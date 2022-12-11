@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -8,7 +10,11 @@ import 'package:nb_utils/nb_utils.dart';
 import '../appConstants.dart';
 import '../network/apiService.dart';
 import '../utils/appCommon.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+
  import 'dart:developer' as logDev;
+
+import '../utils/color_use.dart';
 
 class ChatScreen extends StatefulWidget {
    Doctors? doctors;
@@ -27,8 +33,8 @@ class ChatScreenState extends State<ChatScreen> {
   var sixty =60;
   bool chabox =true;
 
-   var formattedSecondsLeft;
-    var formattedMinutesLeft;
+     var formattedSecondsLeft;
+      var formattedMinutesLeft;
   Timer? timer;
   Timer? time;
   int? prevUserId;
@@ -61,19 +67,20 @@ class ChatScreenState extends State<ChatScreen> {
     receiverId = widget.doctors?.id;
     userToken = getStringAsync(USER_TOKEN);
     getTimes();
-    _startTimer();
-
-    time = Timer.periodic(Duration(seconds: 5), (Timer t) =>   setState(() {
+     time = Timer.periodic(Duration(seconds: 5), (Timer t) =>   setState(() {
 
     }));
     // getMsg =   getMessages(currentUserId,receiverId);
 
   }
+
+
   String get _timerText {
+
     final secondsPerMinute = 60;
     final secondsLeft = maxSeconds! - _currentSecond;
 
-    final formattedMinutesLeft =
+      formattedMinutesLeft =
     (secondsLeft ~/ secondsPerMinute).toString().padLeft(2, '0');
     formattedSecondsLeft =
         (secondsLeft % secondsPerMinute).toString().padLeft(2, '0');
@@ -89,26 +96,37 @@ class ChatScreenState extends State<ChatScreen> {
     timer = Timer.periodic(duration, (Timer timer) {
       setState(() {
         _currentSecond = timer.tick;
-        times = formattedSecondsLeft;
-        if (timer.tick >= maxSeconds!) timer.cancel();
-        if(_timerText =="00 : 00"){
+     //   times = formattedSecondsLeft;
+        if (timer.tick >= maxSeconds) timer.cancel();
+        if(_timerText  =="00 : 00" ){
+           timer.cancel();
+          updateTime(currentUserId!, receiverId!,  "done" );
+
           chabox = false;
         }
       });
     });
   }
- getTimes() async{
-     var get = await getTime( currentUserId!, receiverId!);
- if(get!.error =="000") {
 
+ getTimes() async{
+ var get = await getTime( currentUserId!, receiverId!);
+ if(get!.error =="000") {
+      if(get.doneTime=="done"){
+        chabox = false;
+
+        print("ggg true");
+        print("ggg${get.doneTime}");
+
+      }
    maxSeconds = get.doneTime.toInt();
+   _startTimer();
+
    print("getTime");
  }else{
    print("getTime fail");
 
  }
  }
-
 
 
 
@@ -126,34 +144,42 @@ class ChatScreenState extends State<ChatScreen> {
       return Column(
         children: <Widget>[
           Container(
+
             alignment: Alignment.topRight,
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.80,
-              ),
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.symmetric(vertical: 10),
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius:   BorderRadius.all(Radius.circular(15)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 5,
+            child: Column(
+              children: [
+                Container(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 0.80,
                   ),
-                ],
-              ),
-              child: Text(
-                message.message!,
-                style: TextStyle(
-                  color: Colors.white,
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.symmetric(vertical: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.shade400,
+                    borderRadius:   BorderRadius.only(topRight: Radius.elliptical(0, 100), bottomRight: Radius.circular(5),
+                     bottomLeft:
+                     Radius.circular(5),
+                    topLeft: Radius.circular(5),),
+
+                  ),
+                  child:Text(
+                    message.message!,
+                    style: GoogleFonts.jost(
+                      color: Colors.white,
+
+
+                    ),
+                  ),
+
                 ),
-              ),
+
+              ],
             ),
           ),
           Container(
-            child: null,
+            alignment: Alignment.topRight,
+
+            child:  Text(message.messageTime!,style: GoogleFonts.jost(fontSize: 10,color:Colors.grey),),
           ),
         ],
       );
@@ -170,12 +196,12 @@ class ChatScreenState extends State<ChatScreen> {
               margin: EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(5),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 5,
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 1,
+                    blurRadius: 2,
                   ),
                 ],
               ),
@@ -187,7 +213,11 @@ class ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ),
+          Container(
+            alignment: Alignment.topLeft,
 
+            child:  Text(message.messageTime!,style: GoogleFonts.jost(fontSize: 10,color:Colors.grey),),
+          ),
         ],
       );
     }
@@ -198,24 +228,22 @@ class ChatScreenState extends State<ChatScreen> {
        return Visibility(
          visible: chabox,
          child: Container(
-           padding: EdgeInsets.symmetric(horizontal: 8),
-           height: 70,
+          padding: EdgeInsets.symmetric(horizontal: 8),
+           height: 60,
            color: Colors.white,
            child: Row(
              children: <Widget>[
-               IconButton(
+           /*    IconButton(
                  icon: Icon(Icons.photo),
                  iconSize: 25,
                  color: Theme.of(context).primaryColor,
                  onPressed: () {},
-               ),
+               ),*/
                Expanded(
-                 child: TextField(
+                 child: AppTextField(
                    controller: msgText,
-                   decoration: InputDecoration.collapsed(
-                     hintText: 'Send a message..',
-                   ),
-                   textCapitalization: TextCapitalization.sentences,
+                   decoration:  textInputStyle(context:context,text:"send a message..",isMandatory:true ,),
+                   textCapitalization: TextCapitalization.sentences, textFieldType:TextFieldType.MULTILINE,
                  ),
                ),
                IconButton(
@@ -258,19 +286,28 @@ class ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF6F6F6),
-      appBar: AppBar(
-        brightness: Brightness.dark,
-        centerTitle: true,
+      backgroundColor: scaffoldBgColor,
+      appBar:
+      AppBar(
 
-        title:  Text("$doctorName  ${_timerText}",style: TextStyle(color: Colors.white,fontSize: 20)),
-        leading: IconButton(
+        brightness: Brightness.light,
+
+        title:  Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("$doctorName",style:  GoogleFonts.jost(color: Colors.white,fontSize: 20)),
+            Visibility(
+              visible: chabox,
+                child: Text("${_timerText}",style:  GoogleFonts.jost(color: Colors.white,fontSize: 20))),
+          ],
+        ),
+        /*leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             color: Colors.white,
             onPressed: () {
 
               Navigator.pop(context);
-            }),
+            }),*/
       ),
       body: Column(
         children: <Widget>[
@@ -281,7 +318,7 @@ class ChatScreenState extends State<ChatScreen> {
 
               builder: (context, snapshot) {
                 if (snapshot.data == null) {
-                 // logDev.log(snapshot.data,name:"123");
+
                   print(snapshot.data);
                   return Lottie.network('https://assets7.lottiefiles.com/private_files/lf30_96yLMX.json');
                 }
@@ -317,22 +354,75 @@ class ChatScreenState extends State<ChatScreen> {
     /**
      *  here you can set time
      */
-    //setValue(USER_TIME,  );
-     //getSec =true;
 
-           print("666"+minute.toString());
-           var minutes1 = formattedMinutesLeft.toInt();
-           var sec = formattedSecondsLeft.toInt();
-           var fastestMarathon = Duration(hours: 0, minutes:   minutes1, seconds: sec);
-
-           // total = minute+formattedSecondsLeft;
-
-      updateTime(currentUserId!, receiverId!,  fastestMarathon.inSeconds.toString());
-      print(';;');
+    var minutes1 =   formattedMinutesLeft.toString();
+    var  secnd = formattedSecondsLeft.toString();
+    final fastestMarathon = Duration(minutes:   minutes1.toInt(), seconds: secnd.toInt());
+    print(';;${fastestMarathon.inSeconds}${"%%"}${minutes1}');
+      updateTime(currentUserId!, receiverId!, fastestMarathon.inSeconds.toString()   );
+     print(';;${total.toString()}');
+     if(minutes1=="00"){
+       timer?.cancel();
+        updateTime(currentUserId!, receiverId!,  "done"   );
+     }
      timer!.cancel();
-         print(';;2');
-
-         super.dispose();
+     super.dispose();
   }
+    Future<void> main() async {
+      // Check internet connection with singleton (no custom values allowed)
+      await execute(InternetConnectionChecker());
 
+      // Create customized instance which can be registered via dependency injection
+      final InternetConnectionChecker customInstance =
+      InternetConnectionChecker.createInstance(
+        checkTimeout: const Duration(seconds: 1),
+        checkInterval: const Duration(seconds: 1),
+      );
+
+      // Check internet connection with created instance
+      await execute(customInstance);
+    }
+
+    Future<void> execute(
+        InternetConnectionChecker internetConnectionChecker,
+        ) async {
+      // Simple check to see if we have Internet
+      // ignore: avoid_print
+      print('''The statement 'this machine is connected to the Internet' is: ''');
+      final bool isConnected = await InternetConnectionChecker().hasConnection;
+      // ignore: avoid_print
+      print(
+        isConnected.toString(),
+      );
+      // returns a bool
+
+      // We can also get an enum instead of a bool
+      // ignore: avoid_print
+      print(
+        'Current status: ${await InternetConnectionChecker().connectionStatus}',
+      );
+      // Prints either InternetConnectionStatus.connected
+      // or InternetConnectionStatus.disconnected
+
+      // actively listen for status updates
+      final StreamSubscription<InternetConnectionStatus> listener =
+      InternetConnectionChecker().onStatusChange.listen(
+            (InternetConnectionStatus status) {
+          switch (status) {
+            case InternetConnectionStatus.connected:
+            // ignore: avoid_print
+              print('Data connection is available.');
+              break;
+            case InternetConnectionStatus.disconnected:
+            // ignore: avoid_print
+              print('You are disconnected from the internet.');
+              break;
+          }
+        },
+      );
+
+      // close listener after 30 seconds, so the program doesn't run forever
+      await Future<void>.delayed(const Duration(seconds: 30));
+      await listener.cancel();
+    }
 }

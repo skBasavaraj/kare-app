@@ -415,6 +415,7 @@ Future<Timers?> setTime(String senderId, String receiverId,String time) async {
   if (Stremresponse.statusCode == 200) {
     var response = await http.Response.fromStream(Stremresponse);
     final result = jsonDecode(response.body);
+    print("setTime${result}");
     return Timers.fromJson(result);
   } else {
     return null;

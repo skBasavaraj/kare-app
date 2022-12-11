@@ -70,6 +70,9 @@ dependencies:
   google_maps_flutter: ^2.1.8
   geocoding: ^2.0.5
   geolocator:
+  internet_connection_checker: ^1.0.0+1
+  flutter_custom_clippers: ^2.0.0
+
   # Images and Icons
   flutter_svg: ^0.23.0
   font_awesome_flutter: ^10.2.1

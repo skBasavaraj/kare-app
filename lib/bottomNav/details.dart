@@ -41,7 +41,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
     super.initState();
     init();
   }
-  void init() {
+  void init() async{
     String?  drLastName = doctors!.lastName;
     String?  name= doctors!.name;
     drName =  name! +" "+ drLastName!;
@@ -53,6 +53,8 @@ class _DoctorDetailsState extends State<DoctorDetails> {
     String? location = doctors!.location;
     drLocation = hospital! +" "+ location!;
     ratings = doctors!.ratings.toDouble();
+   await setTime(getStringAsync(USER_ID),doctors!.id!,"180");
+
   }
   @override
   Widget build(BuildContext context) {
@@ -240,7 +242,6 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                                     ),
                                                   ],),
                                                 onTap: () {
-                                                  setTime(getStringAsync(USER_ID),doctors!.id!,"180");
                                                   ChatScreen(doctors).launch(context, pageRouteAnimation: PageRouteAnimation.Slide);
                                                 },
                                               )
