@@ -104,7 +104,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> {
                 //  CategoryScreen(service: service).launch(context);
               },
               child: Text("See all",
-                  style: secondaryTextStyle(color:  Colors.blue)),
+                  style: GoogleFonts.poppins(color:  Colors.blue,fontSize: 12)),
             )
             //.visible(service.length >= 7),
           ],
@@ -231,21 +231,21 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> {
     // if (doctorList.isEmpty) return Offstage();
     return Column(
       children: [
-        16.height,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Top Doctors',
-                style: GoogleFonts.poppins(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16)),
-            Text('ViewAll',
-                style: GoogleFonts.poppins(color: Colors.blue,fontWeight: FontWeight.w400,fontSize: 14))
-                .onTap(() {
-            //  ListPage().launch(context);
-            }),
-
-            //.visible( ),
+            Text('Near by you',
+                style: GoogleFonts.poppins(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold)),
+            TextButton(
+              onPressed: () {
+                //  CategoryScreen(service: service).launch(context);
+              },
+              child: Text("See all",
+                  style: GoogleFonts.poppins(color:  Colors.blue,fontSize: 12)),
+            )
+            //.visible(service.length >= 7),
           ],
-        ),
+        ).paddingSymmetric(horizontal: 8),
         16.height,
         Align(
           alignment: Alignment.topLeft,
@@ -262,7 +262,8 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> {
             builder: (context, snapshot) {
               if(snapshot.data == null){
                 logDev.log(snapshot.data.toString(),name:"show");
-                return CircularProgressIndicator();
+                return   Lottie.network("https://assets2.lottiefiles.com/packages/lf20_eMqO0m.json",height: 400,width: 200,);
+
               }else {
                 List<Doctors>? doctors = snapshot.data;
 

@@ -1,7 +1,7 @@
 
-const appName = 'ZatKare';
+const appName = 'ZatCare';
 const appFirstName = 'Zat';
-const appSecondName = 'Kare';
+const appSecondName = 'Care';
 
 String mainUrl = 'https://wordpress.iqonic.design/product/wp/kivicare/';
 //String mBaseUrl = '${appStore.tempBaseUrl}/wp-json/';

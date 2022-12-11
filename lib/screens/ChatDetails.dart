@@ -67,7 +67,7 @@ class ChatScreenState extends State<ChatScreen> {
     receiverId = widget.doctors?.id;
     userToken = getStringAsync(USER_TOKEN);
     getTimes();
-     time = Timer.periodic(Duration(seconds: 5), (Timer t) =>   setState(() {
+     time = Timer.periodic(Duration(seconds: 1), (Timer t) =>   setState(() {
 
     }));
     // getMsg =   getMessages(currentUserId,receiverId);
@@ -114,12 +114,17 @@ class ChatScreenState extends State<ChatScreen> {
       if(get.doneTime=="done"){
         chabox = false;
 
-        print("ggg true");
+        print("ttr true");
         print("ggg${get.doneTime}");
 
+      }else{
+        print("ttr false");
+
+        _startTimer();
+        maxSeconds = get.doneTime.toInt();
+
       }
-   maxSeconds = get.doneTime.toInt();
-   _startTimer();
+
 
    print("getTime");
  }else{
@@ -363,6 +368,7 @@ class ChatScreenState extends State<ChatScreen> {
      print(';;${total.toString()}');
      if(minutes1=="00"){
        timer?.cancel();
+       print("decline");
         updateTime(currentUserId!, receiverId!,  "done"   );
      }
      timer!.cancel();
