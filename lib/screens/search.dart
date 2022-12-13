@@ -12,6 +12,7 @@ import '../utils/appCommon.dart';
 import '../utils/color_use.dart';
  import 'ApointmentscreenBooking.dart';
 import 'DoctorDetails.dart';
+import 'doctorDetilas2.dart';
 
 class SearchScreen extends StatefulWidget {
   String? charString;
@@ -107,7 +108,7 @@ double? ratingBarValue;
             child: InkWell(
               splashColor: Colors.blue.shade100,
               onTap: () {
-              DoctorDetails(doctor).launch(context,pageRouteAnimation: PageRouteAnimation.Slide);
+                DetailsDoctors(doctor).launch(context,pageRouteAnimation: PageRouteAnimation.Slide);
               },
               child: Row(
 

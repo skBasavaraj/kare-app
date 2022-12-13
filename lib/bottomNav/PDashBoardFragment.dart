@@ -271,12 +271,14 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> {
                   itemBuilder: (BuildContext context, int index) {
                     return topDoctorList(doctors![index]);
 
-                  },/* gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                  },
+                  /* gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 4.0,
                       mainAxisSpacing:4.0
 
-                  )*/);
+                  )*/
+                );
               }
             },
           ) ,

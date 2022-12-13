@@ -273,7 +273,6 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            _makingPhoneCall( doctors?.number!);
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(15))),
@@ -489,14 +488,6 @@ class _DoctorDetailsState extends State<DoctorDetails> {
       )
   // This t/railing comma makes auto-formatting nicer for build methods.
     );
-  }
-  _makingPhoneCall(String? doctorNumber) async {
-    var url = Uri.parse("tel:$doctorNumber");
-    if (await canLaunchUrl(url)) {
-      await  launchUrl(url);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 
 }

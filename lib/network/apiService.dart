@@ -14,8 +14,8 @@ import '../utils/appCommon.dart';
 
 class ApiService {
   //192.168.1.138
-  //static String url ="http://192.168.0.102";
-  static String url ="http://192.168.1.138";
+  static String url ="http://192.168.0.102";
+ // static String url ="http://192.168.1.138";
   static Future<loginInfo?> register
       ( String name,
       String lastName,
