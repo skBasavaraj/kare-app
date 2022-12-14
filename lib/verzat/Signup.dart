@@ -210,8 +210,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         textFieldType: TextFieldType.NAME,
                         decoration: textInputStyle(
                           context: context,
-                          label: 'FirstName',
-                          text: 'FirstName',
+                          label: 'Name',
+                          text: 'Name',
                           isMandatory: true,
                           suffixIcon: commonImage(
                             imageUrl: "images/icons/user.png",
@@ -219,7 +219,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         focus: firstNameFocus,
-                        errorThisFieldRequired:  'FirstNameIsRequired',
+                        errorThisFieldRequired:  'Name Is Required',
                         nextFocus: lastNameFocus,
                       ),
                       16.height,
@@ -229,8 +229,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         textFieldType: TextFieldType.NAME,
                         decoration: textInputStyle(
                           context: context,
-                          label: 'LastName',
-                          text: 'LastName',
+                          label: 'User Name',
+                          text: 'User Name',
                           isMandatory: true,
                           suffixIcon: commonImage(
                             imageUrl: "images/icons/user.png",
@@ -239,7 +239,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         focus: lastNameFocus,
                         nextFocus: emailFocus,
-                        errorThisFieldRequired:  'LastNameIsRequired',
+                        errorThisFieldRequired:  'User Name Is Required',
                       ),
 
                       16.height,
@@ -285,13 +285,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         nextFocus: dOBFocus,
                         textFieldType: TextFieldType.PHONE,
                         validator: (s) {
-                          if (s!.trim().isEmpty) return  'ContactNumberIsRequired';
+                          if (s!.trim().isEmpty) return  'Contact Number Is Required';
                           return null;
                         },
                         decoration: textInputStyle(
                           context: context,
-                          label: 'ContactNumber',
-                          text: 'ContactNumber',
+                          label: 'Contact Number',
+                          text: 'Contact Number',
                           isMandatory: true,
                           suffixIcon: commonImage(
                             imageUrl: "images/icons/phone.png",
@@ -307,7 +307,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         nextFocus: bloodGroupFocus,
                         focus: dOBFocus,
                         textFieldType: TextFieldType.NAME,
-                        errorThisFieldRequired:  'BirthDateIsRequired',
+                        errorThisFieldRequired:  'Birth Date Is Required',
                         decoration: textInputStyle(
                           context: context,
                           label: 'DOB',
@@ -323,7 +323,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           dateBottomSheet(context);
                         },
                       ),
-                      16.height,
+                    /*  16.height,
                       AppTextField(
                         controller: addressCont,
                         focus: addressFocus,
@@ -341,7 +341,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         minLines: 4,
                         maxLines: 4,
                         textInputAction: TextInputAction.newline,
-                      ),
+                      ),*/
                       16.height,
                       AppTextField(
                         controller: cityCont,
@@ -355,7 +355,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ,text: 'City'
                         ),
                       ),
-                      16.height,
+                      /*16.height,
                       AppTextField(
                         controller: stateCont,
                         focus: stateFocus,
@@ -367,8 +367,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             label: 'State'
                             ,text: 'State'
                         ),
-                      ),
-                      16.height,
+                      ),*/
+                      /*16.height,
                       AppTextField(
                         controller: countryCont,
                         focus: countryFocus,
@@ -380,14 +380,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             label: 'Country',
                             text: 'Country'
                         ),
-                      ),
-                      16.height,
+                      ),*/
+                      /*16.height,
                       AppTextField(
                         controller: postalCodeCont,
                         focus: postalCodeFocus,
                         textFieldType: TextFieldType.OTHER,
                         decoration: textInputStyle(context: context, label: 'PostalCode'),
-                      ),
+                      ),*/
 
                       16.height,
                       Align(
@@ -471,14 +471,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         shapeBorder: RoundedRectangleBorder(borderRadius: radius()),
                         onTap: () async {
                           // signUp();
-                          var info = await  ApiService.register(firstNameCont.text.validate(),lastNameCont.text.validate(),emailCont.text.validate(),passwordCont.text,
-                              contactNumberCont.text.toString(),birthDate.toString().validate(),
-                              genderValue.validate(), filePath!,addressCont.text,cityCont.text,stateCont.text,countryCont.text,postalCodeCont.text
-                          );
+                          var info = await  ApiService.register(filePath!,firstNameCont.text.validate(),lastNameCont.text.validate()
+                          ,emailCont.text.validate(),contactNumberCont.text,cityCont.text.validate(),passwordCont.text.validate(),dOBCont.text
+                             ,  genderValue.validate());
 
                           if(info!.error =="001"){
                             successToast(info.message);
                             Navigator.pop(context);
+                          }else{
+                            errorToast(info.message!);
                           }
                         },
                         color: primaryColor,

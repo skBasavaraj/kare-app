@@ -11,9 +11,8 @@ import 'package:crypto/crypto.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:pointycastle/asymmetric/api.dart';
 
-
 import 'package:http/http.dart' as http;
-import 'dart:developer'as logDev;
+import 'dart:developer' as logDev;
 
 import '../appConstants.dart';
 import '../screens/ApointmentscreenBooking.dart';
@@ -23,22 +22,22 @@ import '../utils/appwigets.dart';
 import '../utils/color_use.dart';
 import 'cerateAppointment.dart';
 
-
 class PatientAppointmentFragment extends StatefulWidget {
   @override
-  _PatientAppointmentFragmentState createState() => _PatientAppointmentFragmentState();
+  _PatientAppointmentFragmentState createState() =>
+      _PatientAppointmentFragmentState();
 }
 
-class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment> {
-
+class _PatientAppointmentFragmentState
+    extends State<PatientAppointmentFragment> {
   List<String> pStatus = [];
   ScrollController _controller = new ScrollController();
   String? currentUserId;
   int selectIndex = -1;
   List<Appointments>? _app;
 
-  static String? urlLink="http://192.168.0.102";
-  static String? url =  urlLink!+'/UserApi/getAppointments.php';
+  static String? urlLink = "https://admin.verzat.com/user-api/";
+  static String? url = "";
 
   TextEditingController searchCont = TextEditingController();
 
@@ -52,15 +51,15 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
 
   init() async {
     //
-    currentUserId =getStringAsync(USER_ID);
-    pStatus.add( "All");
-    pStatus.add( "Latest");
-    pStatus.add( 'Completed');
+    currentUserId = getStringAsync(USER_ID);
+    pStatus.add("All");
+    pStatus.add("Latest");
+    pStatus.add('Completed');
     pStatus.add('Cancelled');
-    pStatus.add( 'Past');
+    pStatus.add('Past');
     selectIndex = 0;
 
-   // await getConfiguration().catchError(log);
+    // await getConfiguration().catchError(log);
   }
 
   @override
@@ -73,13 +72,10 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
     super.didUpdateWidget(oldWidget);
   }
 
-  Widget body(
-
-      ) {
-
+  Widget body() {
     return SingleChildScrollView(
       child: Container(
-        color:scaffoldBgColor,
+        color: scaffoldBgColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -99,42 +95,45 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
               itemBuilder: (context, index) {
                 return Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.only(top: 8, bottom: 8, left: 12, right: 12),
+                  padding:
+                      EdgeInsets.only(top: 8, bottom: 8, left: 12, right: 12),
                   margin: EdgeInsets.only(left: 0, right: 8, top: 4, bottom: 4),
                   decoration: BoxDecoration(
-                    color: selectIndex == index
-                    ?primaryColor
-                        :scaffoldBgColor
-                  ,
-                        // ? appStore.isDarkModeOn
-                       // ? cardDarkColor
-                        //: black
-                        // // : appStore.isDarkModeOn
-                        //? scaffoldDarkColors
+                    color:
+                        selectIndex == index ? primaryColor : scaffoldBgColor,
+                    // ? appStore.isDarkModeOn
+                    // ? cardDarkColor
+                    //: black
+                    // // : appStore.isDarkModeOn
+                    //? scaffoldDarkColors
 
-                    borderRadius: BorderRadius.all(Radius.circular(defaultRadius)),
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(defaultRadius)),
                   ),
                   child: FittedBox(
                     child: Text(
                       pStatus[index],
-                      style: primaryTextStyle(size: 14, color: selectIndex == index ? white : Theme.of(context).iconTheme.color),
+                      style: primaryTextStyle(
+                          size: 14,
+                          color: selectIndex == index
+                              ? white
+                              : Theme.of(context).iconTheme.color),
                       textAlign: TextAlign.center,
                     ).paddingSymmetric(horizontal: 16, vertical: 2),
                   ),
                 ).onTap(
-                      () {
+                  () {
                     selectIndex = index;
                     if (index == 0) {
-                      url   =  urlLink!+'/UserApi/getAppointments.php';
+                      url = urlLink! + '/UserApi/getAppointments.php';
                       successToast("all");
-                     // appStore.setStatus('all');
+                      // appStore.setStatus('all');
                     } else if (index == 1) {
                       successToast("latest");
-                      url   =  urlLink!+'/UserApi/appointmentDone.php';
+                      url = urlLink! + 'appointmentDone.php';
 
-                     // appStore.setStatus('-1');
+                      // appStore.setStatus('-1');
                     } else if (index == 2) {
-
                       successToast("Completd");
 
                       //appStore.setStatus('3');
@@ -142,7 +141,7 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
                       //appStore.setStatus('0');
                     } else if (index == 4) {
                       //appStore.setStatus('past');
-                    }//
+                    } //
                     setState(() {});
                   },
                 );
@@ -152,32 +151,32 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
             16.height,
             Container(
               height: 600,
-              child: FutureBuilder<List<Appointments>> (
-
-                future:  get(currentUserId!),
-
+              child: FutureBuilder<List<Appointments>>(
+                future: get(currentUserId!),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.data == null) {
                     // logDev.log(snapshot.data,name:"123");
                     print(snapshot.data);
-                    return  Lottie.network("https://assets2.lottiefiles.com/packages/lf20_eMqO0m.json",height: 400,width: 200,);
-                  }
-                  else
-                  {
-                    _app=[];
+                    return Lottie.network(
+                      "https://assets2.lottiefiles.com/packages/lf20_eMqO0m.json",
+                      height: 400,
+                      width: 200,
+                    );
+                  } else {
+                    _app = [];
                     _app = snapshot.data;
-                    return   ListView.builder(
+                    return ListView.builder(
                       shrinkWrap: true,
-                      physics: const AlwaysScrollableScrollPhysics(), // new
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      // new
                       scrollDirection: Axis.vertical,
-                      controller:  _controller,
+                      controller: _controller,
                       padding: EdgeInsets.all(10),
                       itemCount: snapshot.data!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return appointments(_app![index]);
                       },
                     );
-
                   }
                 },
               ),
@@ -197,22 +196,23 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
           onTap: () {
             //appStore.setBookedFromDashboard(false);
 
-            AddAppointmentScreenStep1().launch(context, pageRouteAnimation: PageRouteAnimation.Scale);
-           // // isProEnabled() ? AddAppointmentScreenStep3().launch(context, pageRouteAnimation: PageRouteAnimation.Scale) : AddAppointmentScreenStep1().launch(context, pageRouteAnimation: PageRouteAnimation.Scale);
+            AddAppointmentScreenStep1()
+                .launch(context, pageRouteAnimation: PageRouteAnimation.Scale);
+            // // isProEnabled() ? AddAppointmentScreenStep3().launch(context, pageRouteAnimation: PageRouteAnimation.Scale) : AddAppointmentScreenStep1().launch(context, pageRouteAnimation: PageRouteAnimation.Scale);
           },
         ),
         body: body(),
       ),
     );
   }
-  appointments(Appointments appointments){
+
+  appointments(Appointments appointments) {
     bool buttonenabled = false;
-    if(appointments.status =="pending"){
-      return  Container(
+    if (appointments.status == "pending") {
+      return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: Colors.white),
         margin: EdgeInsets.all(10),
-
         height: 200,
         child: Column(
           children: [
@@ -224,7 +224,7 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Text(
-                      "Dr.${appointments.doctorName!}",
+                      "Dr.${appointments.name!}",
                       style: TextStyle(
                           fontSize: 30,
                           color: Colors.black,
@@ -233,23 +233,20 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 15,top:10),
+                    padding: const EdgeInsets.only(left: 15, top: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-
                       children: [
-
                         const Icon(
                           Icons.calendar_month,
                           color: Colors.blue,
                         ),
-
                         Padding(
                           padding: const EdgeInsets.only(left: 5),
-                          child:   Text(
-                            "${appointments.date}",
+                          child: Text(
+                            "${appointments.apptDate}",
                             style: TextStyle(
-                                fontSize:16,
+                                fontSize: 16,
                                 color: Colors.black,
                                 decoration: TextDecoration.none),
                             maxLines: 2,
@@ -259,21 +256,19 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
                           width: 10,
                         ),
                         Row(
-                          children:  [
+                          children: [
                             Icon(
                               Icons.watch_later_outlined,
                               color: Colors.blue,
                             ),
-
                             Padding(
                               padding: EdgeInsets.only(left: 5),
                               child: Text(
-                                "${appointments.time}",
+                                "${appointments.apptTime}",
                                 style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,
                                     decoration: TextDecoration.none),
-
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -283,11 +278,11 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
                     ),
                   ),
                   Padding(
-                    padding:   EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10),
                     child: ElevatedButton(
-
-                        onPressed: buttonenabled?(){}:null ,
-                        child:   Center(child: Text("appointment not approved "))),
+                        onPressed: buttonenabled ? () {} : null,
+                        child:
+                            Center(child: Text("appointment not approved "))),
                   )
                 ],
               ),
@@ -295,8 +290,8 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
           ],
         ),
       );
-    } else if(appointments.status =="approved"){
-      return  Container(
+    } else if (appointments.status == "approved") {
+      return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: Colors.white),
         margin: EdgeInsets.all(10),
@@ -312,9 +307,9 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(left:15,top:10),
+                          padding: const EdgeInsets.only(left: 15, top: 10),
                           child: Text(
-                            "Dr.${appointments.doctorName}",
+                            "Dr.${appointments.name}",
                             style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black,
@@ -326,22 +321,20 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left:15,top:15),
+                    padding: const EdgeInsets.only(left: 15, top: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-
                         const Icon(
                           Icons.calendar_month,
                           color: Colors.blue,
                         ),
-
                         Padding(
                           padding: const EdgeInsets.only(left: 5),
-                          child:   Text(
-                            "${appointments.date}",
+                          child: Text(
+                            "${appointments.apptDate}",
                             style: TextStyle(
-                                fontSize:16,
+                                fontSize: 16,
                                 color: Colors.black,
                                 decoration: TextDecoration.none),
                             maxLines: 2,
@@ -351,21 +344,19 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
                           width: 10,
                         ),
                         Row(
-                          children:   [
+                          children: [
                             Icon(
                               Icons.watch_later_outlined,
                               color: Colors.blue,
                             ),
-
                             Padding(
                               padding: EdgeInsets.only(left: 5),
                               child: Text(
-                                "${appointments.time}",
+                                "${appointments.apptTime}",
                                 style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,
                                     decoration: TextDecoration.none),
-
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -378,9 +369,8 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
                     padding: const EdgeInsets.all(10),
                     child: ElevatedButton(
                         onPressed: () async {
-
                           //  var info =    await get();
-                         CheckOut(appointments).launch(context);
+                          CheckOut(appointments).launch(context);
                           //_pay(appointments.doctorName!,appointments.id!,appointments.dEmail!,appointments.patientName!);
                         },
                         child: Center(child: const Text("Payment pending"))),
@@ -391,9 +381,8 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
           ],
         ),
       );
-
-    }else if(appointments.status == "booked"){
-      return  Container(
+    } else if (appointments.status == "booked") {
+      return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: Colors.white),
         margin: EdgeInsets.all(10),
@@ -408,13 +397,12 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-
                       Expanded(
                         flex: 3,
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 15,top:10),
+                          padding: const EdgeInsets.only(left: 15, top: 10),
                           child: Text(
-                            "Dr.${appointments.doctorName}",
+                            "Dr.${appointments.name}",
                             style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.black,
@@ -430,18 +418,16 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-
                         const Icon(
                           Icons.calendar_month,
                           color: Colors.blue,
                         ),
-
                         Padding(
                           padding: const EdgeInsets.only(left: 5),
-                          child:   Text(
-                            "${appointments.date}",
+                          child: Text(
+                            "${appointments.apptDate}",
                             style: TextStyle(
-                                fontSize:16,
+                                fontSize: 16,
                                 color: Colors.black,
                                 decoration: TextDecoration.none),
                             maxLines: 2,
@@ -451,21 +437,19 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
                           width: 10,
                         ),
                         Row(
-                          children:   [
+                          children: [
                             Icon(
                               Icons.watch_later_outlined,
                               color: Colors.blue,
                             ),
-
                             Padding(
                               padding: EdgeInsets.only(left: 5),
                               child: Text(
-                                "${appointments.time}",
+                                "${appointments.apptTime}",
                                 style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,
                                     decoration: TextDecoration.none),
-
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -478,35 +462,45 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 15,top: 5),
+                        padding: const EdgeInsets.only(left: 15, top: 5),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(Icons.location_on_sharp,size: 20,color: Colors.green,)
-
-                              ,Padding(
+                              Icon(
+                                Icons.location_on_sharp,
+                                size: 20,
+                                color: Colors.green,
+                              ),
+                              Padding(
                                 padding: const EdgeInsets.only(left: 10),
-                                child: Text(appointments.doctorLocation!,style: TextStyle(color: Colors.black,fontSize: 20,)
-                                  ,overflow: TextOverflow.ellipsis,),
-                              ), SizedBox(width: 10,)
-
-                            ]
-                        ),
-
-                      )
-                      ,
+                                child: Text(
+                                  "appointments.doctorLocation!",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              )
+                            ]),
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container
-                          (
+                        child: Container(
                           width: 200,
                           height: 40,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
-                              color: Colors.green
-                          ),
-                          child: Center(child: Text("Booked",style: TextStyle(color: Colors.white,fontSize: 15),)),
+                              color: Colors.green),
+                          child: Center(
+                              child: Text(
+                            "Booked",
+                            style: TextStyle(color: Colors.white, fontSize: 15),
+                          )),
                         ),
                       )
                     ],
@@ -527,122 +521,25 @@ class _PatientAppointmentFragmentState extends State<PatientAppointmentFragment>
           ],
         ),
       );
-
-    }else {
+    } else {
       NoDataFoundWidget();
     }
-
   }
 
   @override
   void dispose() {
     super.dispose();
   }
-
 }
 
-
-
-
-class Appointments {
-  String? id;
-  String? name;
-  String? doctorName;
-  String? userId;
-  String? clinic;
-  String? patientName;
-  String? doctorNumber;
-  String? patientAge;
-  String? patientNumber;
-  String? date;
-  String? time;
-  String? bloodGroup;
-  String? doctorLocation;
-  String? description;
-  String? gender;
-  String? dEmail;
-  String? doctorUpiAddress;
-  String? uEmail;
-  String? status;
-
-  Appointments(
-      {this.id,
-        this.name,
-        this.doctorName,
-        this.userId,
-        this.clinic,
-        this.patientName,
-        this.doctorNumber,
-        this.patientAge,
-        this.patientNumber,
-        this.date,
-        this.time,
-        this.bloodGroup,
-        this.doctorLocation,
-        this.description,
-        this.gender,
-        this.dEmail,
-        this.doctorUpiAddress,
-        this.uEmail,
-        this.status});
-
-  Appointments.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    doctorName = json['doctorName'];
-    userId = json['userId'];
-    clinic = json['clinic'];
-    patientName = json['patientName'];
-    doctorNumber = json['doctorNumber'];
-    patientAge = json['patientAge'];
-    patientNumber = json['patientNumber'];
-    date = json['date'];
-    time = json['time'];
-    bloodGroup = json['bloodGroup'];
-    doctorLocation = json['doctorLocation'];
-    description = json['description'];
-    gender = json['gender'];
-    dEmail = json['dEmail'];
-    doctorUpiAddress = json['doctorUpiAddress'];
-    uEmail = json['uEmail'];
-    status = json['status'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['doctorName'] = this.doctorName;
-    data['userId'] = this.userId;
-    data['clinic'] = this.clinic;
-    data['patientName'] = this.patientName;
-    data['doctorNumber'] = this.doctorNumber;
-    data['patientAge'] = this.patientAge;
-    data['patientNumber'] = this.patientNumber;
-    data['date'] = this.date;
-    data['time'] = this.time;
-    data['bloodGroup'] = this.bloodGroup;
-    data['doctorLocation'] = this.doctorLocation;
-    data['description'] = this.description;
-    data['gender'] = this.gender;
-    data['dEmail'] = this.dEmail;
-    data['doctorUpiAddress'] = this.doctorUpiAddress;
-    data['uEmail'] = this.uEmail;
-    data['status'] = this.status;
-    return data;
-  }
-}
 Future<List<Appointments>> get(String userId) async {
-
   var request = http.MultipartRequest(
       'POST', Uri.parse(_PatientAppointmentFragmentState.url!));
   request.fields.addAll({'userId': userId});
 
-
   http.StreamedResponse response = await request.send();
 
   var response1 = await http.Response.fromStream(response);
-
 
   var jsonData = json.decode(response1.body);
   List<Appointments> apptmntList = [];
@@ -653,28 +550,128 @@ Future<List<Appointments>> get(String userId) async {
   for (var item in jsonArray) {
     Appointments appointments = Appointments(
         id: item['id'],
-        doctorName: item['doctorName'],
-        userId: item['userId'],
-        clinic: item['clinic'],
+        userID: item['userID'],
+        role: item['role'],
+        doctorID: item['doctorID'],
         patientName: item['patientName'],
-        doctorNumber: item['doctorNumber'],
         patientAge: item['patientAge'],
         patientNumber: item['patientNumber'],
-        date: item['date'],
-        time: item['time'],
+        patientEmail: item['patientEmail'],
+        patientGender: item['patientGender'],
+        apptDate: item['apptDate'],
+        apptTime: item['apptTime'],
+        bookDate: item['bookDate'],
+        bookTime: item['bookTime'],
         bloodGroup: item['bloodGroup'],
-        doctorLocation: item['doctorLocation'],
+        subject: item['subject'],
         description: item['description'],
-        gender: item['gender'],
-        dEmail: item['dEmail'],
-        doctorUpiAddress: item['doctorUpiAddress'],
-        uEmail: item['uEmail'],
-        status: item['status']);
+        appointmentId: item['appointmentId'],
+        status: item['status']
+        ,mobile: item['mobile'],
+          location: item['location'],
+         name:item['name']
+    );
 
     apptmntList.add(appointments);
-    logDev.log('4'+ item['status'],name:"12");
-
+    logDev.log('4' + item['status'], name: "12");
   }
-  logDev.log('5$apptmntList',name:"12");
+  logDev.log('5$apptmntList', name: "12");
   return apptmntList;
+}
+
+class Appointments {
+  String? id;
+  String? userID;
+  String? role;
+  String? doctorID;
+  String? patientName;
+  String? patientAge;
+  String? patientNumber;
+  String? patientEmail;
+  String? patientGender;
+  String? apptDate;
+  String? apptTime;
+  String? bookDate;
+  String? bookTime;
+  String? bloodGroup;
+  String? subject;
+  String? description;
+  String? appointmentId;
+  String? status;
+  String? mobile;
+  String? location;
+  String? name;
+
+  Appointments(
+      {this.id,
+      this.userID,
+      this.role,
+      this.doctorID,
+      this.patientName,
+      this.patientAge,
+      this.patientNumber,
+      this.patientEmail,
+      this.patientGender,
+      this.apptDate,
+      this.apptTime,
+      this.bookDate,
+      this.bookTime,
+      this.bloodGroup,
+      this.subject,
+      this.description,
+      this.appointmentId,
+      this.status,
+      this.mobile,
+      this.location,
+      this.name});
+
+  Appointments.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userID = json['userID'];
+    role = json['role'];
+    doctorID = json['doctorID'];
+    patientName = json['patientName'];
+    patientAge = json['patientAge'];
+    patientNumber = json['patientNumber'];
+    patientEmail = json['patientEmail'];
+    patientGender = json['patientGender'];
+    apptDate = json['apptDate'];
+    apptTime = json['apptTime'];
+    bookDate = json['bookDate'];
+    bookTime = json['bookTime'];
+    bloodGroup = json['bloodGroup'];
+    subject = json['subject'];
+    description = json['description'];
+    appointmentId = json['appointmentId'];
+    status = json['status'];
+    mobile = json['mobile'];
+    location = json['location'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['userID'] = this.userID;
+    data['role'] = this.role;
+    data['doctorID'] = this.doctorID;
+    data['patientName'] = this.patientName;
+    data['patientAge'] = this.patientAge;
+    data['patientNumber'] = this.patientNumber;
+    data['patientEmail'] = this.patientEmail;
+    data['patientGender'] = this.patientGender;
+    data['apptDate'] = this.apptDate;
+    data['apptTime'] = this.apptTime;
+    data['bookDate'] = this.bookDate;
+    data['bookTime'] = this.bookTime;
+    data['bloodGroup'] = this.bloodGroup;
+    data['subject'] = this.subject;
+    data['description'] = this.description;
+    data['appointmentId'] = this.appointmentId;
+    data['status'] = this.status;
+    data['mobile'] = this.mobile;
+    data['location'] = this.location;
+    data['name'] = this.name;
+    return data;
+  }
 }

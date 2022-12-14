@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import "package:google_fonts/google_fonts.dart";
 import 'package:nb_utils/nb_utils.dart';
@@ -23,17 +22,12 @@ class _DetailsDoctorsState extends State<DetailsDoctors> {
   Doctors? doctor;
 
   _DetailsDoctorsState(this.doctor);
-    @override
+ @override
   void initState() {
-      init();
+   init();
      super.initState();
   }
-  void init() async{
-      var setTimes = await setTime(getStringAsync(USER_ID), doctor!.id!, "180");
-      if(setTimes?.error=="00"){
-        print("Time set");
-      }
-  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -244,7 +238,7 @@ class _DetailsDoctorsState extends State<DetailsDoctors> {
                       child: Ink(
                         child: InkWell(
                           onTap: () {
-                            _makingPhoneCall( doctor!.number!);
+                            makingPhoneCall( doctor!.number!);
 
                           },
                           splashColor: Colors.blue,
@@ -330,7 +324,24 @@ class _DetailsDoctorsState extends State<DetailsDoctors> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.center,
-
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.message,
+                                    color: Colors.blue,
+                                    size: 15,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: Text(
+                                    "Text Message",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 12, color: Colors.blue),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ),
@@ -341,7 +352,8 @@ class _DetailsDoctorsState extends State<DetailsDoctors> {
           ],
         ));
   }
-  _makingPhoneCall(String? doctorNumber) async {
+
+  makingPhoneCall(String? doctorNumber) async {
     var url = Uri.parse("tel:$doctorNumber");
     if (await canLaunchUrl(url)) {
       await  launchUrl(url);
@@ -349,5 +361,12 @@ class _DetailsDoctorsState extends State<DetailsDoctors> {
       throw 'Could not launch $url';
     }
   }
-
+  init() async{
+   var set = await setTime(getStringAsync(USER_ID),  doctor!.id!, "180");
+   if(set!.error=="000"){
+     print("Time set");
+   }
+  }
 }
+
+

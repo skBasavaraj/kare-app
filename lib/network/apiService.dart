@@ -17,39 +17,35 @@ class ApiService {
   static String url ="http://192.168.0.102";
  // static String url ="http://192.168.1.138";
   static Future<loginInfo?> register
-      ( String name,
-      String lastName,
+      (
+      String file,
+      String name,
+      String username,
       String email,
+      String mobile,
+      String location,
       String password,
-      String number,
+
       String dob,
       String gender,
-      String file,
-      String address,
-      String city,
-      String state,
-      String country,
-      String postal,
+
       ) async {
     var request = http.MultipartRequest(
-        'POST', Uri.parse(ApiService.url+'/UserApi/register.php'));
+        'POST', Uri.parse('https://admin.verzat.com/user-api/register.php'));
     request.fields.addAll({
-      'id':getStringAsync(USER_ID),
-      'firstName': name,
-      'lastName': lastName,
+
+      'type': 'user',
+      'name': name,
+      'username':  username,
       'email': email,
-      'number':  number,
-      'password':password ,
-      'dob': dob,
-      //'bloodGroup': 'B,
-      'gender':gender,
-      'address': address,
-      'city': city,
-      'state': state,
-      'country': country,
-      'postal':postal
+      'mobile': mobile,
+      'location':  location,
+      'password': password,
+      'dob':  dob,
+      'gender':  gender,
+      'status': 'online'
     });
-    request.files.add(await http.MultipartFile.fromPath('photo',  file));
+    request.files.add(await http.MultipartFile.fromPath('file',  file));
     var Stremresponse = await request.send();
 
     if (Stremresponse.statusCode == 200) {
@@ -65,7 +61,8 @@ class ApiService {
 
   static Future<loginInfo?> login(String email, String password) async {
     var request = http.MultipartRequest(
-        'POST', Uri.parse(url+'/UserApi/login.php'));
+      //  'POST', Uri.parse(url+'/UserApi/login.php'));
+        'POST', Uri.parse("https://admin.verzat.com/user-api/login.php"));
     request.fields.addAll({
       'email': email,
       'password': password,
@@ -83,41 +80,27 @@ class ApiService {
   }
 
   static Future<BookSucessful?> bookAppointments
-      (String sendimage,
-      String doctorName,
-      String? clinic,
-      String patientName,
-      String doctorNumber,
-      String patientAge,
-      String patientNumber,
-      String date,
-      String time,
-      String bloodGroup,
-      String doctorLocation,
-      String description,
-      String gender,
-      String dEmail,
-      String uEmail) async {
-    var request = http.MultipartRequest(
-        'POST', Uri.parse(url+'/UserApi/bookAppointment.php'));
+      (String userId,String doctorId,String patientName,patientAge,patientNumber,patientEmail,patientGender,
+      apptDate,apptTime,bloodGroup,subject,description) async {
+    var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/bookAppointment.php'));
     request.fields.addAll({
-      'doctorName': doctorName,
-      'clinic': clinic!,
+      'userId': userId,
+      'role': 'user',
+      'doctorId': doctorId,
       'patientName': patientName,
-      'doctorNumber': doctorNumber,
       'patientAge': patientAge,
       'patientNumber': patientNumber,
-      'date': date,
-      'time': time,
+      'patientEmail': patientEmail,
+      'patientGender': patientGender,
+      'apptDate':  apptDate,
+      'apptTime': apptTime,
       'bloodGroup': bloodGroup,
-      'doctorLocation': doctorLocation,
+      'subject': subject,
       'description': description,
-      'gender': gender,
-      'dEmail': dEmail,
-      'uEmail': uEmail
+      'status': 'pending'
     });
-    request.files
-        .add(await http.MultipartFile.fromPath('sendimage', sendimage));
+    // request.files
+    //     .add(await http.MultipartFile.fromPath('sendimage', sendimage));
 
     var Stremresponse = await request.send();
 
@@ -280,7 +263,7 @@ Future<loginInfo?> forgotPasswrd(String email, String password) async {
 
 Future<List<Doctors>> getDoctors() async {
   var response =
-  await http.get(Uri.parse(ApiService.url+'/UserApi/doctorsList.php'));
+  await http.get(Uri.parse("https://admin.verzat.com/user-api/doctorsList.php"));
 
   var jsonData = json.decode(response.body);
   var jsonArray = jsonData['doctors'];
@@ -310,7 +293,7 @@ Future<List<Doctors>> getDoctors() async {
 Future<List<Doctors>> getSearchDoctors(String text) async {
   // var response =
   // await http.get(Uri.parse(ApiService.url+'/UserApi/doctorsList.php'));
-  var request = http.MultipartRequest('POST', Uri.parse(ApiService.url+'/UserApi/searchList.php'));
+  var request = http.MultipartRequest('POST', Uri.parse("https://admin.verzat.com/user-api/searchList.php"));
   request.fields.addAll({
     'text':  text
   });

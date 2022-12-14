@@ -28,7 +28,7 @@ class _CheckOutState extends State<CheckOut> {
     super.initState();
      _razorpay = Razorpay();
 
-      _pay(widget.appointments!.doctorName!, widget.appointments!.id!,widget.appointments!.dEmail!,
+      _pay(widget.appointments!.name!, widget.appointments!.id!,widget.appointments!.patientEmail!,
            widget.appointments!.patientName!);
     _razorpay!.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay!.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
@@ -42,9 +42,8 @@ class _CheckOutState extends State<CheckOut> {
     );
   }
 
-  _pay(String doctorName,String doctorId,String doctorEmail,String  patientName) {
+  _pay(String doctorName,String doctorId,String patientEmail,String  patientName) {
 
-    print(doctorName + doctorEmail + doctorId);
 
     var options = {
       'key': 'rzp_live_ILgsfZCZoFIKMb',
@@ -54,7 +53,7 @@ class _CheckOutState extends State<CheckOut> {
       'description': 'Pn'+patientName,
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,
-      'prefill': {'contact': "91"+widget.appointments!.doctorNumber!, 'email': ''+doctorEmail},
+      'prefill': {'contact': "91"+widget.appointments!.patientNumber!, 'email': ''+widget.appointments!.patientEmail!},
       'external': {
         'wallets': ['paytm']
       }
@@ -71,8 +70,8 @@ class _CheckOutState extends State<CheckOut> {
     print("paymentId"+response.paymentId!);
     print( response.paymentId);
     print('');
-   await uploadPaymentInfo(widget.appointments!.doctorName!,
-     widget.appointments!.id!,widget.appointments!.dEmail!,response.paymentId,"response.orderId",
+   await uploadPaymentInfo(widget.appointments!.doctorID!,
+     widget.appointments!.id!,widget.appointments!.patientName!,response.paymentId,"response.orderId",
         "response.signature");
 
     await setBook(widget.appointments!.id!,response.paymentId!,"response.orderId"!);

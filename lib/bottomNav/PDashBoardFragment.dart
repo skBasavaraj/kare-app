@@ -26,7 +26,7 @@ class PDashBoardFragment extends StatefulWidget {
   _PDashBoardFragmentState createState() => _PDashBoardFragmentState();
 }
 
-class _PDashBoardFragmentState extends State<PDashBoardFragment> {
+class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTickerProviderStateMixin {
   int charLength = 0;
   double?  ratingBarValue;
   TextEditingController searchCont = TextEditingController();
@@ -35,6 +35,11 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> {
   List<String> hospital = [];
   List<String>  active = [];
   List<Doctors> doctorsList=[];
+
+  late AnimationController _animationController;
+  late Animation<double> _nextPage;
+  int _currentPage = 0;
+  PageController _pageController = PageController(initialPage: 0);
   @override
   void initState() {
     super.initState();
@@ -43,8 +48,24 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> {
 
   init() async {
     //
+    //Start at the controller and set the time to switch pages
+    _animationController =
+    new AnimationController(vsync: this, duration: Duration(seconds: 10));
+    _nextPage = Tween(begin: 0.0, end: 1.0).animate(_animationController);
 
-
+     _animationController.addListener(() {
+      if (_animationController.status == AnimationStatus.completed) {
+        _animationController.reset(); //Reset the controller
+        final int page = 4; //Number of pages in your PageView
+        if (_currentPage < page) {
+          _currentPage++;
+          _pageController.animateToPage(_currentPage,
+              duration: Duration(milliseconds: 300), curve: Curves.easeInSine);
+        } else {
+          _currentPage = 0;
+        }
+      }
+    });
   }
 
   @override
@@ -54,7 +75,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> {
 
   @override
   void dispose() {
-
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -72,10 +93,12 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> {
           return Container(
             height: 150,
                 child: Center(
-                  child: ListView.builder(itemCount: snapshot.data!.length,
+                  child: PageView.builder(itemCount: snapshot.data!.length,
 
-               shrinkWrap: true,
-
+                    onPageChanged: (value) {
+                      //When page change, start the controller
+                      _animationController.forward();
+                    },
               itemBuilder: (BuildContext context, int index) {
                   return  topList (list![index]) ;
 
@@ -316,6 +339,8 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> {
 
   @override
   Widget build(BuildContext context) {
+    _animationController.forward(); //Start controller with widget
+
     return    SingleChildScrollView(
       padding: EdgeInsets.all(8),
       child: Column(
@@ -514,6 +539,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> {
 
   Widget topList(Doctors doctors) {
     return Container(
+      width: 200,
     margin: EdgeInsets.only(left: 10,right: 10),
      decoration: BoxDecoration(color: Colors.white,borderRadius:
     BorderRadius.all( Radius.circular(20),)

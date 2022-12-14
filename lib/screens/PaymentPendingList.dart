@@ -79,7 +79,7 @@ class _PaymentPendingListState extends State<PaymentPendingList> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Dr.${appointments.doctorName!}",
+                        "Dr.${appointments.name!}",
                         style: TextStyle(
                             fontSize: 30,
                             color: Colors.black,
@@ -102,7 +102,7 @@ class _PaymentPendingListState extends State<PaymentPendingList> {
                         Padding(
                           padding: const EdgeInsets.only(left: 5),
                           child:   Text(
-                            "${appointments.date}",
+                            "${appointments.apptDate}",
                             style: TextStyle(
                                 fontSize:16,
                                 color: Colors.black,
@@ -123,7 +123,7 @@ class _PaymentPendingListState extends State<PaymentPendingList> {
                             Padding(
                               padding: EdgeInsets.only(left: 5),
                               child: Text(
-                                "${appointments.time}",
+                                "${appointments.apptTime}",
                                 style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,
@@ -168,7 +168,7 @@ class _PaymentPendingListState extends State<PaymentPendingList> {
                       SizedBox(width: 20,),
                       Expanded(
                         child: Text(
-                          "Dr.${appointments.doctorName}",
+                          "Dr.${appointments.name}",
                           style: const TextStyle(
                               fontSize: 30,
                               color: Colors.black,
@@ -192,7 +192,7 @@ class _PaymentPendingListState extends State<PaymentPendingList> {
                         Padding(
                           padding: const EdgeInsets.only(left: 5),
                           child:   Text(
-                            "${appointments.date}",
+                            "${appointments.apptDate}",
                             style: TextStyle(
                                 fontSize:16,
                                 color: Colors.black,
@@ -213,7 +213,7 @@ class _PaymentPendingListState extends State<PaymentPendingList> {
                             Padding(
                               padding: EdgeInsets.only(left: 5),
                               child: Text(
-                                "${appointments.time}",
+                                "${appointments.apptTime}",
                                 style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,

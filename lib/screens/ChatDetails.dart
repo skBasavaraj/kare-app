@@ -61,8 +61,7 @@ class ChatScreenState extends State<ChatScreen> {
     currentUserId = getStringAsync(USER_ID);
     print("UID"+currentUserId!);
     var name = widget.doctors?.name;
-    var lName = widget.doctors?.lastName;
-    var concat = name!+" "+lName!;
+     var concat = name!;
     doctorName = "Dr."+concat;
     receiverId = widget.doctors?.id;
     userToken = getStringAsync(USER_TOKEN);
