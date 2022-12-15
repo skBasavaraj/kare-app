@@ -27,7 +27,7 @@ class _PaymentPendingListState extends State<PaymentPendingList> {
           Expanded(
 
             child:FutureBuilder<List<Appointments>> (
-              future:  get(getStringAsync(USER_ID)),
+              future:  get(getStringAsync(USER_ID),"booked"),
 
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.data == null) {

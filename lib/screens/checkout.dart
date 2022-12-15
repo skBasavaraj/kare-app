@@ -70,9 +70,7 @@ class _CheckOutState extends State<CheckOut> {
     print("paymentId"+response.paymentId!);
     print( response.paymentId);
     print('');
-   await uploadPaymentInfo(widget.appointments!.doctorID!,
-     widget.appointments!.id!,widget.appointments!.patientName!,response.paymentId,"response.orderId",
-        "response.signature");
+   await uploadPaymentInfo(widget.appointments!.doctorID!,widget.appointments!.userID!,widget.appointments!.userID!,"","","","");
 
     await setBook(widget.appointments!.id!,response.paymentId!,"response.orderId"!);
       statusPay = "done";

@@ -216,16 +216,17 @@ Future<loginInfo?> editRegister( String name,
   }
 }
 Future<loginInfo?> uploadPaymentInfo(
-    String doctorName,String appointmentId,String doctorEmail,String? paymentId,String? orderId,String? razorpaySignature
+    String doctorID,String userID,String doctorEmail,String? paymentID,String? orderId ,String amount,String statusType
     )async{
-  var request = http.MultipartRequest('POST', Uri.parse(ApiService.url+'/UserApi/paymentInfo.php'));
+  var request = http.MultipartRequest('POST',  Uri.parse('https://admin.verzat.com/user-api/paymentInfo.php'));
   request.fields.addAll({
-    'doctorName': "Dr."+doctorName ,
-    'appointmentId': appointmentId ,
-    'doctorEmail': doctorEmail,
-    'paymentId': paymentId!,
-    'orderId': orderId!,
-    'razorpaySignature': razorpaySignature!
+    'doctorID': doctorID,
+    'userID': userID,
+    'role': 'user',
+    'amount':  amount,
+    'status': statusType,
+    'paymentID': paymentID!,
+    'orderID':  orderId!
   });
 
   var Stremresponse = await request.send();
@@ -233,8 +234,8 @@ Future<loginInfo?> uploadPaymentInfo(
   if (Stremresponse.statusCode == 200) {
     var response = await http.Response.fromStream(Stremresponse);
     final result = jsonDecode(response.body);
-    return loginInfo.fromJson(result);
-    print(result);
+     return loginInfo.fromJson(result);
+
   } else {
     return null;
     print(Stremresponse.reasonPhrase);
@@ -322,6 +323,7 @@ Future<List<Doctors>> getSearchDoctors(String text) async {
 
     docList.add(doctors);
   }
+  print('hey${docList.toString()}');
   return docList;
 }
 Future<List<CatList>> getCatList() async {
@@ -535,10 +537,12 @@ class loginInfo {
   String? state;
   String? lastName;
   String? photo;
+  String? mobile;
+
 
 
   loginInfo(this.token, this.error, this.id, this.message, this.email,this.name,
-      this.address, this.city, this.state, this.lastName, this.photo);
+      this.address, this.city, this.state, this.lastName, this.photo,this.mobile);
 
   loginInfo.fromJson(Map<String, dynamic> json) {
     token = json['token'];
@@ -551,6 +555,7 @@ class loginInfo {
     state = json['state'];
     lastName = json['lastName'];
     photo = json['photo'];
+    mobile = json['mobile'];
   }
 
   Map<String, dynamic> toJson() {
@@ -559,6 +564,7 @@ class loginInfo {
     data['error'] = this.error;
     data['id'] = this.id;
     data['message'] = this.message;
+
     return data;
   }
 }

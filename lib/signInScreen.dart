@@ -196,8 +196,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         //saveForm();
                         signIn(emailCont.text, passwordCont.text);
                         if (isRemember) {
-                          setValue(USER_NAME, emailCont.text);
-                          setValue(USER_PASSWORD, passwordCont.text);
+                          // setValue(USER_NAME, emailCont.text);
+                          // setValue(USER_PASSWORD, passwordCont.text);
                           setValue(IS_REMEMBER_ME, true);
                         }
                       },
@@ -235,8 +235,12 @@ class _SignInScreenState extends State<SignInScreen> {
     var info = await ApiService.login(email, password);
     if (info!.error == "000") {
       setValue(USER_ID,  info.id);
-      // setValue(USER_CITY,info.city);
-      setValue(U_NAME,  info.email);
+      setValue(USER_CITY,info.city);
+      setValue(USER_EMAIL,  info.email);
+      setValue(USER_NAME, info.name);
+      setValue(USER_MOBILE, info.mobile);
+
+    //  setValue(USER_PASSWORD, passwordCont.text);
      // setValue(USER_STATE,info.state);
       setValue(IS_LOGGED_IN,  true);
       successToast("login successful");

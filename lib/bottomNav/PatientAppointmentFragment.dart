@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:encrypt/encrypt.dart';
 import 'package:encrypt/encrypt_io.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -33,6 +34,8 @@ class _PatientAppointmentFragmentState
   List<String> pStatus = [];
   ScrollController _controller = new ScrollController();
   String? currentUserId;
+  String? statusType="pending";
+
   int selectIndex = -1;
   List<Appointments>? _app;
 
@@ -46,14 +49,16 @@ class _PatientAppointmentFragmentState
   @override
   void initState() {
     super.initState();
+
     init();
   }
 
   init() async {
     //
     currentUserId = getStringAsync(USER_ID);
-    pStatus.add("All");
-    pStatus.add("Latest");
+    pStatus.add("Approved");
+    pStatus.add("pending");
+    pStatus.add("booked");
     pStatus.add('Completed');
     pStatus.add('Cancelled');
     pStatus.add('Past');
@@ -74,117 +79,139 @@ class _PatientAppointmentFragmentState
 
   Widget body() {
     return SingleChildScrollView(
-      child: Container(
-        color: scaffoldBgColor,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //TODO Not implement the Functionality
-            /*  16.height.visible(false),
-            AppTextField(
-              textStyle: primaryTextStyle(color: !appStore.isDarkModeOn ? textPrimaryBlackColor : textPrimaryWhiteColor),
-              controller: searchCont,
-              textAlign: TextAlign.start,
-              textFieldType: TextFieldType.NAME,
-              decoration: speechInputWidget(context, hintText: languageTranslate('SearchDoctor'), iconColor: primaryColor),
-            ).paddingSymmetric(horizontal: 16).visible(true),*/
-            16.height,
-            HorizontalList(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              itemCount: pStatus.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  alignment: Alignment.center,
-                  padding:
-                      EdgeInsets.only(top: 8, bottom: 8, left: 12, right: 12),
-                  margin: EdgeInsets.only(left: 0, right: 8, top: 4, bottom: 4),
-                  decoration: BoxDecoration(
-                    color:
-                        selectIndex == index ? primaryColor : scaffoldBgColor,
-                    // ? appStore.isDarkModeOn
-                    // ? cardDarkColor
-                    //: black
-                    // // : appStore.isDarkModeOn
-                    //? scaffoldDarkColors
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          //TODO Not implement the Functionality
+          /*  16.height.visible(false),
+          AppTextField(
+            textStyle: primaryTextStyle(color: !appStore.isDarkModeOn ? textPrimaryBlackColor : textPrimaryWhiteColor),
+            controller: searchCont,
+            textAlign: TextAlign.start,
+            textFieldType: TextFieldType.NAME,
+            decoration: speechInputWidget(context, hintText: languageTranslate('SearchDoctor'), iconColor: primaryColor),
+          ).paddingSymmetric(horizontal: 16).visible(true),*/
+          16.height,
+          HorizontalList(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            itemCount: pStatus.length,
+            itemBuilder: (context, index) {
+              return Container(
+                alignment: Alignment.center,
+                padding:
+                    EdgeInsets.only(top: 8, bottom: 8, left: 12, right: 12),
+                margin: EdgeInsets.only(left: 0, right: 8, top: 4, bottom: 4),
+                decoration: BoxDecoration(
+                  color:
+                      selectIndex == index ? primaryColor : scaffoldBgColor,
+                  // ? appStore.isDarkModeOn
+                  // ? cardDarkColor
+                  //: black
+                  // // : appStore.isDarkModeOn
+                  //? scaffoldDarkColors
 
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(defaultRadius)),
-                  ),
-                  child: FittedBox(
-                    child: Text(
-                      pStatus[index],
-                      style: primaryTextStyle(
-                          size: 14,
-                          color: selectIndex == index
-                              ? white
-                              : Theme.of(context).iconTheme.color),
-                      textAlign: TextAlign.center,
-                    ).paddingSymmetric(horizontal: 16, vertical: 2),
-                  ),
-                ).onTap(
-                  () {
-                    selectIndex = index;
-                    if (index == 0) {
-                      url = urlLink! + '/UserApi/getAppointments.php';
-                      successToast("all");
-                      // appStore.setStatus('all');
-                    } else if (index == 1) {
-                      successToast("latest");
-                      url = urlLink! + 'appointmentDone.php';
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(defaultRadius)),
+                ),
+                child: FittedBox(
+                  child: Text(
+                    pStatus[index],
+                    style: primaryTextStyle(
+                        size: 14,
+                        color: selectIndex == index
+                            ? white
+                            : Theme.of(context).iconTheme.color),
+                    textAlign: TextAlign.center,
+                  ).paddingSymmetric(horizontal: 16, vertical: 2),
+                ),
+              ).onTap(
+                () {
+                  selectIndex = index;
+                  if (index == 0) {
 
-                      // appStore.setStatus('-1');
-                    } else if (index == 2) {
-                      successToast("Completd");
+                    statusType = "approved";
 
-                      //appStore.setStatus('3');
-                    } else if (index == 3) {
-                      //appStore.setStatus('0');
-                    } else if (index == 4) {
-                      //appStore.setStatus('past');
-                    } //
-                    setState(() {});
-                  },
-                );
+                    url = urlLink! + '/UserApi/getAppointments.php';
+                    successToast("Approved");
+
+                    // appStore.setStatus('all');
+                  } else if (index == 1) {
+                    statusType = "pending";
+
+                    url = urlLink! + '/UserApi/getAppointments.php';
+                    successToast("pending");
+
+
+                    // appStore.setStatus('-1');
+                  } else if (index == 2) {
+                    successToast("booked");
+                    statusType = "booked";
+
+                    url = urlLink! + 'appointmentDone.php';
+
+
+                    //appStore.setStatus('3');
+                  } else if (index == 3) {
+                    successToast("Completed");
+                    statusType = "Completed";
+                    url = urlLink! + 'appointmentDone.php';
+
+                  } else if (index == 4) {
+                    successToast("Cancel");
+                    statusType = "Cancel";
+                    url = urlLink! + 'appointmentDone.php';
+                    //appStore.setStatus('0');
+
+
+
+                    //appStore.setStatus('past');
+                  } else if(index == 5){
+                    successToast("closed");
+                    statusType = "closed";
+                    url = urlLink! + 'appointmentDone.php';
+                  } //
+                  setState(() {});
+                },
+              );
+            },
+          ),
+          // NoDataFoundWidget(iconSize: 120).center(),
+          16.height,
+          Container(
+             color: scaffoldBgColor,
+            child: FutureBuilder<List<Appointments>>(
+              future: get(currentUserId!,statusType!),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.data == null) {
+                  // logDev.log(snapshot.data,name:"123");
+                  print(snapshot.data);
+                  return Lottie.network(
+                    "https://assets2.lottiefiles.com/packages/lf20_eMqO0m.json",
+                    height: 400,
+                    width: 200,
+                  );
+                } else {
+                  _app = [];
+                  _app = snapshot.data;
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    // new
+                    scrollDirection: Axis.vertical,
+                    controller: _controller,
+                    padding: EdgeInsets.all(10),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return appointments(_app![index]);
+                    },
+                  );
+                }
               },
             ),
-            // NoDataFoundWidget(iconSize: 120).center(),
-            16.height,
-            Container(
-              height: 600,
-              child: FutureBuilder<List<Appointments>>(
-                future: get(currentUserId!),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.data == null) {
-                    // logDev.log(snapshot.data,name:"123");
-                    print(snapshot.data);
-                    return Lottie.network(
-                      "https://assets2.lottiefiles.com/packages/lf20_eMqO0m.json",
-                      height: 400,
-                      width: 200,
-                    );
-                  } else {
-                    _app = [];
-                    _app = snapshot.data;
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      // new
-                      scrollDirection: Axis.vertical,
-                      controller: _controller,
-                      padding: EdgeInsets.all(10),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return appointments(_app![index]);
-                      },
-                    );
-                  }
-                },
-              ),
-            )
-            // PatientAppointment().paddingAll(16),
-          ],
-        ).expand(),
-      ),
+          )
+          // PatientAppointment().paddingAll(16),
+        ],
+      ).expand(),
     );
   }
 
@@ -192,6 +219,7 @@ class _PatientAppointmentFragmentState
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: scaffoldBgColor,
         floatingActionButton: AddFloatingButton(
           onTap: () {
             //appStore.setBookedFromDashboard(false);
@@ -225,7 +253,7 @@ class _PatientAppointmentFragmentState
                     padding: const EdgeInsets.all(15.0),
                     child: Text(
                       "Dr.${appointments.name!}",
-                      style: TextStyle(
+                      style: GoogleFonts.jost(
                           fontSize: 30,
                           color: Colors.black,
                           decoration: TextDecoration.none),
@@ -245,7 +273,7 @@ class _PatientAppointmentFragmentState
                           padding: const EdgeInsets.only(left: 5),
                           child: Text(
                             "${appointments.apptDate}",
-                            style: TextStyle(
+                            style: GoogleFonts.jost(
                                 fontSize: 16,
                                 color: Colors.black,
                                 decoration: TextDecoration.none),
@@ -265,7 +293,7 @@ class _PatientAppointmentFragmentState
                               padding: EdgeInsets.only(left: 5),
                               child: Text(
                                 "${appointments.apptTime}",
-                                style: TextStyle(
+                                style: GoogleFonts.jost(
                                     fontSize: 16,
                                     color: Colors.black,
                                     decoration: TextDecoration.none),
@@ -310,7 +338,7 @@ class _PatientAppointmentFragmentState
                           padding: const EdgeInsets.only(left: 15, top: 10),
                           child: Text(
                             "Dr.${appointments.name}",
-                            style: const TextStyle(
+                            style:   GoogleFonts.jost(
                                 fontSize: 30,
                                 color: Colors.black,
                                 decoration: TextDecoration.none),
@@ -333,7 +361,7 @@ class _PatientAppointmentFragmentState
                           padding: const EdgeInsets.only(left: 5),
                           child: Text(
                             "${appointments.apptDate}",
-                            style: TextStyle(
+                            style: GoogleFonts.jost(
                                 fontSize: 16,
                                 color: Colors.black,
                                 decoration: TextDecoration.none),
@@ -353,7 +381,7 @@ class _PatientAppointmentFragmentState
                               padding: EdgeInsets.only(left: 5),
                               child: Text(
                                 "${appointments.apptTime}",
-                                style: TextStyle(
+                                style: GoogleFonts.jost(
                                     fontSize: 16,
                                     color: Colors.black,
                                     decoration: TextDecoration.none),
@@ -387,138 +415,139 @@ class _PatientAppointmentFragmentState
             borderRadius: BorderRadius.circular(15), color: Colors.white),
         margin: EdgeInsets.all(10),
         height: 200,
-        child: Column(
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15, top: 10),
+                  Expanded(
+                    flex: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15, top: 10),
+                      child: Text(
+                        "Dr.${appointments.name}",
+                        style:   GoogleFonts.jost(
+                            fontSize: 30,
+                            color: Colors.black,
+                            decoration: TextDecoration.none),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.calendar_month,
+                      color: Colors.blue,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5),
+                      child: Text(
+                        "${appointments.apptDate}",
+                        style: GoogleFonts.jost(
+                            fontSize: 16,
+                            color: Colors.black,
+                            decoration: TextDecoration.none),
+                        maxLines: 2,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.watch_later_outlined,
+                          color: Colors.blue,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 5),
                           child: Text(
-                            "Dr.${appointments.name}",
-                            style: const TextStyle(
-                                fontSize: 30,
+                            "${appointments.apptTime}",
+                            style: GoogleFonts.jost(
+                                fontSize: 16,
                                 color: Colors.black,
                                 decoration: TextDecoration.none),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Row(
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding:   EdgeInsets.only(left: 15, top: 5),
+                child: Expanded(
+                  child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(
-                          Icons.calendar_month,
-                          color: Colors.blue,
+                        Icon(
+                          Icons.location_on_sharp,
+                          size: 20,
+                          color: Colors.green,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: Text(
-                            "${appointments.apptDate}",
-                            style: TextStyle(
-                                fontSize: 16,
+                          padding:   EdgeInsets.only(left: 10),
+                          child:  SizedBox(
+
+                            width: 260,
+                            height: 30,
+                            child: Text(
+                            "Hospital: ${appointments.hospital} "+  appointments.location!,
+                                  style: GoogleFonts.jost(
                                 color: Colors.black,
-                                decoration: TextDecoration.none),
-                            maxLines: 2,
+                                fontSize: 20,
+
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+
+                            ),
                           ),
                         ),
                         SizedBox(
                           width: 10,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.watch_later_outlined,
-                              color: Colors.blue,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 5),
-                              child: Text(
-                                "${appointments.apptTime}",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.none),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15, top: 5),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.location_on_sharp,
-                                size: 20,
-                                color: Colors.green,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Text(
-                                  "appointments.doctorLocation!",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              )
-                            ]),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: 200,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.green),
-                          child: Center(
-                              child: Text(
-                            "Booked",
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          )),
-                        ),
-                      )
-                    ],
-                  ),
-                  /* Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: ElevatedButton(
-                        onPressed: () async {
-                          //  var info =    await get();
-
-                          _pay(appointments.doctorUpiAddress!,appointments.doctorName!);
-                        },
-                        child: Center(child: const Text("Payment pending"))),
-                  )*/
-                ],
+                        )
+                      ]),
+                ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(left: 15,top:5),
+                child: Container(
+                  width: 200,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.green),
+                  child: Center(
+                      child: Text(
+                    "Booked",
+                    style: TextStyle(color: Colors.white, fontSize: 15),
+                  )),
+                ),
+              ),
+              /* Padding(
+                padding: const EdgeInsets.all(10),
+                child: ElevatedButton(
+                    onPressed: () async {
+                      //  var info =    await get();
+
+                      _pay(appointments.doctorUpiAddress!,appointments.doctorName!);
+                    },
+                    child: Center(child: const Text("Payment pending"))),
+              )*/
+            ],
+          ),
         ),
       );
     } else {
@@ -532,22 +561,20 @@ class _PatientAppointmentFragmentState
   }
 }
 
-Future<List<Appointments>> get(String userId) async {
-  var request = http.MultipartRequest(
-      'POST', Uri.parse(_PatientAppointmentFragmentState.url!));
-  request.fields.addAll({'userId': userId});
+Future<List<Appointments>> get(String userId ,String statusType) async {
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/appointmentDone.php'));
+  request.fields.addAll({
+    'userID':  userId,
+    'text': statusType
+  });
+
 
   http.StreamedResponse response = await request.send();
 
   var response1 = await http.Response.fromStream(response);
-
-  var jsonData = json.decode(response1.body);
   List<Appointments> apptmntList = [];
-  var jsonArray = jsonData['appointments'];
-
-  //logDev.log('3'+jsonArray['status'],name:"12");
-
-  for (var item in jsonArray) {
+  var appList = jsonDecode( response1.body);
+  for(var item in appList){
     Appointments appointments = Appointments(
         id: item['id'],
         userID: item['userID'],
@@ -568,14 +595,16 @@ Future<List<Appointments>> get(String userId) async {
         appointmentId: item['appointmentId'],
         status: item['status']
         ,mobile: item['mobile'],
-          location: item['location'],
-         name:item['name']
+        location: item['location'],
+        name:item['name'],
+        hospital: item['hospital']
     );
 
     apptmntList.add(appointments);
-    logDev.log('4' + item['status'], name: "12");
+    print("hiii${item['patientName']}");
   }
-  logDev.log('5$apptmntList', name: "12");
+
+
   return apptmntList;
 }
 
@@ -601,6 +630,7 @@ class Appointments {
   String? mobile;
   String? location;
   String? name;
+  String? hospital;
 
   Appointments(
       {this.id,
@@ -623,7 +653,7 @@ class Appointments {
       this.status,
       this.mobile,
       this.location,
-      this.name});
+      this.name,this.hospital});
 
   Appointments.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -647,6 +677,7 @@ class Appointments {
     mobile = json['mobile'];
     location = json['location'];
     name = json['name'];
+    hospital = json['hospital'];
   }
 
   Map<String, dynamic> toJson() {
@@ -672,6 +703,7 @@ class Appointments {
     data['mobile'] = this.mobile;
     data['location'] = this.location;
     data['name'] = this.name;
+    data['hospital'] = this.hospital;
     return data;
   }
 }
