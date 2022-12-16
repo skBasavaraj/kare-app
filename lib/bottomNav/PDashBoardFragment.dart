@@ -18,6 +18,7 @@ import '../screens/doctorDetilas2.dart';
 import '../screens/search.dart';
 import '../utils/appCommon.dart';
 import '../utils/color_use.dart';
+import '../utils/indicator.dart';
 
 
 
@@ -39,8 +40,11 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
   late AnimationController _animationController;
   late Animation<double> _nextPage;
   int _currentPage = 0;
+  int selectIndex =0;
+
   PageController _pageController = PageController(initialPage: 0);
-  @override
+   var size,height,width;
+   @override
   void initState() {
     super.initState();
     init();
@@ -90,24 +94,116 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
         }else {
           List<Doctors>? list = snapshot.data;
 
-          return Container(
-            height: 150,
-                child: Center(
-                  child: PageView.builder(itemCount: snapshot.data!.length,
+          return
+            Column(
+
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  height: 160,
+                  decoration: BoxDecoration(
+                    // color:Colors.purple,
+                  ),
+                  child: PageView.builder(
+                    controller: _pageController,
 
                     onPageChanged: (value) {
-                      //When page change, start the controller
-                      _animationController.forward();
+                      _animationController!.forward();
+
+                      setState(() {
+                        selectIndex = value;
+
+                      });
                     },
-              itemBuilder: (BuildContext context, int index) {
-                  return  topList (list![index]) ;
+                    itemBuilder: ( context,index){
+                      return Padding(
+                        padding:   EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: NetworkImage(backgroundlist[index].url!),
+                                fit:BoxFit.cover,
+                              )
+                          ),
+                          child: Stack(
 
-              },
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12),
+                                child: Container(
 
-        scrollDirection: Axis.horizontal,
-            ),
+                                  width: width/2,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child:
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding:   EdgeInsets.only(left: 10,top: 5),
+                                        child: Text("Find Your Best Doctors ",style: GoogleFonts.jost(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white,height: 1.2 // the height between text, default is null
+                                          ,  letterSpacing: .0 ),softWrap: true,),
+                                      ),
+
+
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 15),
+                                        child: Container(
+                                          width: 100,
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            border: Border.all(color: Colors.white,width: 1,)
+                                          ),
+                                          child: Center(child: Text("Book Now",style: GoogleFonts.jost
+                                            ( color: Colors.white ),)),),
+                                      ),
+
+
+
+                                    ],
+
+                                  ),
+                                ),
+                              )
+                              ,Positioned(
+                                right: 0,
+
+                                child: Container(
+                                  height: 145,
+                                  child:Padding(
+                                    padding:   EdgeInsets.only(top: 5,right: 20),
+                                    child: Image.network("https://pngimg.com/uploads/doctor/doctor_PNG15988.png",                      fit:BoxFit.cover,
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+
+                                ),
+                              ),
+                              Positioned(
+                               left: 100,
+                                   right: 100,
+                                   bottom: 10,
+                                   child:Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ...List.generate(backgroundlist.length, (index) =>     Indictor(isActive: selectIndex == index ? true : false
+                                  ))
+                                ],
+                              ))
+                            ],
+                          ),
+                        ),
+                      );
+                    },itemCount:backgroundlist.length,),
                 ),
-          );
+
+              ],
+            );
         }
       },
     );
@@ -340,7 +436,9 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
   @override
   Widget build(BuildContext context) {
     _animationController.forward(); //Start controller with widget
-
+    size = MediaQuery.of(context).size;
+    height = size.height;
+    width = size.width;
     return    SingleChildScrollView(
       padding: EdgeInsets.all(8),
       child: Column(
@@ -591,3 +689,18 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
   }
 
 }
+ class Images {
+   String? url;
+
+   Images(this.url);
+
+ }
+ List<Images> backgroundlist =[
+   Images("https://www.jqueryscript.net/images/Create-An-Animated-Radial-Gradient-Background-With-jQuery-CSS3.jpg"),
+   Images("https://designmodo.com/wp-content/uploads/2017/08/gradient-1.jpg"),
+   Images("https://t4.ftcdn.net/jpg/02/21/39/93/360_F_221399332_MuA92wdjVCeRQv9AXY8p79hWGaTLMLWY.jpg"),
+   Images("https://www.jqueryscript.net/images/Create-An-Animated-Radial-Gradient-Background-With-jQuery-CSS3.jpg"),
+   Images("https://designmodo.com/wp-content/uploads/2017/08/gradient-1.jpg"),
+   Images("https://t4.ftcdn.net/jpg/02/21/39/93/360_F_221399332_MuA92wdjVCeRQv9AXY8p79hWGaTLMLWY.jpg"),
+
+ ];
