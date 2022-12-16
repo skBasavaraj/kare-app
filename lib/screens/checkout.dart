@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
  import 'package:lottie/lottie.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'dart:developer'as logDev;
 //import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
+import '../appConstants.dart';
 import '../bottomNav/PatientAppointmentFragment.dart';
 import '../network/apiService.dart';
 import 'PaymentPendingList.dart';
@@ -28,7 +30,7 @@ class _CheckOutState extends State<CheckOut> {
     super.initState();
      _razorpay = Razorpay();
 
-      _pay(widget.appointments!.name!, widget.appointments!.id!,widget.appointments!.patientEmail!,
+      _pay(widget.appointments!.name!,
            widget.appointments!.patientName!);
     _razorpay!.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay!.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
@@ -42,7 +44,7 @@ class _CheckOutState extends State<CheckOut> {
     );
   }
 
-  _pay(String doctorName,String doctorId,String patientEmail,String  patientName) {
+  _pay(String doctorName, String  patientName) {
 
 
     var options = {
@@ -50,10 +52,10 @@ class _CheckOutState extends State<CheckOut> {
       'amount': 100,
       'name': 'Dr.'+doctorName,
      // 'order_id': 'order_EMBFqjDHEE312h',
-      'description': 'Pn'+patientName,
+      'description': getStringAsync(USER_NAME) ,
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,
-      'prefill': {'contact': "91"+widget.appointments!.patientNumber!, 'email': ''+widget.appointments!.patientEmail!},
+      'prefill': {'contact': "91"+getStringAsync(USER_MOBILE), 'email': ''+getStringAsync(USER_EMAIL)},
       'external': {
         'wallets': ['paytm']
       }
@@ -70,9 +72,11 @@ class _CheckOutState extends State<CheckOut> {
     print("paymentId"+response.paymentId!);
     print( response.paymentId);
     print('');
-   await uploadPaymentInfo(widget.appointments!.doctorID!,widget.appointments!.userID!,widget.appointments!.userID!,"","","","");
+   await uploadPaymentInfo(widget.appointments!.doctorID!,widget.appointments!.userID!,
+       widget.appointments!.fees!,
+       'success',response.paymentId!,widget.appointments!.appointmentId!,widget.appointments!.role!);
 
-    await setBook(widget.appointments!.id!,response.paymentId!,"response.orderId"!);
+    await setBook(widget.appointments!.id!);
       statusPay = "done";
       Navigator.pop(context);
   }

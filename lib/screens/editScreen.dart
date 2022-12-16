@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
  
 import 'package:nb_utils/nb_utils.dart';
@@ -98,62 +99,6 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
     if (mounted) super.setState(fn);
   }
 
-  Future<void> dateBottomSheet(context, {DateTime? bDate}) async {
-    await showModalBottomSheet(
-      context: context,
-      builder: (BuildContext e) {
-        return Container(
-          height: 245,
-          color:   Colors.white,
-          child: Column(
-            children: [
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text( 'Cancel', style: boldTextStyle()).onTap(() {
-                      finish(context);
-                      setState(() {});
-                    }),
-                    Text( 'Done', style: boldTextStyle()).onTap(() {
-                      if (DateTime.now().year - birthDate.year < 18) {
-                        toast(
-                          'MinimumAgeRequired' +  'CurrentAgeIs' + ' ${DateTime.now().year - birthDate.year}',
-                          bgColor: errorBackGroundColor,
-                          textColor: errorTextColor,
-                        );
-                      } else {
-                        finish(context);
-                        dOBCont.text = birthDate.getFormattedDate(BIRTH_DATE_FORMAT).toString();
-                      }
-                    })
-                  ],
-                ).paddingOnly(top: 8, left: 8, right: 8, bottom: 8),
-              ),
-              Container(
-                height: 200,
-                child: CupertinoTheme(
-                  data: CupertinoThemeData(
-                    textTheme: CupertinoTextThemeData(dateTimePickerTextStyle: primaryTextStyle(size: 20)),
-                  ),
-                  child: CupertinoDatePicker(
-                    minimumDate: DateTime(1900, 1, 1),
-                    minuteInterval: 1,
-                    initialDateTime: bDate == null ? DateTime.now() : bDate,
-                    mode: CupertinoDatePickerMode.date,
-                    onDateTimeChanged: (DateTime dateTime) {
-                      birthDate = dateTime;
-                      setState(() {});
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 
   @override
   void dispose() {
@@ -181,22 +126,23 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
             children: [
               SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image.asset('images/appIcon.png', height: 100, width: 100),
+                      Image.asset('images/appIcon.png', height: 150, width: 200),
+                         Text("Edit your Details",style:GoogleFonts.jost(color:Colors.blue, fontSize: 30,fontWeight: FontWeight.w500),
+                        ),
                       16.height,
-
                       AppTextField(
-                        textStyle: primaryTextStyle(color:  textPrimaryBlackColor ),
+                        textStyle:  GoogleFonts.jost(color: textPrimaryBlackColor),
                         controller: firstNameCont,
                         textFieldType: TextFieldType.NAME,
                         decoration: textInputStyle(
                           context: context,
-                          label: 'FirstName',
+                          label: 'Name',
                           isMandatory: true,
-                          text:"FirstName",
+                          text:"Name",
                           suffixIcon: commonImage(
 
                             imageUrl: "images/icons/user.png",
@@ -204,17 +150,17 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
                           ),
                         ),
                         focus: firstNameFocus,
-                        errorThisFieldRequired:  'FirstNameIsRequired',
+                        errorThisFieldRequired:  'Name Is Required',
                         nextFocus: lastNameFocus,
                       ),
-                      16.height,
+                   /*   16.height,
                       AppTextField(
-                        textStyle: primaryTextStyle(color:  textPrimaryBlackColor),
+                        textStyle:  GoogleFonts.jost(color: textPrimaryBlackColor),
                         controller: lastNameCont,
                         textFieldType: TextFieldType.NAME,
                         decoration: textInputStyle(
                           context: context,
-                          label: 'LastName',
+                          label: ' ',
                           text: 'LastName',
                           isMandatory: true,
                           suffixIcon: commonImage(
@@ -225,7 +171,7 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
                         focus: lastNameFocus,
                         nextFocus: emailFocus,
                         errorThisFieldRequired:  'LastNameIsRequired',
-                      ),
+                      ),*/
                       16.height,
                       AppTextField(
                         textStyle: primaryTextStyle(color:   textPrimaryBlackColor  ),
@@ -252,13 +198,13 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
                         nextFocus: dOBFocus,
                         textFieldType: TextFieldType.PHONE,
                         validator: (s) {
-                          if (s!.trim().isEmpty) return  'ContactNumberIsRequired';
+                          if (s!.trim().isEmpty) return  'Contact Number Is Required';
                           return null;
                         },
                         decoration: textInputStyle(
                           context: context,
-                          label: 'ContactNumber',
-                          text: 'ContactNumber',
+                          label: 'Contact Number',
+                          text: 'Contact Number',
                           isMandatory: true,
                           suffixIcon: commonImage(
                             imageUrl: "images/icons/phone.png",
@@ -268,7 +214,7 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
                       ),
 
                       16.height,
-                      AppTextField(
+                     /* AppTextField(
                         textStyle: primaryTextStyle(color:   textPrimaryBlackColor  ),
                         controller: dOBCont,
                         nextFocus: bloodGroupFocus,
@@ -309,7 +255,7 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
                         maxLines: 4,
                         textInputAction: TextInputAction.newline,
                       ),
-                      16.height,
+                      16.height,*/
                       AppTextField(
                         controller: cityCont,
                         focus: cityFocus,
@@ -323,6 +269,7 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
                         ),
                       ),
                       16.height,
+                    /*  16.height,
                       AppTextField(
                         controller: stateCont,
                         focus: stateFocus,
@@ -435,7 +382,7 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
                           ),
                         ),
                       ),
-                      60.height,
+                      60.height,*/
                       AppButton(
                         width: context.width(),
                         shapeBorder: RoundedRectangleBorder(borderRadius: radius()),
@@ -467,11 +414,14 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
               //   builder: (context) => setLoader().withSize(width: 40, height: 40).visible(appStore.isLoading).center(),
               // ),
               Positioned(
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back_ios, size: 20),
-                  onPressed: () {
-                    finish(context);
-                  },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back, size: 30),
+                    onPressed: () {
+                      finish(context);
+                    },
+                  ),
                 ),
               )
             ],

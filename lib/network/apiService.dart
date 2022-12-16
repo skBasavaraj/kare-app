@@ -216,13 +216,13 @@ Future<loginInfo?> editRegister( String name,
   }
 }
 Future<loginInfo?> uploadPaymentInfo(
-    String doctorID,String userID,String doctorEmail,String? paymentID,String? orderId ,String amount,String statusType
+    String doctorID,String userID,String amount, String statusType,String? paymentID,String? orderId,String role
     )async{
   var request = http.MultipartRequest('POST',  Uri.parse('https://admin.verzat.com/user-api/paymentInfo.php'));
   request.fields.addAll({
     'doctorID': doctorID,
     'userID': userID,
-    'role': 'user',
+    'role': role,
     'amount':  amount,
     'status': statusType,
     'paymentID': paymentID!,
@@ -410,10 +410,12 @@ Future<Timers?> setTime(String senderId, String receiverId,String time) async {
 Future<List<Msg>> getMessages(String? currentUserId, String? receiverId) async {
   logDev.log('0',name:"12");
 
-  var request = http.MultipartRequest('POST', Uri.parse(ApiService.url+'/UserApi/messages.php'));
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/messages.php'));
   request.fields.addAll({
-    'sender_id':  currentUserId!,
-    'receiver_id':  receiverId!
+    'receiver_type': 'doctor',
+    'sender_type': 'user',
+    'sender_id': currentUserId!,
+    'receiver_id': receiverId!
   });
 
   logDev.log('1',name:"12");
@@ -435,7 +437,7 @@ Future<List<Msg>> getMessages(String? currentUserId, String? receiverId) async {
         senderId: item['sender_id'],
         message: item['message'],
         messageDate: item['messageDate'],
-        messageTime: item['messageTime']);
+         messageTime: item['messageTime']);
 
     msgList.add(msg);
     logDev.log('4',name:"12");
@@ -447,12 +449,11 @@ Future<List<Msg>> getMessages(String? currentUserId, String? receiverId) async {
 }
 
 Future<MsgSend?> sendMsg(String msg ,String token,String senderId,String receiverId) async{
-  var request = http.MultipartRequest('POST', Uri.parse(ApiService.url+'/UserApi/send_messages.php'));
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/send_messages.php'));
   request.fields.addAll({
-    'text': msg,
-    'token': token,
-    'senderId': senderId,
-    'receiverId': receiverId
+    'message': msg,
+    'sender_id': senderId,
+    'receiver_id': receiverId
   });
 
 
@@ -468,12 +469,10 @@ Future<MsgSend?> sendMsg(String msg ,String token,String senderId,String receive
 
 }
 
-Future<void> setBook(String id,String paymentId,String orderId  ) async{
-  var request = http.MultipartRequest('POST', Uri.parse(ApiService.url+'/UserApi/setBook.php'));
+Future<void> setBook(String id ) async{
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/setBook.php'));
   request.fields.addAll({
-    'id': id,
-    'paymentId': paymentId,
-    'orderId': orderId
+    'id': id
   });
 
 

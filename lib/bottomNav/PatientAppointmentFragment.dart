@@ -597,7 +597,8 @@ Future<List<Appointments>> get(String userId ,String statusType) async {
         ,mobile: item['mobile'],
         location: item['location'],
         name:item['name'],
-        hospital: item['hospital']
+        hospital: item['hospital'],
+        fees: item['fees']
     );
 
     apptmntList.add(appointments);
@@ -631,6 +632,7 @@ class Appointments {
   String? location;
   String? name;
   String? hospital;
+  String? fees;
 
   Appointments(
       {this.id,
@@ -653,13 +655,15 @@ class Appointments {
       this.status,
       this.mobile,
       this.location,
-      this.name,this.hospital});
+      this.name,this.hospital
+      ,this.fees});
 
   Appointments.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userID = json['userID'];
     role = json['role'];
-    doctorID = json['doctorID'];
+    doctorID =
+    json['doctorID'];
     patientName = json['patientName'];
     patientAge = json['patientAge'];
     patientNumber = json['patientNumber'];
@@ -678,6 +682,7 @@ class Appointments {
     location = json['location'];
     name = json['name'];
     hospital = json['hospital'];
+    fees = json['fees'];
   }
 
   Map<String, dynamic> toJson() {
