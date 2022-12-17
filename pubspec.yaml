@@ -40,7 +40,6 @@ dependencies:
   google_fonts: 3.0.1
   flutter_rating_bar: 4.0.1
   material_design_icons_flutter: ^6.0.7096
-  awesome_bottom_navigation: ^0.0.4
 
   # Firebase for crashlytics and googlesign in for calender
   firebase_core_platform_interface: 4.5.1

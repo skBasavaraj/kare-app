@@ -42,7 +42,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
   int _currentPage = 0;
   int selectIndex =0;
 
-  PageController _pageController = PageController(initialPage: 0);
+  PageController _pageController = PageController(initialPage: 0 );
    var size,height,width;
    @override
   void initState() {
@@ -100,8 +100,8 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  height: 160,
+                  margin: EdgeInsets.only(top:0),
+                  height: 185,
                   decoration: BoxDecoration(
                     // color:Colors.purple,
                   ),
@@ -118,7 +118,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
                     },
                     itemBuilder: ( context,index){
                       return Padding(
-                        padding:   EdgeInsets.all(8.0),
+                        padding:   EdgeInsets.all(20.0),
                         child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -140,18 +140,18 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
                                   ),
                                   child:
                                   Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Padding(
                                         padding:   EdgeInsets.only(left: 10,top: 5),
-                                        child: Text("Find Your Best Doctors ",style: GoogleFonts.jost(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white,height: 1.2 // the height between text, default is null
-                                          ,  letterSpacing: .0 ),softWrap: true,),
+                                        child: Text( backgroundlist[index].labels!,style: GoogleFonts.jost(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white,height: 1.2 // the height between text, default is null
+                                          ,  letterSpacing: .0 ),softWrap: true,maxLines: 2,),
                                       ),
 
 
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 15),
+                                        padding: const EdgeInsets.only(left: 15,top:30),
                                         child: Container(
                                           width: 100,
                                           height: 30,
@@ -210,26 +210,30 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
   }
 
   Widget patientSymptomsComponent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Specialists',
-                style: GoogleFonts.poppins(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold)),
-            TextButton(
-              onPressed: () {
-                //  CategoryScreen(service: service).launch(context);
-              },
-              child: Text("See all",
-                  style: GoogleFonts.poppins(color:  Colors.blue,fontSize: 12)),
-            )
-            //.visible(service.length >= 7),
-          ],
-        ).paddingSymmetric(horizontal: 8),
-        14.height,
-      /*  Wrap(
+    return
+      Column(
+       children: [
+        Container(
+           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text('Specialists',
+                    style: GoogleFonts.poppins(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold)),
+              ),
+              TextButton(
+                onPressed: () {
+                  //  CategoryScreen(service: service).launch(context);
+                },
+                child: Text("See all",
+                    style: GoogleFonts.poppins(color:  Colors.blue,fontSize: 12)),
+              )
+              //.visible(service.length >= 7),
+            ],
+          ).paddingSymmetric(horizontal: 10)
+        ) ,
+       /*  Wrap(
           direction: Axis.horizontal,
           spacing: 16,
           runSpacing:
@@ -237,7 +241,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
 
         ).paddingSymmetric(horizontal: 4),*/
          Container(
-          height: 50,
+          height: 40,
 
           child: FutureBuilder<List<CatList>>(
             future:getCatList(),
@@ -260,15 +264,15 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
           ) ,
         )
       ],
-    );
+    ) ;
   }
   Widget categoryList(CatList list){
-    print("list${list!.categoryUrl}");
- 
+  
     
     return
       Padding(
-        padding: const EdgeInsets.only(left: 10,right: 10,bottom: 5,top:10),
+
+        padding: const EdgeInsets.only(left: 20,bottom: 5,),
         child: Material(
           shadowColor: Colors.white,
           elevation: 5,
@@ -297,7 +301,8 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.network(list.categoryUrl! ,height: 30,width: 25)
+
+                       Image.network(list.categoryUrl! ,height: 30,width: 25,color: Colors.purple,)
                       , SizedBox(width: 5),
 
                           Expanded(child: Text(list.catName!,style: TextStyle(fontSize: 14,color: Colors.blue,overflow: TextOverflow.ellipsis,fontWeight: FontWeight.w400),))
@@ -308,38 +313,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
                   ),
                 ),
               )
-              /*Container(
-                height: 80,
-                width: 110,
-                decoration: BoxDecoration(boxShadow:[BoxShadow(
-                    color: Colors.transparent
-                    ,blurRadius: 5,spreadRadius: 5
 
-                )]),
-
-
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-
-                  children: [
-                    Card(
-                      color:Colors.transparent.withBlue(50),
-                      shadowColor: Colors.white38,
-                      elevation: 15,
-                      child: CircleAvatar(
-                        maxRadius:  50,
-                        minRadius: 25.0,
-
-                        backgroundImage:  NetworkImage(list.categoryUrl!),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5,right: 5),
-                      child: AutoSizeText(list.catName!,style: GoogleFonts.poppins( ),overflow: TextOverflow.ellipsis,minFontSize: 10,maxFontSize: 14,),
-                    )
-                  ],
-                ),
-              ),*/
             ),
           ),
         ),
@@ -353,20 +327,25 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Near by you',
-                style: GoogleFonts.poppins(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold)),
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Text('Near by you',
+                  style: GoogleFonts.poppins(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold)),
+            ),
             TextButton(
               onPressed: () {
                 //  CategoryScreen(service: service).launch(context);
               },
-              child: Text("See all",
-                  style: GoogleFonts.poppins(color:  Colors.blue,fontSize: 12)),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: Text("See all",
+                    style: GoogleFonts.poppins(color:  Colors.blue,fontSize: 12)),
+              ),
             )
             //.visible(service.length >= 7),
           ],
-        ).paddingSymmetric(horizontal: 8),
-        16.height,
-        Align(
+        )  ,
+         Align(
           alignment: Alignment.topLeft,
           child: Wrap(
             runSpacing: 8,
@@ -375,28 +354,25 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
           ),
         ),
         Container(
-          height: 400,
+          height: 150,
           child: FutureBuilder<List<Doctors>>(
             future:getSearchDoctors(getStringAsync(USER_CITY)),
             builder: (context, snapshot) {
               if(snapshot.data == null){
                 logDev.log(snapshot.data.toString(),name:"show");
-                return   Lottie.network("https://assets2.lottiefiles.com/packages/lf20_eMqO0m.json",height: 400,width: 200,);
+                return   Lottie.network("https://assets2.lottiefiles.com/packages/lf20_eMqO0m.json",height: 150);
 
               }else {
                 List<Doctors>? doctors = snapshot.data;
 
-                return ListView.builder(itemCount: snapshot.data!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return topDoctorList(doctors![index]);
+                return PageView.builder(itemCount: snapshot.data!.length,
+
+                   itemBuilder: (BuildContext context, int index)
+                  {
+                    return topDoctorList(doctors![index]).paddingSymmetric(horizontal: 10);
 
                   },
-                  /* gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 4.0,
-                      mainAxisSpacing:4.0
 
-                  )*/
                 );
               }
             },
@@ -439,40 +415,42 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
     size = MediaQuery.of(context).size;
     height = size.height;
     width = size.width;
-    return    SingleChildScrollView(
-      padding: EdgeInsets.all(8),
-      child: Column(
-        children: [
+    return   Scaffold(
+      backgroundColor: scaffoldBgColor,
+        body:  SingleChildScrollView(
+          child: Column(
+           children: [
 
 
-          InkWell(
+             InkWell(
 
-            child:
-            AppTextField(
+               child:
+               AppTextField(
 
-              onChanged: _onChanged,
-              textStyle: primaryTextStyle(
-                  color:   Colors.black26),
-              controller: searchCont,
-              textAlign: TextAlign.start,
-              textFieldType: TextFieldType.NAME,
-              decoration: speechInputWidget(context,
-                  hintText:  "Search a doctor or specialization or location",
-                  iconColor: primaryColor
-              ),
-            ).paddingSymmetric(horizontal: 8).visible(true),
-          ),
-          20.height,
+                 onChanged: _onChanged,
+                 textStyle: primaryTextStyle(
+                     color:   Colors.black26),
+                 controller: searchCont,
+                 textAlign: TextAlign.start,
+                 textFieldType: TextFieldType.NAME,
+                 decoration: speechInputWidget(context,
+                     hintText:  "Search a doctor or specialization or location",
+                     iconColor: primaryColor
+                 ),
+               ).paddingSymmetric(horizontal: 20).visible(true),
+             ),
+             5.height,
 
-           patientTotalDataComponent(),
-          // 32.height,
-           patientSymptomsComponent().paddingSymmetric(vertical: 8),
-                
+             patientTotalDataComponent() ,
+             // 32.height,
+             patientSymptomsComponent() ,
 
-          /*    topDoctorComponent().paddingAll(8),*/
-          topDoctorComponent().paddingAll(5)
-        ],
-      ),
+
+             /*    topDoctorComponent().paddingAll(8),*/
+             topDoctorComponent()
+           ],
+         ),
+       ),
     );
   }
   _onChanged(String value) {
@@ -512,13 +490,13 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
 
                 children:   [
                   Padding(
-                    padding:   EdgeInsets.only(left: 5,right: 5,top: 2,bottom: 8),
+                    padding:   EdgeInsets.only(left: 5,right: 5,),
                     child:ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
                         'https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5790.jpg?w=2000',
-                        width: 75,
-                        height: 110,
+                        width: 80,
+                        height: 150,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -534,7 +512,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
                         Padding(
                           padding: const EdgeInsets.only(left: 5,),
                           child: Text(
-                            "Dr.${doctor.name} ${doctor.lastName}"
+                            "Dr.${doctor.name} "
                             ,style: GoogleFonts.poppins(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.blue),overflow: TextOverflow.ellipsis, ),
                         ).paddingTop(1)
 
@@ -545,7 +523,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
                           (
                           child: Padding(
                             padding: const EdgeInsets.only(left: 5),
-                            child: Text("${doctor.hospital}${doctor.location}",
+                            child: Text("${doctor.hospital} ${doctor.location}",
                                 style: GoogleFonts.poppins(
                                   fontSize: 12,
                                   color: Colors.blue
@@ -553,9 +531,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
 
                                 ),overflow: TextOverflow.ellipsis),
                           ),
-                        )
-
-                        ,
+                        ),
 
                         Padding(
                           padding: const EdgeInsets.only(left: 5),
@@ -582,20 +558,19 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
                           children: [
                             Container(
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),shape: BoxShape.rectangle,border: Border.all(color: Colors.blue,width: 1)),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  AutoSizeText("Available",style: GoogleFonts.poppins(
-                                    fontSize: 12,color: Colors.blue,
-                                  ),)
-                                  , Padding(
-                                    padding: const EdgeInsets.only(left: 3,right: 3),
-                                    child: AutoSizeText("7am - 10 am",style: GoogleFonts.poppins(
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    AutoSizeText("Available",style: GoogleFonts.poppins(
                                       fontSize: 12,color: Colors.blue,
-                                    ),),
-                                  )
-                                ],
+                                    ),)
+                                    , AutoSizeText("7am - 10 am",style: GoogleFonts.poppins(
+                                      fontSize: 12,color: Colors.blue,
+                                    ),)
+                                  ],
+                                ).paddingAll(4),
                               ),
                             ),
                             Padding(
@@ -691,16 +666,13 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
 }
  class Images {
    String? url;
-
-   Images(this.url);
+   String? labels;
+   Images(this.url,this.labels);
 
  }
  List<Images> backgroundlist =[
-   Images("https://www.jqueryscript.net/images/Create-An-Animated-Radial-Gradient-Background-With-jQuery-CSS3.jpg"),
-   Images("https://designmodo.com/wp-content/uploads/2017/08/gradient-1.jpg"),
-   Images("https://t4.ftcdn.net/jpg/02/21/39/93/360_F_221399332_MuA92wdjVCeRQv9AXY8p79hWGaTLMLWY.jpg"),
-   Images("https://www.jqueryscript.net/images/Create-An-Animated-Radial-Gradient-Background-With-jQuery-CSS3.jpg"),
-   Images("https://designmodo.com/wp-content/uploads/2017/08/gradient-1.jpg"),
-   Images("https://t4.ftcdn.net/jpg/02/21/39/93/360_F_221399332_MuA92wdjVCeRQv9AXY8p79hWGaTLMLWY.jpg"),
+   Images("https://www.jqueryscript.net/images/Create-An-Animated-Radial-Gradient-Background-With-jQuery-CSS3.jpg","Find your Best Doctors"),
+    Images("https://t4.ftcdn.net/jpg/02/21/39/93/360_F_221399332_MuA92wdjVCeRQv9AXY8p79hWGaTLMLWY.jpg","Find Best Specialists"),
+   Images("https://www.jqueryscript.net/images/Create-An-Animated-Radial-Gradient-Background-With-jQuery-CSS3.jpg","Find your Near by Doctors"),
 
  ];

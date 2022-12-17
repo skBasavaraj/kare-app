@@ -1,7 +1,6 @@
 import 'dart:ui';
 
-import 'package:awesome_bottom_navigation/awesome_bottom_navigation.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'package:nb_utils/nb_utils.dart';
@@ -70,7 +69,7 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
             ],
           ),
           bottomNavigationBar:
-          AwesomeBottomNav(
+        /*  AwesomeBottomNav(
 
             icons: [
               Icons.home_outlined,
@@ -94,54 +93,51 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
             highlightColor: Colors.blue,
             navFgColor: Colors.blue.withOpacity(0.8),
             navBgColor: Colors.white,
-          ),
-        /*  Padding(
-            padding:    EdgeInsets.all(8.0),
-            child: BottomNavigationBar(
-              currentIndex: currentIndex,
-              onTap: (i) {
-                currentIndex = i;
-                setState(() {});
-              },
+          ),*/
+          BottomNavigationBar(
+            currentIndex: currentIndex,
+            onTap: (i) {
+              currentIndex = i;
+              setState(() {});
+            },
 
-              type: BottomNavigationBarType.fixed,
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              selectedItemColor: Theme.of(context).iconTheme.color,
-              backgroundColor: Theme.of(context).cardColor,
-              mouseCursor: MouseCursor.uncontrolled,
-              elevation: 12,
-              items: [
-                BottomNavigationBarItem(
-                  icon:  new Icon( MdiIcons.homeOutline,size: iconSize,  color: disableIconColor),
+            type: BottomNavigationBarType.fixed,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            selectedItemColor: Colors.blue,
+            backgroundColor:  Colors.white,
+            mouseCursor: MouseCursor.uncontrolled,
+            elevation: 12,
+            items: [
+              BottomNavigationBarItem(
+                icon:  new Icon( MdiIcons.homeOutline,size: iconSize,  color: disableIconColor),
 
-                  activeIcon: new Icon( MdiIcons.home,size: 30,color: Colors.blue,),
-                  label: 'lblPatientDashboard',
-                ),
-                BottomNavigationBarItem(
-                  icon:  new Icon(  MdiIcons.calendarOutline,size: iconSize,  color: disableIconColor),
+                activeIcon: new Icon( MdiIcons.home,size: 30,color: Colors.blue,),
+                label: 'lblPatientDashboard',
+              ),
+              BottomNavigationBarItem(
+                icon:  new Icon(  MdiIcons.calendarOutline,size: iconSize,  color: disableIconColor),
 
-                  activeIcon: new Icon(MdiIcons.calendarBadge,size: 30,color: Colors.blue,),
-                  label:  'lblAppointments',
-                ),
-                BottomNavigationBarItem(
-                  icon:  new Icon(  MdiIcons.newspaperVariantOutline,size: iconSize,  color: disableIconColor),
+                activeIcon: new Icon(MdiIcons.calendarBadge,size: 30,color: Colors.blue,),
+                label:  'lblAppointments',
+              ),
+              BottomNavigationBarItem(
+                icon:  new Icon(  MdiIcons.newspaperVariantOutline,size: iconSize,  color: disableIconColor),
 
-                  activeIcon: new Icon(LineIcons.newspaper_1,size: 30,color: Colors.blue,),
-                  label:  'FeedsAndArticles',
-                ),
-                BottomNavigationBarItem(
-                  // icon: Image.asset('images/icons/user.png', height: iconSize, width: iconSize, color: disableIconColor),
-                  // activeIcon: Image.asset('', height: iconSize, width: iconSize, color: primaryColor),
-                  icon:  new Icon( Icons.person_outline_outlined,size: iconSize,  color: disableIconColor),
+                activeIcon: new Icon(LineIcons.newspaper_1,size: 30,color: Colors.blue,),
+                label:  'FeedsAndArticles',
+              ),
+              BottomNavigationBarItem(
+                // icon: Image.asset('images/icons/user.png', height: iconSize, width: iconSize, color: disableIconColor),
+                // activeIcon: Image.asset('', height: iconSize, width: iconSize, color: primaryColor),
+                icon:  new Icon( Icons.person_outline_outlined,size: iconSize,  color: disableIconColor),
 
-                  activeIcon: new Icon( Icons.person,size: 30,color: Colors.blue,),
+                activeIcon: new Icon( Icons.person,size: 30,color: Colors.blue,),
 
-                  label:  'lblSettings',
-                ),
-              ],
-            ),
-          )*/
+                label:  'lblSettings',
+              ),
+            ],
+          )
         ),
       ),
     );
