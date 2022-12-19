@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:nb_utils/nb_utils.dart';
 
@@ -44,12 +45,12 @@ class TopNameWidget extends StatelessWidget {
                               8.width,
                               Text(
                                 'Hi',
-                                style: primaryTextStyle(color:   secondaryTxtColor),
+                                style:  GoogleFonts.jost(color:   secondaryTxtColor),
                               ),
                             ],
                           ),
                           8.height,
-                          Text(' ${getStringAsync(U_NAME)}  ', style: boldTextStyle(size: 20)),
+                          Text(' ${getStringAsync(USER_NAME)}  ', style: GoogleFonts.jost(fontSize: 20)),
                          // Text(' ${getStringAsync(USER_NAME)} ${appStore.lastName.validate()}', style: boldTextStyle(size: 20)),
                         ],
                       ),
@@ -63,7 +64,8 @@ class TopNameWidget extends StatelessWidget {
                           boxShape: BoxShape.circle,
                         ),
                         child: cachedImage(
-                          'images/patientAvatars/patient3.png',
+                          getStringAsync(PROFILE_IMAGE),
+                       //  'images/patientAvatars/patient3.png',
                           fit: BoxFit.cover,
                           height: 47,
                           width: 47,

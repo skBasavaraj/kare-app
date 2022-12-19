@@ -52,17 +52,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
       mIsLoading = true;
       setState(() {});
 
-   /*   await forgotPasswrd( oldPassCont.text, newPassCont.text).then((value) async {
-        setStringAsync(PASSWORD, newPassCont.text.trim());
-        finish(context);
-        successToast(value!.message);
 
-      }).catchError((e) {
-        errorToast(e.toString());
-      }).whenComplete(() {
-        mIsLoading = false;
-        setState(() {});
-      });*/
 
       var info = await editRegister(getStringAsync(USER_ID) ,getStringAsync(USER_NAME), getStringAsync(USER_EMAIL),
            getStringAsync(USER_MOBILE),  getStringAsync(USER_CITY),newPassCont.text.validate()

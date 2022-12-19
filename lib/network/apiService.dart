@@ -320,13 +320,18 @@ Future<List<CatList>> getCatList() async {
   // var jsonArray = jsonData['catList'];
 
   List<CatList> catList = [];
+   catList.add(CatList(categoryUrl:   "https://static.thenounproject.com/png/2683238-200.png", catName:  "Anxiety"));
+   catList.add(CatList(categoryUrl:   "https://cdn-icons-png.flaticon.com/512/7145/7145185.png", catName:  "Depression"));
+   catList.add(CatList(categoryUrl:   "https://cdn-icons-png.flaticon.com/512/4939/4939498.png", catName:  "Activity & Nutrition"));
+   catList.add(CatList(categoryUrl:   "https://cdn.iconscout.com/icon/premium/png-256-thumb/obesity-1573349-1332894.png", catName:  "Over weight "));
+   catList.add(CatList(categoryUrl:   "https://static.thenounproject.com/png/3199163-200.png", catName:  "Eye care"));
+    catList.add(CatList(categoryUrl:   "https://cdn-icons-png.flaticon.com/512/7075/7075766.png", catName:  "Skin care"));
   catList.add(CatList(categoryUrl:   "https://cdn.iconscout.com/icon/premium/png-256-thumb/cardiology-2383070-2014925.png", catName:  "CardioLogy"));
-  catList.add(CatList(categoryUrl:  "https://static.thenounproject.com/png/3322747-200.png", catName:  "Neurology"));
+  catList.add(CatList(categoryUrl:  "https://static.thenounproject.com/png/3627839-200.png", catName:  " Neurology"));
   catList.add(CatList(categoryUrl:  "https://cdn.iconscout.com/icon/free/png-256/dental-1537082-1302669.png", catName:  "Dental"));
-  catList.add(CatList(categoryUrl:  "https://static.thenounproject.com/png/1191437-200.png", catName:  "ENT"));
-  catList.add(CatList(categoryUrl:  "https://cdn1.iconfinder.com/data/icons/human-body-parts-1-3/100/a-23-512.png", catName:  "orthopaedic"));
-  catList.add(CatList(categoryUrl:  "https://static.thenounproject.com/png/1050590-200.png", catName:  "Pulmonologist"));
-  /*for (var item in jsonArray) {
+  catList.add(CatList(categoryUrl:  "https://cdn.iconscout.com/icon/premium/png-256-thumb/ear-nose-throat-3281171-2750704.png", catName:  "ENT"));
+  catList.add(CatList(categoryUrl:  "https://static.thenounproject.com/png/3429664-200.png", catName:  "Orthopaedic"));
+   /*for (var item in jsonArray) {
        CatList list = CatList(categoryUrl: item['categoryUrl'],
        catName: item['catName']);
 
@@ -523,6 +528,7 @@ class loginInfo {
   String? lastName;
   String? photo;
   String? mobile;
+  String? file;
 
 
 
@@ -541,6 +547,7 @@ class loginInfo {
     lastName = json['lastName'];
     photo = json['photo'];
     mobile = json['mobile'];
+    file = json['file'];
   }
 
   Map<String, dynamic> toJson() {

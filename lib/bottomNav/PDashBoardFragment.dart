@@ -22,6 +22,7 @@ import '../screens/search.dart';
 import '../utils/appCommon.dart';
 import '../utils/color_use.dart';
 import '../utils/indicator.dart';
+import '../utils/marqeeWidget.dart';
 
 
 
@@ -250,7 +251,8 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
 
         ).paddingSymmetric(horizontal: 4),*/
          Container(
-          height: 40,
+          height:height/4,
+          width: width,
 
           child: FutureBuilder<List<CatList>>(
             future:getCatList(),
@@ -262,12 +264,17 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
               }else {
                 List<CatList>? list = snapshot.data;
 
-                return ListView.builder(itemCount: snapshot.data!.length,
+                return GridView.builder(itemCount: snapshot.data!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return categoryList( list![index]) ;
 
                   },
-                  scrollDirection: Axis.horizontal,);
+                  scrollDirection: Axis.horizontal,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                    childAspectRatio: 0.8
+
+                    ), );
               }
             },
           ) ,
@@ -280,9 +287,60 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
     
     return
       Padding(
+        padding: const EdgeInsets.only(left: 5,right: 5),
+        child: CupertinoButton(onPressed:() {
+
+        },  child:
+        InkWell(
+          onTap: () {
+            SearchScreen(list.catName).launch(context,pageRouteAnimation: PageRouteAnimation.Scale);
+
+          },
+          child: Container(
+            height: height/6,
+            width: 150,
+
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                2.height,
+                Image.network(list.categoryUrl! ,height: 30,width: 30,color: Colors.white,)
+                ,/*AutoSizeText(list.catName!,style: GoogleFonts.jost(color: Colors.white,
+                     ),softWrap: false,
+                maxFontSize:14 ,
+                minFontSize: 10,)*/
+             Padding(
+               padding:   EdgeInsets.symmetric(horizontal: 6),
+               child: MarqueeWidget(child:Text(list.catName!,style: GoogleFonts.jost(color: Colors.white,
+                 fontSize: 14
+               ),softWrap: false,
+                 ),),
+             )
+              ],
+            ),
+
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                gradient: LinearGradient(
+
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.blue,
+                    Colors.indigo,
+                  ],
+                ),
+                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.4),blurRadius: 6,spreadRadius: 1)]
+            ),
+          ),
+        ),),
+      );
+    /*  Padding(
 
         padding: const EdgeInsets.only(left: 20,bottom: 5,),
-        child: Material(
+        child:
+        Material(
           shadowColor: Colors.white,
           elevation: 5,
           color: Colors.white,
@@ -326,7 +384,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
             ),
           ),
         ),
-      );
+      );*/
 
   }
   Widget topDoctorComponent() {
@@ -434,11 +492,12 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
 
              InkWell(
 
+
                child:
                AppTextField(
 
                  onChanged: _onChanged,
-                 textStyle: primaryTextStyle(
+                 textStyle: GoogleFonts.jost(
                      color:   Colors.black26),
                  controller: searchCont,
                  textAlign: TextAlign.start,
@@ -449,7 +508,6 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
                  ),
                ).paddingSymmetric(horizontal: 20).visible(true),
              ),
-             5.height,
 
              patientTotalDataComponent() ,
              // 32.height,

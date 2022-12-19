@@ -11,7 +11,7 @@ import '../appConstants.dart';
 import '../utils/color_use.dart';
 import 'PDashBoardFragment.dart';
 import 'PatientAppointmentFragment.dart';
-import 'feedLisr.dart';
+import 'feedList.dart';
 
 class PatientDashBoardScreen extends StatefulWidget {
   @override
@@ -95,6 +95,7 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
             navBgColor: Colors.white,
           ),*/
           BottomNavigationBar(
+
             currentIndex: currentIndex,
             onTap: (i) {
               currentIndex = i;
@@ -122,9 +123,9 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
                 label:  'lblAppointments',
               ),
               BottomNavigationBarItem(
-                icon:  new Icon(  MdiIcons.newspaperVariantOutline,size: iconSize,  color: disableIconColor),
+                icon:  new Icon(Icons.search,size: iconSize,  color: disableIconColor),
 
-                activeIcon: new Icon(LineIcons.newspaper_1,size: 30,color: Colors.blue,),
+                activeIcon: new Icon(Icons.search,size: 30,color: Colors.blue,),
                 label:  'FeedsAndArticles',
               ),
               BottomNavigationBarItem(

@@ -246,6 +246,10 @@ class _SignInScreenState extends State<SignInScreen> {
       setValue(USER_NAME, info.name);
       setValue(USER_MOBILE, info.mobile);
 
+      var imagePath = USER_IMAGE_URL+info.file!;
+      setValue(PROFILE_IMAGE, imagePath);
+
+
     //  setValue(USER_PASSWORD, passwordCont.text);
      // setValue(USER_STATE,info.state);
       setValue(IS_LOGGED_IN,  true);
