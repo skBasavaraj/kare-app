@@ -28,13 +28,10 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   FilePickerResult? result;
 
-  File? file;
 
-  List<String> bloodGroupList = ['A+', 'B+', 'AB+', 'O+', 'A-', 'B-', 'AB-', 'O-'];
-  List<GenderModel> genderList = [];
+   List<GenderModel> genderList = [];
   TextEditingController fileCont = TextEditingController();
-  String? filePath;
-  TextEditingController emailCont = TextEditingController();
+   TextEditingController emailCont = TextEditingController();
   TextEditingController passwordCont = TextEditingController();
   TextEditingController firstNameCont = TextEditingController();
   TextEditingController lastNameCont = TextEditingController();
@@ -42,12 +39,13 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
   TextEditingController dOBCont = TextEditingController();
   String? genderValue;
   String? bloodGroup;
+
   TextEditingController bloodGroupCont = TextEditingController();
   TextEditingController addressCont = TextEditingController();
   TextEditingController cityCont = TextEditingController();
   TextEditingController stateCont = TextEditingController();
   TextEditingController countryCont = TextEditingController();
-  TextEditingController postalCodeCont = TextEditingController();
+
 
   FocusNode emailFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
@@ -61,7 +59,6 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
   FocusNode cityFocus = FocusNode();
   FocusNode stateFocus = FocusNode();
   FocusNode countryFocus = FocusNode();
-  FocusNode postalCodeFocus = FocusNode();
 
   late DateTime birthDate;
 
@@ -89,9 +86,7 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
 
 
   init() async {
-    genderList.add(GenderModel(name:  "Male", value: "Male"));
-    genderList.add(GenderModel(name:  "Female", value: "Female"));
-    genderList.add(GenderModel(name:  "Other", value: "Other"));
+
   }
 
   @override
@@ -126,7 +121,7 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
             children: [
               SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -383,14 +378,27 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
                         ),
                       ),
                       60.height,*/
+                      AppTextField(
+                        controller: passwordCont,
+                        focus: passwordFocus,
+                        textStyle: primaryTextStyle(),
+                        textFieldType: TextFieldType.PASSWORD,
+                        suffixPasswordVisibleWidget: commonImage(
+                            imageUrl: "images/icons/showPassword.png", size: 18),
+                        suffixPasswordInvisibleWidget: commonImage(
+                            imageUrl: "images/icons/hidePassword.png", size: 18),
+                        decoration: textInputStyle(
+                            context: context, label: 'Password',text: 'Password'),
+                      ),
+                      16.height,
                       AppButton(
                         width: context.width(),
                         shapeBorder: RoundedRectangleBorder(borderRadius: radius()),
                         onTap: () async {
                           // signUp();
-                          var info = await editRegister( firstNameCont.text.validate(),lastNameCont.text.validate(),emailCont.text.validate(),
-                              contactNumberCont.text.toString(),birthDate.toString().validate(),
-                              genderValue.validate(), filePath!,addressCont.text,cityCont.text,stateCont.text,countryCont.text,postalCodeCont.text
+                          var info = await editRegister(getStringAsync(USER_ID) ,firstNameCont.text.validate(), emailCont.text.validate(),
+                              contactNumberCont.text.toString(), cityCont.text,passwordCont.text.validate()
+
                           ) ;
                           if(info!.error =="000"){
                             successToast(info.message);
@@ -399,7 +407,7 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
                         },
                         color: primaryColor,
                         padding: EdgeInsets.all(16),
-                        child: Text( 'Submit', style: boldTextStyle(color: textPrimaryWhiteColor)),
+                        child: Text( 'Submit', style: GoogleFonts.jost(color:  Colors.white)),
                       ),
                       /*24.height,
                       loginRegisterWidget(context, title: languageTranslate('AlreadyAMember'), subTitle: languageTranslate('Login'), onTap: () {
@@ -432,26 +440,7 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
 
 
   }
-  void pickSingleFile() async {
-    if (isProEnabled()) {
-      result = await FilePicker.platform
-          .pickFiles(allowMultiple: false, type: FileType.any);
-      // logDev.log(result.toString(), name: "file");
-    } else {
-      result = await FilePicker.platform.pickFiles();
-    }
 
-    if (result != null) {
-     // appointmentAppStore.addReportData(data: result!.files);
-      filePath = result!.files.first.path;
-
-      fileCont.text =filePath!;
-    //  "${appointmentAppStore.reportList.length} ${languageTranslate('FilesSelected')}";
-    } else {
-      toast( 'NoReportWasSelected');
-    }
-    setState(() {});
-  }
   addEditedData() async {
     isLoading = true;
     setState(() {});

@@ -45,9 +45,8 @@ class _SignInScreenState extends State<SignInScreen> {
     passwordCont.text = "";
     if (getBoolAsync(IS_REMEMBER_ME)) {
       isRemember = true;
-      emailCont.text = getStringAsync(USER_NAME);
-      passwordCont.text = getStringAsync(USER_PASSWORD);
-    }
+      emailCont.text = getStringAsync(USER_EMAIL);
+     }
   }
 
   void forgotPasswordDialog() {
@@ -257,6 +256,8 @@ class _SignInScreenState extends State<SignInScreen> {
           builder: (context) => PatientDashBoardScreen(),
         ),
       );
+    }else{
+      print(info.message);
     }
   }
 }

@@ -47,10 +47,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
 
-      Map req = {
-        'old_password': oldPassCont.text.trim(),
-        'new_password': newPassCont.text.trim(),
-      };
+
 
       mIsLoading = true;
       setState(() {});
@@ -66,11 +63,20 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
         mIsLoading = false;
         setState(() {});
       });*/
-      var info = await forgotPasswrd( oldPassCont.text, newPassCont.text);
-      if(info!.error=="000"){
-      successToast("please check in email");
+      var info = await editRegister(getStringAsync(USER_ID) ,getStringAsync(USER_NAME), getStringAsync(USER_EMAIL),
+           getStringAsync(USER_MOBILE),  getStringAsync(USER_CITY),newPassCont.text.validate()
+
+      ) ;
+      if(info!.error =="000"){
+        successToast("password reset");
+        print("ppp"+newPassCont.text.validate());
+        mIsLoading = false;
+        setState(() {});
+        Navigator.pop(context);
+        print(info.message);
+
       }else{
-        errorToast(info.message!);
+        print(info.message);
       }
     }
   }
@@ -163,7 +169,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       textInputAction: TextInputAction.done,
                       onFieldSubmitted: (s) {
 
-                        submit();
+                        //submit();
                       },
                       textStyle: primaryTextStyle(),
                     ),
@@ -175,7 +181,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
                         submit();
                       },
-                      text:  'Save',
+                      text:  'submit',
                       textStyle: boldTextStyle(color:  Colors.white),
                       width: context.width(),
                     ),

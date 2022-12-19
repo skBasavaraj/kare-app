@@ -172,38 +172,24 @@ Future<Timers?> updateTime(String senderId, String receiverId,String time) async
   }
 }
 
-Future<loginInfo?> editRegister( String name,
-    String lastName,
-    String email,
+Future<loginInfo?> editRegister( String id,String name,
+     String email,
     String number,
-    String dob,
-    String gender,
-    String file,
-    String address,
     String city,
-    String state,
-    String country,
-    String postal,
+    String password,
+
     ) async {
-  var request = http.MultipartRequest(
-      'POST', Uri.parse(ApiService.url+'/UserApi/editProfile.php'));
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/editProfile.php'));
   request.fields.addAll({
-    'id':getStringAsync(USER_ID),
-    'firstName': name,
-    'lastName': lastName,
+    'id': id,
+    'name': name,
     'email': email,
-    'number':  number,
-    // 'password': '123456',
-    'dob': dob,
-    //'bloodGroup': 'B,
-    'gender':gender,
-    'address': address,
-    'city': city,
-    'state': state,
-    'country': country,
-    'postal':postal
+    'mobile': number,
+    'location': city,
+    'password': password
   });
-  request.files.add(await http.MultipartFile.fromPath('photo',  file));
+
+  // request.files.add(await http.MultipartFile.fromPath('photo',  file));
   var Stremresponse = await request.send();
 
   if (Stremresponse.statusCode == 200) {
@@ -964,14 +950,14 @@ Future<Position> determinePosition() async {
 Future<void> logout(BuildContext context) async {
   await removeKey(TOKEN);
   await removeKey(USER_ID);
-  await removeKey(FIRST_NAME);
-  await removeKey(LAST_NAME);
-  await removeKey(USER_EMAIL);
+  await removeKey(USER_NAME);
+  // await removeKey(USER_EMAIL);
   await removeKey(USER_DISPLAY_NAME);
   await removeKey(PROFILE_IMAGE);
   await removeKey(USER_MOBILE);
   await removeKey(USER_GENDER);
   await removeKey(USER_ROLE);
+  await removeKey(USER_CITY);
   await removeKey(PASSWORD);
   await removeKey(USER_TIME);
   await removeKey(IS_LOGGED_IN);
