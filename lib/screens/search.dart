@@ -94,7 +94,7 @@ double? ratingBarValue;
 
     return
       Padding(
-        padding:   EdgeInsets.all(8.0),
+        padding:   EdgeInsets.all(20.0),
         child: Material(
           color: Colors.white,
           elevation: 3,
@@ -136,7 +136,7 @@ double? ratingBarValue;
                         Padding(
                           padding: const EdgeInsets.only(left: 5,),
                           child: Text(
-                            "Dr.${doctor.name} ${doctor.lastName}"
+                            "Dr.${doctor.name}"
                             ,style: GoogleFonts.poppins(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.blue),overflow: TextOverflow.ellipsis, ),
                         ).paddingTop(1)
 

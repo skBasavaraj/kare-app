@@ -69,8 +69,6 @@ class ChatScreenState extends State<ChatScreen> {
      time = Timer.periodic(Duration(seconds: 1), (Timer t) =>   setState(() {
 
     }));
-    // getMsg =   getMessages(currentUserId,receiverId);
-
   }
 
 

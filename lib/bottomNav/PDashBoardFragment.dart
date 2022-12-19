@@ -1,4 +1,6 @@
- import 'package:flutter/cupertino.dart';
+ import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hovering/hovering.dart';
@@ -14,6 +16,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import '../appConstants.dart';
 import '../network/apiService.dart';
 import '../screens/DoctorDetails.dart';
+import '../screens/connectionScreen.dart';
 import '../screens/doctorDetilas2.dart';
 import '../screens/search.dart';
 import '../utils/appCommon.dart';
@@ -47,10 +50,12 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
    @override
   void initState() {
     super.initState();
+
     init();
   }
 
   init() async {
+
     //
     //Start at the controller and set the time to switch pages
     _animationController =
@@ -70,6 +75,10 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
         }
       }
     });
+    Timer.periodic(Duration(seconds: 1), (Timer t) =>   setState(() {
+      NoNetwork.checkNet();
+    }));
+
   }
 
   @override
@@ -415,6 +424,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
     size = MediaQuery.of(context).size;
     height = size.height;
     width = size.width;
+
     return   Scaffold(
       backgroundColor: scaffoldBgColor,
         body:  SingleChildScrollView(

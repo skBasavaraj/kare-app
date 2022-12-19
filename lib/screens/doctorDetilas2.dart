@@ -107,7 +107,7 @@ class _DetailsDoctorsState extends State<DetailsDoctors> {
                           Padding(
                             padding: const EdgeInsets.only(left: 24),
                             child: Text(
-                               "Dr.${doctor!.name!} ${doctor!.lastName}",
+                               "Dr.${doctor!.name!}",
                               style: GoogleFonts.poppins(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -239,6 +239,7 @@ class _DetailsDoctorsState extends State<DetailsDoctors> {
                         child: InkWell(
                           onTap: () {
                             makingPhoneCall( doctor!.number!);
+                            print("tap tap");
 
                           },
                           splashColor: Colors.blue,
@@ -354,6 +355,7 @@ class _DetailsDoctorsState extends State<DetailsDoctors> {
   }
 
   makingPhoneCall(String? doctorNumber) async {
+   print("tap tap");
     var url = Uri.parse("tel:$doctorNumber");
     if (await canLaunchUrl(url)) {
       await  launchUrl(url);

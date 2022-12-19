@@ -55,16 +55,23 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
       mIsLoading = true;
       setState(() {});
 
-      await forgotPasswrd( oldPassCont.text, newPassCont.text).then((value) async {
+   /*   await forgotPasswrd( oldPassCont.text, newPassCont.text).then((value) async {
         setStringAsync(PASSWORD, newPassCont.text.trim());
         finish(context);
         successToast(value!.message);
+
       }).catchError((e) {
         errorToast(e.toString());
       }).whenComplete(() {
         mIsLoading = false;
         setState(() {});
-      });
+      });*/
+      var info = await forgotPasswrd( oldPassCont.text, newPassCont.text);
+      if(info!.error=="000"){
+      successToast("please check in email");
+      }else{
+        errorToast(info.message!);
+      }
     }
   }
 
@@ -155,6 +162,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       },
                       textInputAction: TextInputAction.done,
                       onFieldSubmitted: (s) {
+
                         submit();
                       },
                       textStyle: primaryTextStyle(),

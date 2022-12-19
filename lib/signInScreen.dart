@@ -6,7 +6,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:zatcare/utils/appCommon.dart';
 import 'package:zatcare/utils/appwigets.dart';
+import 'package:zatcare/utils/changePassword.dart';
 import 'package:zatcare/utils/color_use.dart';
+import 'package:zatcare/utils/dialog.dart';
 import 'package:zatcare/verzat/Signup.dart';
 
 import 'dart:developer' as logDev;
@@ -49,8 +51,8 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void forgotPasswordDialog() {
-  //  DoctorDashboardScreen().launch(context, isNewTask: true);
-
+  //  DoctorDashboardScreen()
+    //CustomDailog().launch(context, isNewTask: true);
 
   }
 
@@ -175,7 +177,12 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            return forgotPasswordDialog();
+                            showDialog(context: context, builder:    (context) =>
+                                forgotAlertDialog(context)
+                              ,  );
+                       //    return forgotPasswordDialog();
+
+                           // ChangePasswordScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Scale);
                           },
                           child: Text(
                             "ForgotPassword",

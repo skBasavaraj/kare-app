@@ -25,7 +25,6 @@ class ApiService {
       String mobile,
       String location,
       String password,
-
       String dob,
       String gender,
 
@@ -58,6 +57,8 @@ class ApiService {
       print(Stremresponse.reasonPhrase);
     }
   }
+
+
 
   static Future<loginInfo?> login(String email, String password) async {
     var request = http.MultipartRequest(
@@ -243,11 +244,10 @@ Future<loginInfo?> uploadPaymentInfo(
 
 }
 Future<loginInfo?> forgotPasswrd(String email, String password) async {
-  var request = http.MultipartRequest(
-      'POST', Uri.parse(ApiService.url+'/UserApi/forgotPassword.php'));
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/forgotPassword.php'));
   request.fields.addAll({
-    'email': email,
-    'password': password,
+    'email': email
+    // 'password': password,
   });
 
   var Stremresponse = await request.send();
@@ -283,7 +283,7 @@ Future<List<Doctors>> getDoctors() async {
         expertise: item['expertise'],
         hospital: item['hospital'],
         location: item['location'],
-        number: item['number'],
+        number: item['mobile'],
         ratings: item['ratings']);
 
     docList.add(doctors);
@@ -318,7 +318,7 @@ Future<List<Doctors>> getSearchDoctors(String text) async {
         expertise: item['expertise'],
         hospital: item['hospital'],
         location: item['location'],
-        number: item['number'],
+        number: item['mobile'],
         ratings: item['ratings']);
 
     docList.add(doctors);
@@ -630,7 +630,7 @@ class Doctors {
     hospital = json['hospital'];
     location = json['location'];
     ratings = json['ratings'];
-    number = json['number'];
+    number = json['mobile'];
     description = json['description'];
     email = json['email'];
   }
@@ -974,7 +974,30 @@ Future<void> logout(BuildContext context) async {
   await removeKey(USER_ROLE);
   await removeKey(PASSWORD);
   await removeKey(USER_TIME);
+  await removeKey(IS_LOGGED_IN);
 
   //appStore.setLoggedIn(false);
   push(SignInScreen(), isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+}
+Future<bool> connectivityChecker()   async {
+  var connected = false;
+  print("Checking internet...");
+  try {
+    final result = await InternetAddress.lookup('google.com');
+    final result2 = await InternetAddress.lookup('facebook.com');
+    final result3 = await InternetAddress.lookup('microsoft.com');
+    if ((result.isNotEmpty && result[0].rawAddress.isNotEmpty) ||
+        (result2.isNotEmpty && result2[0].rawAddress.isNotEmpty) ||
+        (result3.isNotEmpty && result3[0].rawAddress.isNotEmpty)) {
+      print('connected..');
+      connected = true;
+    } else {
+      print("not connected from else..");
+      connected = false;
+    }
+  } on SocketException catch (_) {
+    print('not connected...');
+    connected = false;
+  }
+  return connected;
 }
