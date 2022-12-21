@@ -57,7 +57,6 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
 
   init() async {
 
-    //
     //Start at the controller and set the time to switch pages
     _animationController =
     new AnimationController(vsync: this, duration: Duration(seconds: 10));
@@ -251,7 +250,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
 
         ).paddingSymmetric(horizontal: 4),*/
          Container(
-          height:height/4,
+          height: 210,
           width: width,
 
           child: FutureBuilder<List<CatList>>(
@@ -292,13 +291,11 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
 
         },  child:
         InkWell(
-          onTap: () {
+          onTap: () async {
             SearchScreen(list.catName).launch(context,pageRouteAnimation: PageRouteAnimation.Scale);
-
           },
           child: Container(
-            height: height/6,
-            width: 150,
+             width: width,
 
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

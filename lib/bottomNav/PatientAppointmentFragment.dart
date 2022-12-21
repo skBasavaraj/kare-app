@@ -57,8 +57,8 @@ class _PatientAppointmentFragmentState
     //
     currentUserId = getStringAsync(USER_ID);
     pStatus.add("Approved");
-    pStatus.add("pending");
-    pStatus.add("booked");
+    pStatus.add("Pending");
+    pStatus.add("Booked");
     pStatus.add('Completed');
     pStatus.add('Cancelled');
     pStatus.add('Past');
@@ -179,7 +179,8 @@ class _PatientAppointmentFragmentState
           16.height,
           Container(
              color: scaffoldBgColor,
-            child: FutureBuilder<List<Appointments>>(
+            child:
+            FutureBuilder<List<Appointments>>(
               future: get(currentUserId!,statusType!),
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.data == null) {
@@ -242,7 +243,7 @@ class _PatientAppointmentFragmentState
             borderRadius: BorderRadius.circular(15), color: Colors.white),
         margin: EdgeInsets.all(10),
         height: 200,
-        child: Column(
+        child: Wrap(
           children: [
             Expanded(
               child: Column(
@@ -323,8 +324,8 @@ class _PatientAppointmentFragmentState
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: Colors.white),
         margin: EdgeInsets.all(10),
-        height: 200,
-        child: Column(
+
+        child: Wrap(
           children: [
             Expanded(
               child: Column(
@@ -416,9 +417,9 @@ class _PatientAppointmentFragmentState
         margin: EdgeInsets.all(10),
         height: 200,
         child: Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Wrap(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

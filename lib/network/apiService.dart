@@ -9,6 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../appConstants.dart';
+import '../bottomNav/PatientAppointmentFragment.dart';
 import '../signInScreen.dart';
 import '../utils/appCommon.dart';
 
@@ -982,15 +983,65 @@ Future<bool> connectivityChecker()   async {
     if ((result.isNotEmpty && result[0].rawAddress.isNotEmpty) ||
         (result2.isNotEmpty && result2[0].rawAddress.isNotEmpty) ||
         (result3.isNotEmpty && result3[0].rawAddress.isNotEmpty)) {
-      print('connected..');
+    //  print('connected..');
       connected = true;
     } else {
-      print("not connected from else..");
+    //  print("not connected from else..");
       connected = false;
     }
   } on SocketException catch (_) {
-    print('not connected...');
+  //  print('not connected...');
     connected = false;
   }
   return connected;
 }
+Future<List<Appointments>> getNotificaton( ) async {
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/appStatus.php'));
+  request.fields.addAll({
+    'userID': getStringAsync(USER_ID),
+
+  });
+
+
+  http.StreamedResponse response = await request.send();
+
+  var response1 = await http.Response.fromStream(response);
+  List<Appointments> apptmntList = [];
+  var appList = jsonDecode( response1.body);
+  for(var item in appList){
+    Appointments appointments = Appointments(
+        id: item['id'],
+        userID: item['userID'],
+        role: item['role'],
+        doctorID: item['doctorID'],
+        patientName: item['patientName'],
+        patientAge: item['patientAge'],
+        patientNumber: item['patientNumber'],
+        patientEmail: item['patientEmail'],
+        patientGender: item['patientGender'],
+        apptDate: item['apptDate'],
+        apptTime: item['apptTime'],
+        bookDate: item['bookDate'],
+        bookTime: item['bookTime'],
+        bloodGroup: item['bloodGroup'],
+        subject: item['subject'],
+        description: item['description'],
+        appointmentId: item['appointmentId'],
+        status: item['status']
+        ,mobile: item['mobile'],
+        location: item['location'],
+        name:item['name'],
+        hospital: item['hospital'],
+        fees: item['fees']
+    );
+
+    apptmntList.add(appointments);
+    print("hiii${item['patientName']}");
+  }
+
+
+  return apptmntList;
+}
+
+
+

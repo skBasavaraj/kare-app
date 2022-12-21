@@ -56,7 +56,7 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
         child: Scaffold(
            body: Stack(
             children: [
-              TopNameWidget().visible(currentIndex != 3),
+              TopNameWidget() ,
               Container(
                 margin: EdgeInsets.only(top: currentIndex != 3 ? 70 : 0),
                 child: [

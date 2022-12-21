@@ -15,6 +15,9 @@ import 'dart:developer'as logDev;
 import 'package:http/http.dart' as http;
 import 'package:zatcare/spalshScreen.dart';
 
+import 'appConstants.dart';
+import 'network/apiService.dart';
+
 late PackageInfoData packageInfo;
 
 
@@ -23,15 +26,9 @@ PickedFile? image;
 
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
-
-
-  Function? originalOnError = FlutterError.onError;
-
-
-
   await initialize();
+
 
   packageInfo = await getPackageInfo();
 
@@ -43,55 +40,63 @@ void main() async {
 
       // If enabled it will post a notification whenever
       // the task is running. Handy for debugging tasks
-      isInDebugMode: false
+      isInDebugMode: true
   );
   // Periodic task registration
-  await Workmanager().registerPeriodicTask(
+  await Workmanager()
+      .registerPeriodicTask(
       "2",
 
 
-      "simplePeriodicTask",
+      "ZatCare",
 
 
-      frequency:   Duration(minutes: 15),
+      frequency:   Duration(minutes: 1),
+
       constraints: Constraints(networkType:  NetworkType.connected)
   );
   runApp(MyApp());
 }
+
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
 
-    // initialise the plugin of flutterlocalnotifications.
-    FlutterLocalNotificationsPlugin flip = FlutterLocalNotificationsPlugin();
+     FlutterLocalNotificationsPlugin flip = FlutterLocalNotificationsPlugin();
 
     // app_icon needs to be a added as a drawable
     // resource to the Android head project.
-    var android = const AndroidInitializationSettings('@mipmap/ic_launcher');
+    var android = const AndroidInitializationSettings('@mipmap/app_icon');
     var IOS = const DarwinInitializationSettings();
+  //  _showNotificationWithDefaultSound(flip, "you appointment approved make payment to confirm");
 
     // initialise settings for both Android and iOS device.
+
+    _showNotificationWithDefaultSound(flip, "Nothing");
+    // var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/appStatus.php'));
+    // request.fields.addAll({
+    //   'userID': getStringAsync(USER_ID)
+    //
+    // });
+    //
+    // http.StreamedResponse response = await request.send();
+    //
+    // if (response.statusCode == 200) {
+    //
+    //   var response1 = await http.Response.fromStream(response);
+    //   await  _showNotificationWithDefaultSound(flip, "you appointment approved make payment to confirm");
+    //
+    //
+    // }
+    // else {
+    //   print(response.reasonPhrase);
+    // }
+    logDev.log("NOT message1", name: ';;');
     var settings = InitializationSettings(android: android,iOS: IOS);
     flip.initialize(settings);
-    var request = http.MultipartRequest('POST', Uri.parse('http://192.168.1.165/UserApi/appStatus.php'));
-    request.fields.addAll({
-      'userId': '11'
-    });
+    logDev.log("NOT message", name: ';;');
 
-
-    http.StreamedResponse response = await request.send();
-
-    var response1 = await http.Response.fromStream(response);
-
-
-    var jsonData = json.decode(response1.body);
-    if(jsonData['status'] =="true"){
-      await   _showNotificationWithDefaultSound(flip,"your appointment approved");
-    }else {
-      await   _showNotificationWithDefaultSound(flip,"your appointment still pending");
-
-      logDev.log("NOT message4", name: ';;');
-    }
     return Future.value(true);
+
   });
 }
 
@@ -113,7 +118,7 @@ Future _showNotificationWithDefaultSound(flip,String msg) async {
       android: androidPlatformChannelSpecifics,
       iOS: iOSPlatformChannelSpecifics
   );
-  await flip.show(0,  "ZatKare",
+  await flip.show(0,  "ZatCare",
       msg ,
       platformChannelSpecifics, payload: 'Default_Sound'
   );

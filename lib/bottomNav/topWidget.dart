@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../appConstants.dart';
+import '../screens/notificsion.dart';
 import '../utils/appwigets.dart';
 import '../utils/color_use.dart';
 
@@ -17,13 +18,14 @@ class TopNameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) => Container(
-        decoration: boxDecorationWithShadow(
+         decoration: boxDecorationWithShadow(
           borderRadius: radius(0),
           backgroundColor:   scaffoldBgColor,
         ),
         child: Expanded(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
               Column(
@@ -34,29 +36,31 @@ class TopNameWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Wrap(
+          direction: Axis.vertical,
                         children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Image.asset("images/icons/hi.png", width: 22, height: 22, fit: BoxFit.cover),
-                              8.width,
-                              Text(
-                                'Hi',
-                                style:  GoogleFonts.jost(color:   secondaryTxtColor),
-                              ),
-                            ],
+                          // Image.asset("images/icons/hi.png", width: 22, height: 22, fit: BoxFit.cover),
+                            Text(
+                            'Good Morning',
+                            style:  GoogleFonts.jost(color:    Colors.blue, fontSize: 24,fontWeight: FontWeight.bold),
+
                           ),
-                          8.height,
-                          Text(' ${getStringAsync(USER_NAME)}  ', style: GoogleFonts.jost(fontSize: 20)),
-                         // Text(' ${getStringAsync(USER_NAME)} ${appStore.lastName.validate()}', style: boldTextStyle(size: 20)),
+                          Text(' ${getStringAsync(USER_NAME)}  ', style: GoogleFonts.jost(fontSize: 16)),
+
                         ],
-                      ),
+                      ).paddingOnly(left: 10),
                     /*  appStore.profileImage.validate().isNotEmpty
                           ? */
-                      Container(
+                      Stack(
+                        children: [
+                          InkWell(
+                              child: Image.asset('images/notify.png',height: 30),onTap: () {
+                            UserNotification().launch(context,pageRouteAnimation: PageRouteAnimation.Scale);
+                              },) ,
+                          Positioned(child:Text("",))
+                        ],
+                       ).paddingOnly(right: 5)
+                      /*Container(
                         decoration: boxDecorationWithShadow(
                           border: Border.all(color: white, width: 4),
                           spreadRadius: 0,
@@ -75,7 +79,7 @@ class TopNameWidget extends StatelessWidget {
 
 
                         }),
-                      ),
+                      ),*/
                          // :
                    /*   Container(
                         padding: EdgeInsets.all(14),
@@ -111,7 +115,7 @@ class TopNameWidget extends StatelessWidget {
                 ],
               ).expand(),
             ],
-          ).paddingSymmetric(horizontal: 12, vertical: 8),
+          ).paddingSymmetric(horizontal: 12, vertical: 5),
         ),
       ),
     );
