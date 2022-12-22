@@ -75,8 +75,9 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment> with SingleTick
         }
       }
     });
-    Timer.periodic(Duration(seconds: 1), (Timer t) =>   setState(() {
+    Timer.periodic(Duration(seconds: 2), (Timer t) =>   setState(() async {
       NoNetwork.checkNet();
+      await  getNotificaton( );
     }));
 
   }

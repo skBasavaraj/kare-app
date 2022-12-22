@@ -189,7 +189,7 @@ class _DoctorListWidgetState extends State<DoctorListWidget> {
                         Padding(
                           padding: const EdgeInsets.only(left: 5,),
                           child: Text(
-                            "Dr.${doctor.name} ${doctor.lastName}"
+                            "Dr.${doctor.name}"
                             ,style: GoogleFonts.poppins(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.blue),overflow: TextOverflow.ellipsis, ),
                         ).paddingTop(1)
 

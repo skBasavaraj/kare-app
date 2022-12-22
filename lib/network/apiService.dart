@@ -1009,7 +1009,7 @@ Future<List<Appointments>> getNotificaton( ) async {
   var response1 = await http.Response.fromStream(response);
   List<Appointments> apptmntList = [];
   var appList = jsonDecode( response1.body);
-  print("hiii${ appList }");
+ // print("hiii${ appList }");
   for(var item in appList){
     Appointments appointments = Appointments(
         id: item['id'],
@@ -1040,7 +1040,7 @@ Future<List<Appointments>> getNotificaton( ) async {
     );
 
     apptmntList.add(appointments);
-    ApiService.notiCount = item['count'].toString();
+    ApiService.notiCount = apptmntList.length.toString();
 
   }
 

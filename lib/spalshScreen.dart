@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   init() async {
     checkFirstSeen();
-   await getNotificaton( );
+ await getNotificaton( );
   }
 
 
@@ -44,13 +44,13 @@ class _SplashScreenState extends State<SplashScreen> {
      });
 
     await Future.delayed(Duration(seconds: 2));
-    print("P0");
+
     //print("P0"+getBoolAsync(IS_LOGGED_IN).toString());
     if(getBoolAsync(IS_LOGGED_IN)==true) {
-      print("P1");
+
       PatientDashBoardScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Scale);
     }else{
-      print("P2");
+
       SignInScreen().launch(context, isNewTask: true);
     }
 

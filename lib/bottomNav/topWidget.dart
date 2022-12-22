@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -73,21 +75,8 @@ class _TopNameWidgetState extends State<TopNameWidget> {
                                 pageRouteAnimation: PageRouteAnimation.Scale);
                           },
                         ),
-                        Positioned(
-                            right: 3,
-                            child: Container(
-                                height: 15,
-                                width: 12,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.red),
-                                child:
+                        notifyText()
 
-                                Center(
-                                    child: Text(ApiService.notiCount,
-                                      style: GoogleFonts.jost(
-                                          color: Colors.white, fontSize: 10),
-                                    ))))
                       ],
                     ).paddingOnly(right: 5)
                   ],
@@ -168,6 +157,28 @@ class _TopNameWidgetState extends State<TopNameWidget> {
         ),
       ),
     );*/
+  }
+   notifyText(){
+
+    if(ApiService.notiCount.isNotEmpty){
+
+    return  Positioned(
+          right: 3,
+          child: Container(
+              height: 15,
+              width: 12,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.red),
+              child:
+
+              Center(
+                  child: Text(ApiService.notiCount,
+                    style: GoogleFonts.jost(
+                        color: Colors.white, fontSize: 10),
+                  ))));
+    }
+    return Text( "");
   }
 
   Future<void> init() async {
