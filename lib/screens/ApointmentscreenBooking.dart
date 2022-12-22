@@ -120,7 +120,7 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
     doctorNumber = doctors!.number;
     doctorEmail = doctors!.email;
     doctorLocation = doctors!.location;
-    userEmail = getStringAsync(USER_NAME);
+    userEmail = getStringAsync(USER_EMAIL);
 
     logDev.log(Drname!, name: 'app');
   }

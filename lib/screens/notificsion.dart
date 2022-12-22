@@ -78,7 +78,7 @@ class _UserNotificationState extends State<UserNotification> {
     );
   }
   appointments(Appointments appointments) {
-    bool buttonenabled = false;
+   // bool buttonenabled = false;
      if (appointments.status == "approved") {
       return
         InkWell(
@@ -94,7 +94,7 @@ class _UserNotificationState extends State<UserNotification> {
               elevation: 5,
               shadowColor: Colors.green,
               color: Colors.blue.shade500,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),side: BorderSide(color: Colors.green,width: 0.5)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),side: BorderSide(color: Colors.green,width: 1)),
           /*  decoration: BoxDecoration(
               border: Border.all(color: Colors.green,width: 1),
                  borderRadius: BorderRadius.circular(10), color: Colors.blue.withOpacity(0.3)),
@@ -144,7 +144,7 @@ class _UserNotificationState extends State<UserNotification> {
               elevation: 5,
               shadowColor: Colors.blue,
               color: Colors.green.shade500,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),side: BorderSide(color: Colors.blue,width: 0.5)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),side: BorderSide(color: Colors.blue,width: 1)),
               /*  decoration: BoxDecoration(
               border: Border.all(color: Colors.green,width: 1),
                  borderRadius: BorderRadius.circular(10), color: Colors.blue.withOpacity(0.3)),
@@ -164,7 +164,8 @@ class _UserNotificationState extends State<UserNotification> {
                           child: Icon(Icons.check,size: 30,color: Colors.blue,),
                         )),
                   )
-                  ,Column(
+                  ,
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -175,7 +176,7 @@ class _UserNotificationState extends State<UserNotification> {
                       ,  Text("Contact:${appointments.mobile}",style: GoogleFonts.jost(fontSize: 10,color: Colors.white),)
 
                     ],
-                  )
+                  ).paddingSymmetric(vertical: 5)
 
                 ],
               ),

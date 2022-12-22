@@ -67,11 +67,11 @@ void callbackDispatcher() {
     // resource to the Android head project.
     var android = const AndroidInitializationSettings('@mipmap/app_icon');
     var IOS = const DarwinInitializationSettings();
-  //  _showNotificationWithDefaultSound(flip, "you appointment approved make payment to confirm");
+
+     //  _showNotificationWithDefaultSound(flip, "you appointment approved make payment to confirm");
 
     // initialise settings for both Android and iOS device.
 
-    _showNotificationWithDefaultSound(flip, "Nothing");
     // var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/appStatus.php'));
     // request.fields.addAll({
     //   'userID': getStringAsync(USER_ID)
@@ -93,7 +93,12 @@ void callbackDispatcher() {
     logDev.log("NOT message1", name: ';;');
     var settings = InitializationSettings(android: android,iOS: IOS);
     flip.initialize(settings);
-    logDev.log("NOT message", name: ';;');
+     var getCount = await getNotificaton();
+
+     print("length11"+getCount.first.name.toString());
+     _showNotificationWithDefaultSound(flip, "Nothing");
+
+     logDev.log("NOT message", name: ';;');
 
     return Future.value(true);
 

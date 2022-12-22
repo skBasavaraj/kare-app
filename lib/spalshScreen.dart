@@ -11,6 +11,8 @@ import 'dart:developer' as logDev;
 import 'package:zatcare/signInScreen.dart';
 import 'package:zatcare/utils/color_use.dart';
 
+import 'network/apiService.dart';
+
 
 
 class SplashScreen extends StatefulWidget {
@@ -19,6 +21,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  static var  countShow;
   @override
   void initState() {
     super.initState();
@@ -28,6 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   init() async {
     checkFirstSeen();
+   await getNotificaton( );
   }
 
 
@@ -51,6 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
   }
+
 
   @override
   void setState(fn) {

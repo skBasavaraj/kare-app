@@ -79,6 +79,7 @@ const CancelledStatus = 'Cancelled';
 
 // Shared preferences keys
 const USER_NAME = 'USER_NAME';
+const COUNT = 'COUNT';
 const U_NAME = 'U_NAME';
 const USER_TIME= 'USER_TIME';
 const USER_TOKEN = 'USER_TOKEN';

@@ -15,6 +15,7 @@ import '../utils/appCommon.dart';
 
 class ApiService {
   //192.168.1.138
+  static String notiCount="";
   static String url ="http://192.168.0.102";
  // static String url ="http://192.168.1.138";
   static Future<loginInfo?> register
@@ -1008,6 +1009,7 @@ Future<List<Appointments>> getNotificaton( ) async {
   var response1 = await http.Response.fromStream(response);
   List<Appointments> apptmntList = [];
   var appList = jsonDecode( response1.body);
+  print("hiii${ appList }");
   for(var item in appList){
     Appointments appointments = Appointments(
         id: item['id'],
@@ -1032,16 +1034,28 @@ Future<List<Appointments>> getNotificaton( ) async {
         location: item['location'],
         name:item['name'],
         hospital: item['hospital'],
-        fees: item['fees']
+        fees: item['fees'],
+        count:item['count'].toString()
+
     );
 
     apptmntList.add(appointments);
-    print("hiii${item['patientName']}");
+    ApiService.notiCount = item['count'].toString();
+
   }
 
 
   return apptmntList;
 }
 
-
+Future<String> count()
+async {
+  var countNum;
+ var num = await getNotificaton();
+ for(var item in num){
+   countNum = item.count.toString();
+   print(countNum+"ggg");
+ }
+  return countNum;
+}
 

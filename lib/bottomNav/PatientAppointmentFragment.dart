@@ -634,6 +634,7 @@ class Appointments {
   String? name;
   String? hospital;
   String? fees;
+  String? count;
 
   Appointments(
       {this.id,
@@ -657,7 +658,7 @@ class Appointments {
       this.mobile,
       this.location,
       this.name,this.hospital
-      ,this.fees});
+      ,this.fees,this.count});
 
   Appointments.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -684,6 +685,7 @@ class Appointments {
     name = json['name'];
     hospital = json['hospital'];
     fees = json['fees'];
+    count =json['count'];
   }
 
   Map<String, dynamic> toJson() {
