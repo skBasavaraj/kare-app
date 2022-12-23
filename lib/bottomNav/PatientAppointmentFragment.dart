@@ -242,7 +242,7 @@ class _PatientAppointmentFragmentState
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: Colors.white),
         margin: EdgeInsets.all(10),
-        height: 200,
+        height: 160,
         child: Wrap(
           children: [
             Expanded(
@@ -251,7 +251,7 @@ class _PatientAppointmentFragmentState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.only(left: 15,top: 15,bottom: 5),
                     child: Text(
                       "Dr.${appointments.name!}",
                       style: GoogleFonts.jost(
@@ -262,7 +262,7 @@ class _PatientAppointmentFragmentState
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 15, top: 10),
+                    padding: const EdgeInsets.only(left: 15, ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -342,7 +342,7 @@ class _PatientAppointmentFragmentState
                             style:   GoogleFonts.jost(
                                 fontSize: 30,
                                 color: Colors.black,
-                                decoration: TextDecoration.none),
+                                 decoration: TextDecoration.none),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
@@ -350,7 +350,7 @@ class _PatientAppointmentFragmentState
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 15, top: 15),
+                    padding: const EdgeInsets.only(left: 15, top: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -441,7 +441,7 @@ class _PatientAppointmentFragmentState
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.only(left: 15,top: 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -486,15 +486,15 @@ class _PatientAppointmentFragmentState
                 ),
               ),
               Padding(
-                padding:   EdgeInsets.only(left: 15, top: 5),
+                padding:   EdgeInsets.only(left: 15, top: 0),
                 child: Expanded(
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Icon(
-                          Icons.location_on_sharp,
-                          size: 20,
+                          Icons.location_city_rounded,
+                          size: 24,
                           color: Colors.green,
                         ),
                         Padding(
@@ -504,7 +504,7 @@ class _PatientAppointmentFragmentState
                             width: 260,
                             height: 30,
                             child: Text(
-                            "Hospital: ${appointments.hospital} "+  appointments.location!,
+                            "Hospital: ${appointments.hospital} " ,
                                   style: GoogleFonts.jost(
                                 color: Colors.black,
                                 fontSize: 20,
@@ -516,12 +516,52 @@ class _PatientAppointmentFragmentState
                             ),
                           ),
                         ),
+
                         SizedBox(
                           width: 10,
                         )
                       ]),
                 ),
               ),
+              Padding(
+                padding:   EdgeInsets.only(left: 15, top: 0),
+                child: Expanded(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.location_on_sharp,
+                          size: 24,
+                          color: Colors.red,
+                        ),
+                        Padding(
+                          padding:   EdgeInsets.only(left: 4),
+                          child:  SizedBox(
+
+                            width: 260,
+                            height: 30,
+                            child: Text(
+                              " ${appointments.location} " ,
+                              style: GoogleFonts.jost(
+                                color: Colors.black,
+                                fontSize: 20,
+
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(
+                          width: 10,
+                        )
+                      ]),
+                ),
+              ),
+
               Padding(
                 padding: const EdgeInsets.only(left: 15,top:5),
                 child: Container(

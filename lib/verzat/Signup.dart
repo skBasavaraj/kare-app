@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_fonts/google_fonts.dart';
  
 import 'package:nb_utils/nb_utils.dart';
 import 'dart:async';
@@ -31,7 +32,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
   FilePickerResult? result;
 
   File? file;
+  String? dropdownvalue ;
+    String? cityName;
+  // List of items in our dropdown menu
+  var items = [
+    'Ahmedabad',
+    'Agra',
+    'Bengaluru',
+    'Bhopal',
+    'Chennai',
+    'Delhi',
+    'Ernakulam',
+    'Hyderabad',
+    'Indore',
+    'Jaipur',
+    'Kochi',
+    'Kolkata',
+    'Lucknow',
+    'Mumbai',
+    'Pune',
 
+  ];
   List<String> bloodGroupList = ['A+', 'B+', 'AB+', 'O+', 'A-', 'B-', 'AB-', 'O-'];
   List<GenderModel> genderList = [];
   TextEditingController fileCont = TextEditingController();
@@ -343,7 +364,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         textInputAction: TextInputAction.newline,
                       ),*/
                       16.height,
-                      AppTextField(
+                    /*  AppTextField(
                         controller: cityCont,
                         focus: cityFocus,
                         nextFocus: stateFocus,
@@ -354,40 +375,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             label: 'City'
                             ,text: 'City'
                         ),
+                      ),*/
+                      Container(
+                        decoration:  BoxDecoration(color: Color(0xFFEDF4FF) ,borderRadius:  BorderRadius.circular(10),border:Border.all(color: Colors.blue,width: 1)),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10,right: 10),
+                          child: DropdownButton(
+                            hint:Text("Select City",style:GoogleFonts.jost(color: Colors.grey) ,),
+                             iconSize: 30,
+                            onTap: () {
+
+                            },
+                            dropdownColor: Colors.white,
+
+                            borderRadius: BorderRadius.circular(10),
+                     isExpanded: true,
+                            // Initial Value
+                           value: dropdownvalue ,
+
+                            // Down Arrow Icon
+                            icon: const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+
+                            // Array list of items
+                            items: items.map((String items) {
+
+                              return DropdownMenuItem(
+
+                                 value: items,
+                                child: Text(items),
+
+                              );
+                            }).toList(),
+                            // After selecting the desired option,it will
+                            // change button value to selected value
+                            onChanged: (String? newValue) {
+                              cityName =newValue;
+                              setState(() {
+                                dropdownvalue = newValue!;
+                              });
+                            },
+                          ),
+                        ),
                       ),
-                      /*16.height,
-                      AppTextField(
-                        controller: stateCont,
-                        focus: stateFocus,
-                        nextFocus: countryFocus,
-                        textStyle: primaryTextStyle(color:  textPrimaryBlackColor ),
 
-                        textFieldType: TextFieldType.OTHER,
-                        decoration: textInputStyle(context: context,
-                            label: 'State'
-                            ,text: 'State'
-                        ),
-                      ),*/
-                      /*16.height,
-                      AppTextField(
-                        controller: countryCont,
-                        focus: countryFocus,
-                        nextFocus: postalCodeFocus,
-                        textStyle: primaryTextStyle(color:  textPrimaryBlackColor ),
-
-                        textFieldType: TextFieldType.OTHER,
-                        decoration: textInputStyle(context: context,
-                            label: 'Country',
-                            text: 'Country'
-                        ),
-                      ),*/
-                      /*16.height,
-                      AppTextField(
-                        controller: postalCodeCont,
-                        focus: postalCodeFocus,
-                        textFieldType: TextFieldType.OTHER,
-                        decoration: textInputStyle(context: context, label: 'PostalCode'),
-                      ),*/
 
                       16.height,
                       Align(
@@ -472,7 +502,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         onTap: () async {
                           // signUp();
                           var info = await  ApiService.register(filePath!,firstNameCont.text.validate(),lastNameCont.text.validate()
-                          ,emailCont.text.validate(),contactNumberCont.text,cityCont.text.validate(),passwordCont.text.validate(),dOBCont.text
+                          ,emailCont.text.validate(),contactNumberCont.text,cityName!,passwordCont.text.validate(),dOBCont.text
                              ,  genderValue.validate());
 
                           if(info!.error =="001"){
@@ -500,7 +530,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               // ),*/
               Positioned(
                 child: IconButton(
-                  icon: Icon(Icons.arrow_back_ios, size: 20),
+                  icon: Icon(Icons.arrow_back, size: 20),
                   onPressed: () {
                     finish(context);
                   },

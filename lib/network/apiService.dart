@@ -969,6 +969,7 @@ Future<void> logout(BuildContext context) async {
   await removeKey(USER_CITY);
   await removeKey(PASSWORD);
   await removeKey(USER_TIME);
+  await removeKey(USER_LOCATION);
   await removeKey(IS_LOGGED_IN);
 
   //appStore.setLoggedIn(false);

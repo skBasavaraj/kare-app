@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'package:nb_utils/nb_utils.dart';
 import 'package:zatcare/appConstants.dart';
@@ -31,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   init() async {
     checkFirstSeen();
- await getNotificaton( );
+ //await getNotificaton( );
   }
 
 
@@ -42,6 +44,9 @@ class _SplashScreenState extends State<SplashScreen> {
     afterBuildCreated(() {
       int themeModeIndex = getIntAsync(THEME_MODE_INDEX);
      });
+
+
+    //cityCont.text = first.locality!;
 
     await Future.delayed(Duration(seconds: 2));
 
