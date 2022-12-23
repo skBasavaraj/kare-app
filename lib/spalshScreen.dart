@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
 
     //cityCont.text = first.locality!;
-
+       // print("CJ4"+await status());
     await Future.delayed(Duration(seconds: 2));
 
     //print("P0"+getBoolAsync(IS_LOGGED_IN).toString());

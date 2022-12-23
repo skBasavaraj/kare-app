@@ -344,38 +344,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           dateBottomSheet(context);
                         },
                       ),
-                    /*  16.height,
-                      AppTextField(
-                        controller: addressCont,
-                        focus: addressFocus,
-                        nextFocus: cityFocus,
-                        textStyle: primaryTextStyle(color:  textPrimaryBlackColor ),
 
-                        keyboardType: TextInputType.multiline,
-                        // maxLines: null,
-                        textFieldType: TextFieldType.OTHER,
-
-                        decoration: textInputStyle(context: context,
-                            label: 'Address'
-                            ,text: 'Address'
-                        ).copyWith(alignLabelWithHint: true),
-                        minLines: 4,
-                        maxLines: 4,
-                        textInputAction: TextInputAction.newline,
-                      ),*/
                       16.height,
-                    /*  AppTextField(
-                        controller: cityCont,
-                        focus: cityFocus,
-                        nextFocus: stateFocus,
-                        textStyle: primaryTextStyle(color:  textPrimaryBlackColor ),
 
-                        textFieldType: TextFieldType.OTHER,
-                        decoration: textInputStyle(context: context,
-                            label: 'City'
-                            ,text: 'City'
-                        ),
-                      ),*/
                       Container(
                         decoration:  BoxDecoration(color: Color(0xFFEDF4FF) ,borderRadius:  BorderRadius.circular(10),border:Border.all(color: Colors.blue,width: 1)),
                         child: Padding(

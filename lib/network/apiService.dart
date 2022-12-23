@@ -1059,4 +1059,14 @@ async {
  }
   return countNum;
 }
+Future<String> status()
+async {
+  var countNum;
+  var num = await getNotificaton();
+  for(var item in num){
+    countNum = item.status.toString();
+    print(countNum+"ggg");
+  }
+  return countNum;
+}
 

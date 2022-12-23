@@ -8,6 +8,7 @@ import 'package:zatcare/bottomNav/settintgs.dart';
 import 'package:zatcare/bottomNav/topWidget.dart';
 
 import '../appConstants.dart';
+import '../network/apiService.dart';
 import '../utils/color_use.dart';
 import 'PDashBoardFragment.dart';
 import 'PatientAppointmentFragment.dart';
@@ -18,21 +19,49 @@ class PatientDashBoardScreen extends StatefulWidget {
   _PatientDashBoardScreenState createState() => _PatientDashBoardScreenState();
 }
 
-class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
+class _PatientDashBoardScreenState extends State<PatientDashBoardScreen>with WidgetsBindingObserver {
   Color disableIconColor =   secondaryTxtColor;
 
   int currentIndex = 0;
 
   double iconSize = 24;
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+      // --
+        print('Resumed');
+        break;
+      case AppLifecycleState.inactive:
+      // --
+        print('Inactive');
+        break;
+      case AppLifecycleState.paused:
+      // --
+        print('Paused');
+        break;
+      case AppLifecycleState.detached:
+      // --
+        print('Detached');
+        break;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     init();
-  }
+    WidgetsBinding.instance.addObserver(this);
 
+  }
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
   init() async {
     setStatusBarColor(  scaffoldBgColor);
+    await getNotificaton();
 
 
 

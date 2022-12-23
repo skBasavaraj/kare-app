@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,7 +34,7 @@ void main() async {
   packageInfo = await getPackageInfo();
 
 
-  await  Workmanager().initialize(
+/*  await  Workmanager().initialize(
 
     // The top level function, aka callbackDispatcher
       callbackDispatcher,
@@ -41,9 +42,9 @@ void main() async {
       // If enabled it will post a notification whenever
       // the task is running. Handy for debugging tasks
       isInDebugMode: true
-  );
+  );*/
   // Periodic task registration
-  await Workmanager()
+/*  await Workmanager()
       .registerPeriodicTask(
       "2",
 
@@ -51,14 +52,14 @@ void main() async {
       "ZatCare",
 
 
-      frequency:   Duration(minutes: 1),
+      frequency:   Duration(minutes: 15),
 
       constraints: Constraints(networkType:  NetworkType.connected)
-  );
+  );*/
   runApp(MyApp());
 }
 
-void callbackDispatcher() {
+/*void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
 
      FlutterLocalNotificationsPlugin flip = FlutterLocalNotificationsPlugin();
@@ -68,34 +69,14 @@ void callbackDispatcher() {
     var android = const AndroidInitializationSettings('@mipmap/app_icon');
     var IOS = const DarwinInitializationSettings();
 
-     //  _showNotificationWithDefaultSound(flip, "you appointment approved make payment to confirm");
 
-    // initialise settings for both Android and iOS device.
-
-    // var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/appStatus.php'));
-    // request.fields.addAll({
-    //   'userID': getStringAsync(USER_ID)
-    //
-    // });
-    //
-    // http.StreamedResponse response = await request.send();
-    //
-    // if (response.statusCode == 200) {
-    //
-    //   var response1 = await http.Response.fromStream(response);
-    //   await  _showNotificationWithDefaultSound(flip, "you appointment approved make payment to confirm");
-    //
-    //
-    // }
-    // else {
-    //   print(response.reasonPhrase);
-    // }
     logDev.log("NOT message1", name: ';;');
     var settings = InitializationSettings(android: android,iOS: IOS);
     flip.initialize(settings);
-     var getCount = await getNotificaton();
+    //var getCount = await getNotificaton();
 
-     print("length11"+getCount.first.name.toString());
+     //
+     // print("length11"+getCount.first.name.toString());
      _showNotificationWithDefaultSound(flip, "Nothing");
 
      logDev.log("NOT message", name: ';;');
@@ -103,9 +84,9 @@ void callbackDispatcher() {
     return Future.value(true);
 
   });
-}
+}*/
 
-Future _showNotificationWithDefaultSound(flip,String msg) async {
+/*Future _showNotificationWithDefaultSound(flip,String msg) async {
 
   // Show a notification after every 15 minute with the first
   // appearance happening a minute after invoking the method
@@ -127,7 +108,7 @@ Future _showNotificationWithDefaultSound(flip,String msg) async {
       msg ,
       platformChannelSpecifics, payload: 'Default_Sound'
   );
-}
+}*/
 
 class MyApp extends StatelessWidget {
   @override
@@ -145,4 +126,6 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+
+
 }
