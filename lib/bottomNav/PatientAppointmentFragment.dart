@@ -186,11 +186,7 @@ class _PatientAppointmentFragmentState
                 if (snapshot.data == null) {
                   // logDev.log(snapshot.data,name:"123");
                   print(snapshot.data);
-                  return Lottie.network(
-                    "https://assets2.lottiefiles.com/packages/lf20_eMqO0m.json",
-                    height: 400,
-                    width: 200,
-                  );
+                  return  Image.asset('images/noFound.png');
                 } else {
                   _app = [];
                   _app = snapshot.data;

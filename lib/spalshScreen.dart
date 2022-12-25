@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 
 import 'package:nb_utils/nb_utils.dart';
 import 'package:zatcare/appConstants.dart';
+import 'package:zatcare/bottomNav/PDashBoardFragment.dart';
 import 'package:zatcare/bottomNav/PatientDashBoardScreen.dart';
 
 import 'dart:developer' as logDev;
@@ -13,6 +14,7 @@ import 'dart:developer' as logDev;
 import 'package:zatcare/signInScreen.dart';
 import 'package:zatcare/utils/color_use.dart';
 
+import 'doctor/DashboardDoctor/DoctorDashBoard.dart';
 import 'network/apiService.dart';
 
 
@@ -41,9 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future checkFirstSeen() async {
     //setStatusBarColor(Colors.transparent, statusBarBrightness: Brightness.dark, statusBarIconBrightness: appStore.isDarkModeOn ? Brightness.light : Brightness.dark);
 
-    afterBuildCreated(() {
-      int themeModeIndex = getIntAsync(THEME_MODE_INDEX);
-     });
+
 
 
     //cityCont.text = first.locality!;
@@ -52,8 +52,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
     //print("P0"+getBoolAsync(IS_LOGGED_IN).toString());
     if(getBoolAsync(IS_LOGGED_IN)==true) {
-
-      PatientDashBoardScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Scale);
+       if(getStringAsync(USER_TYPE)=="user") {
+         PatientDashBoardScreen().launch(
+             context, pageRouteAnimation: PageRouteAnimation.Scale);
+       }else if(getStringAsync(USER_TYPE)=="doctor"){
+         DoctorDashboardScreen().launch(
+             context, pageRouteAnimation: PageRouteAnimation.Scale);
+       }
     }else{
 
       SignInScreen().launch(context, isNewTask: true);

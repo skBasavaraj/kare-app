@@ -9,6 +9,7 @@ import 'package:zatcare/bottomNav/topWidget.dart';
 
 import '../appConstants.dart';
 import '../network/apiService.dart';
+import '../network/doctorApiService.dart';
 import '../utils/color_use.dart';
 import 'PDashBoardFragment.dart';
 import 'PatientAppointmentFragment.dart';
@@ -30,6 +31,7 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen>with Wid
     switch (state) {
       case AppLifecycleState.resumed:
       // --
+
         print('Resumed');
         break;
       case AppLifecycleState.inactive:
@@ -61,7 +63,7 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen>with Wid
   }
   init() async {
     setStatusBarColor(  scaffoldBgColor);
-    await getNotificaton();
+    //await getNotificaton();
 
 
 
@@ -86,9 +88,11 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen>with Wid
            body: Stack(
             children: [
               TopNameWidget() ,
+
               Container(
                 margin: EdgeInsets.only(top: currentIndex != 3 ? 70 : 0),
                 child: [
+
                   PDashBoardFragment(),
                   PatientAppointmentFragment(),
                   FeedListFragment(),

@@ -15,6 +15,7 @@ import 'dart:developer' as logDev;
 
 import 'appConstants.dart';
 import 'bottomNav/PatientDashBoardScreen.dart';
+import 'doctor/DashboardDoctor/DoctorDashBoard.dart';
 import 'network/apiService.dart';
 
 
@@ -32,8 +33,11 @@ class _SignInScreenState extends State<SignInScreen> {
   var emailFocus = FocusNode();
   var passwordFocus = FocusNode();
    int selectedIndex = 0;
+  String Type="user";
+  List<DemoLoginModel> demoLoginData =  [];
 
-  @override
+
+   @override
   void initState() {
     super.initState();
     init();
@@ -47,6 +51,8 @@ class _SignInScreenState extends State<SignInScreen> {
       isRemember = true;
       emailCont.text = getStringAsync(USER_EMAIL);
      }
+    demoLoginData.add(DemoLoginModel('images/icons/user.png'));
+    demoLoginData.add(DemoLoginModel('images/icons/doctorIcon.png'));
   }
 
   void forgotPasswordDialog() {
@@ -221,6 +227,52 @@ class _SignInScreenState extends State<SignInScreen> {
                          SignUpScreen().launch(context);
                       },
                     ),
+                    20.height,
+                    HorizontalList(
+                      itemCount: demoLoginData.length,
+                      spacing: 16,
+                      itemBuilder: (context, index) {
+                        DemoLoginModel data = demoLoginData[index];
+                        bool isSelected = selectedIndex == index;
+
+                        return GestureDetector(
+                          onTap: () {
+                            selectedIndex = index;
+                            setState(() {});
+
+                            if (index == 0) {
+                              successToast("User login");
+                              Type ="user";
+                              // emailCont.text = patientEmail;
+                              // passwordCont.text = loginPassword;
+                            } else if (index == 1) {
+                              successToast("Doctor login");
+                                Type ="doctor";
+                              // emailCont.text = receptionistEmail;
+                              // passwordCont.text = loginPassword;
+                            }
+                          },
+                          child: Container(
+                            child: Image.asset(
+                              data.loginTypeImage.validate(),
+                              height: 22,
+                              width: 22,
+                              fit: BoxFit.cover,
+                              color: isSelected ? white : appSecondaryColor,
+                            ),
+                            decoration: boxDecorationWithRoundedCorners(
+                              boxShape: BoxShape.circle,
+                              backgroundColor: isSelected
+                                  ? appSecondaryColor
+                                  : false
+                                  ? cardDarkColor
+                                  : white,
+                            ),
+                            padding: EdgeInsets.all(12),
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -238,30 +290,41 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void signIn(String email, String password) async {
-    var info = await ApiService.login(email, password);
-    if (info!.error == "000") {
-      setValue(USER_ID,  info.id);
-      setValue(USER_CITY,info.city);
-      setValue(USER_EMAIL,  info.email);
-      setValue(USER_NAME, info.name);
-      setValue(USER_MOBILE, info.mobile);
+    var info = await ApiService.login(email,  password, Type);
 
+    if (info!.error == "000") {
+     await setValue(USER_ID,  info.id);
+     await setValue(USER_CITY,info.city);
+     await  setValue(USER_EMAIL,  info.email);
+     await  setValue(USER_NAME, info.name);
+     await  setValue(USER_MOBILE, info.mobile);
+     await  setValue(USER_TYPE, info.type);
       var imagePath = USER_IMAGE_URL+info.file!;
       setValue(PROFILE_IMAGE, imagePath);
-
-
-    //  setValue(USER_PASSWORD, passwordCont.text);
-     // setValue(USER_STATE,info.state);
       setValue(IS_LOGGED_IN,  true);
       successToast("login successful");
-      Navigator.pushReplacement(
+     if(info.type=="user") {
+       PatientDashBoardScreen().launch(
+           context, pageRouteAnimation: PageRouteAnimation.Scale);
+     }else if(info.type=="doctor"){
+       DoctorDashboardScreen().launch(
+           context, pageRouteAnimation: PageRouteAnimation.Scale);
+       ;
+     }
+      /*Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => PatientDashBoardScreen(),
         ),
-      );
+      );*/
     }else{
       print(info.message);
     }
   }
+}
+
+class DemoLoginModel {
+  String? loginTypeImage;
+
+  DemoLoginModel(this.loginTypeImage);
 }

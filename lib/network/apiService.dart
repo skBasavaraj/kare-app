@@ -35,7 +35,7 @@ class ApiService {
         'POST', Uri.parse('https://admin.verzat.com/user-api/register.php'));
     request.fields.addAll({
 
-      'type': 'user',
+      'type':  'user',
       'name': name,
       'username':  username,
       'email': email,
@@ -62,13 +62,14 @@ class ApiService {
 
 
 
-  static Future<loginInfo?> login(String email, String password) async {
+  static Future<loginInfo?> login(String email, String password,String type) async {
     var request = http.MultipartRequest(
       //  'POST', Uri.parse(url+'/UserApi/login.php'));
         'POST', Uri.parse("https://admin.verzat.com/user-api/login.php"));
     request.fields.addAll({
       'email': email,
       'password': password,
+      'type':type
     });
 
     var Stremresponse = await request.send();
@@ -88,7 +89,7 @@ class ApiService {
     var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/bookAppointment.php'));
     request.fields.addAll({
       'userId': userId,
-      'role': 'user',
+      'role': getStringAsync(USER_TYPE),
       'doctorId': doctorId,
       'patientName': patientName,
       'patientAge': patientAge,
@@ -149,6 +150,7 @@ class ApiService {
     return msgList;
   }*/
 }
+
 Future<Timers?> updateTime(String senderId, String receiverId,String time) async {
   var request = http.MultipartRequest(
       'POST', Uri.parse(ApiService.url+'/UserApi/updateTime.php'));
@@ -406,7 +408,7 @@ Future<List<Msg>> getMessages(String? currentUserId, String? receiverId) async {
   var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/messages.php'));
   request.fields.addAll({
     'receiver_type': 'doctor',
-    'sender_type': 'user',
+    'sender_type': getStringAsync(USER_TYPE),
     'sender_id': currentUserId!,
     'receiver_id': receiverId!
   });
@@ -521,6 +523,7 @@ class loginInfo {
   String? token;
   String? error;
   String? id;
+  String? type;
   String? message;
   String? name;
   String? email;
@@ -534,13 +537,14 @@ class loginInfo {
 
 
 
-  loginInfo(this.token, this.error, this.id, this.message, this.email,this.name,
+  loginInfo(this.token, this.error, this.id,this.type, this.message, this.email,this.name,
       this.address, this.city, this.state, this.lastName, this.photo,this.mobile);
 
   loginInfo.fromJson(Map<String, dynamic> json) {
     token = json['token'];
     error = json['error'];
     id = json['id'];
+    type = json['type'];
     message = json['message'];
     email = json['email'];
     name = json['name'];
@@ -960,7 +964,7 @@ Future<void> logout(BuildContext context) async {
   await removeKey(TOKEN);
   await removeKey(USER_ID);
   await removeKey(USER_NAME);
-  // await removeKey(USER_EMAIL);
+  await removeKey(USER_EMAIL);
   await removeKey(USER_DISPLAY_NAME);
   await removeKey(PROFILE_IMAGE);
   await removeKey(USER_MOBILE);
@@ -970,6 +974,7 @@ Future<void> logout(BuildContext context) async {
   await removeKey(PASSWORD);
   await removeKey(USER_TIME);
   await removeKey(USER_LOCATION);
+  await removeKey(USER_TYPE);
   await removeKey(IS_LOGGED_IN);
 
   //appStore.setLoggedIn(false);
@@ -1041,13 +1046,14 @@ Future<List<Appointments>> getNotificaton( ) async {
     );
 
     apptmntList.add(appointments);
-    ApiService.notiCount = apptmntList.length.toString();
+  //  ApiService.notiCount = apptmntList.length.toString();
 
   }
 
 
   return apptmntList;
 }
+/*
 
 Future<String> count()
 async {
@@ -1069,4 +1075,5 @@ async {
   }
   return countNum;
 }
+*/
 

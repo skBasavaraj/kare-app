@@ -25,7 +25,7 @@ class _TopNameWidgetState extends State<TopNameWidget> {
   var num;
   @override
   void initState() {
-   init();
+   //init();
     super.initState();
 
   }
@@ -181,10 +181,10 @@ class _TopNameWidgetState extends State<TopNameWidget> {
     return Text( "");
   }
 
-  Future<void> init() async {
+ /* Future<void> init() async {
       num =await count().toString();
 
-  }
+  }*/
   String greeting() {
     var hour = DateTime.now().hour;
     if (hour < 12) {
