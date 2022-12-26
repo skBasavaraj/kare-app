@@ -3,15 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:geocoding/geocoding.dart';
-import 'dart:developer' as logDev;
-import 'package:geolocator/geolocator.dart';
-import 'package:nb_utils/nb_utils.dart';
+ import 'dart:developer' as logDev;
+ import 'package:nb_utils/nb_utils.dart';
 
 import '../appConstants.dart';
-import '../bottomNav/PatientAppointmentFragment.dart';
-import '../signInScreen.dart';
-import '../utils/appCommon.dart';
+
 Future<List<getPatientCounts>>? getDoctorRequested(  ) async {
   var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/doctorGetAppointments.php'));
   request.fields.addAll({
@@ -35,24 +31,15 @@ Future<List<getPatientCounts>>? getDoctorRequested(  ) async {
     // ApiService.notiCount = countList.length.toString();
 
   }
-
-
   return countList;
-
 
 }
 Future<List<doctorGetAppointments>>? todayAppointment() async{
   var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/dtodayAppointment.php'));
   request.fields.addAll({
-    'doctorID': '14'
+    'doctorID': getStringAsync(USER_ID)
   });
-  //  var Stremresponse = await request.send();
 
-  /*if (Stremresponse.statusCode == 200) {
-    var response = await http.Response.fromStream(Stremresponse);
-    final result = jsonDecode(response.body);
-    return getPatientCounts.fromJson(result);
-  }*/
 
  http.StreamedResponse response = await request.send();
 
@@ -97,6 +84,60 @@ Future<List<doctorGetAppointments>>? todayAppointment() async{
 
 
  return countList;
+
+}
+Future<List<doctorGetAppointments>>? typesAppointment(String type) async{
+  var request = http.MultipartRequest('POST', Uri.parse(
+      'https://admin.verzat.com/user-api/typeAppointments.php'));
+  request.fields.addAll({
+    'doctorID': getStringAsync(USER_ID)
+    ,'status': type
+  });
+
+
+  http.StreamedResponse response = await request.send();
+
+  var response1 = await http.Response.fromStream(response);
+  List<doctorGetAppointments> countList = [];
+  var appList = jsonDecode( response1.body);
+  // print("hiii${ appList }");
+  for(var item in appList){
+    doctorGetAppointments appointments = doctorGetAppointments(
+      id: item['id'],
+      userID: item['userID'],
+      role: item['role'],
+      doctorID: item['doctorID'],
+      patientName: item['patientName'],
+      patientAge: item['patientAge'],
+      patientNumber: item['patientNumber'],
+      patientEmail: item['patientEmail'],
+      patientGender: item['patientGender'],
+      apptDate: item['apptDate'],
+      apptTime: item['apptTime'],
+      bookDate: item['bookDate'],
+      bookTime: item['bookTime'],
+      bloodGroup: item['bloodGroup'],
+      subject: item['subject'],
+      description: item['description'],
+      appointmentId: item['appointmentId'],
+      status: item['status']
+      ,mobile: item['mobile'],
+      location: item['location'],
+      name:item['name'],
+      hospital: item['hospital'],
+      fees: item['fees'],
+      //   count:item['count'].toString()
+
+    );
+    print("printID"+getStringAsync(USER_ID));
+    countList.add(appointments);
+
+    // ApiService.notiCount = countList.length.toString();
+
+  }
+
+
+  return countList;
 
 }
 
