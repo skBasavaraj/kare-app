@@ -110,7 +110,7 @@ AlertDialog CheckOutDialog(BuildContext context, doctorGetAppointments list) {
               onTap: () {
                 hideKeyboard(context);
 
-                submit();
+                submit(list);
                 Navigator.of(context, rootNavigator: true).pop('dialog');
                 //  submit();
               },
@@ -124,4 +124,12 @@ AlertDialog CheckOutDialog(BuildContext context, doctorGetAppointments list) {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)));
 }
 
-Future<void> submit() async {}
+Future<void> submit(doctorGetAppointments list) async {
+  var info = await  doctorApprove("closed",list.id!,list.doctorID,list.apptDate, list.apptTime);
+  if(info!.error=="000"){
+    successToast("Your successfully updated details");
+    
+  }else{
+    errorToast(info.message!);
+  }
+}

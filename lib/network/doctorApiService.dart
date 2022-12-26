@@ -140,7 +140,67 @@ Future<List<doctorGetAppointments>>? typesAppointment(String type) async{
   return countList;
 
 }
+Future<EditAppointment?> editAppointment(String? endPoint,String? id,String? date,String? time) async{
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/${endPoint}'));
+  request.fields.addAll({
+    'id': id!,
+    'apptDate':  date!,
+    'apptTime':  time!
+  });
 
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 200) {
+    var response1 = await http.Response.fromStream(response);
+    final result = jsonDecode(response1.body);
+     return EditAppointment.fromJson(result);
+  }
+  else {
+    return null;
+   }
+}
+Future<EditAppointment?> doctorApprove(String? status,String? id,String? doctorID,String? date,String? time) async{
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/doctorApproveIt.php'));
+  request.fields.addAll({
+    'id': id!,
+    'doctorID':doctorID!,
+    'apptDate':  date!,
+    'apptTime':  time!,
+    'status':status!
+  });
+
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 200) {
+    var response1 = await http.Response.fromStream(response);
+    final result = jsonDecode(response1.body);
+    return EditAppointment.fromJson(result);
+  }
+  else {
+    return null;
+  }
+}
+
+class EditAppointment {
+  String? error;
+  String? message;
+
+  EditAppointment({this.error, this.message});
+
+  EditAppointment.fromJson(Map<String, dynamic> json) {
+    error = json['error'];
+    message = json['message'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['error'] = this.error;
+    data['message'] = this.message;
+    return data;
+  }
+}
 class doctorGetAppointments {
  String? id;
  String? userID;
