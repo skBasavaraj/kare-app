@@ -403,11 +403,16 @@ Future<Timers?> setTime(String senderId, String receiverId,String time) async {
 }
 
 Future<List<Msg>> getMessages(String? currentUserId, String? receiverId) async {
-  logDev.log('0',name:"12");
+   var type;
+ if(getStringAsync(USER_TYPE)=="user"){
+   type="doctor";
 
+ }else{
+   type="user";
+ }
   var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/messages.php'));
   request.fields.addAll({
-    'receiver_type': 'doctor',
+    'receiver_type': type,
     'sender_type': getStringAsync(USER_TYPE),
     'sender_id': currentUserId!,
     'receiver_id': receiverId!
@@ -423,7 +428,7 @@ Future<List<Msg>> getMessages(String? currentUserId, String? receiverId) async {
   var jsonArray = jsonData['msg'];
   List<Msg> msgList = [];
   print(jsonArray);
-  logDev.log('3',name:"12");
+  logDev.log('3',name:"27-12");
 
   for (var item in jsonArray) {
     Msg msg = Msg(
@@ -435,20 +440,21 @@ Future<List<Msg>> getMessages(String? currentUserId, String? receiverId) async {
          messageTime: item['messageTime']);
 
     msgList.add(msg);
-    logDev.log('4',name:"12");
+    logDev.log('4',name:"27-12");
 
   }
-  logDev.log('5',name:"12");
+  logDev.log('5',name:"27-12");
   return msgList;
 
 }
 
-Future<MsgSend?> sendMsg(String msg ,String token,String senderId,String receiverId) async{
+Future<MsgSend?> sendMsg(String msg , String senderId,String receiverId) async{
   var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/send_messages.php'));
   request.fields.addAll({
     'message': msg,
     'sender_id': senderId,
-    'receiver_id': receiverId
+    'receiver_id': receiverId,
+    'type':getStringAsync(USER_TYPE)
   });
 
 
@@ -463,7 +469,25 @@ Future<MsgSend?> sendMsg(String msg ,String token,String senderId,String receive
   }
 
 }
+Future<void> profileListCreate(String? senderID,String? receiverID )async {
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/profileList.php'));
+  request.fields.addAll({
+    'sender_id': senderID!,
+    'receiver_id': receiverID!
+  });
 
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 200) {
+    print(await response.stream.bytesToString());
+    print("27-12-Dec");
+  }
+  else {
+    print(response.reasonPhrase);
+  }
+
+}
 Future<void> setBook(String id ) async{
   var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/setBook.php'));
   request.fields.addAll({

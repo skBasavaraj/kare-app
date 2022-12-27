@@ -65,10 +65,14 @@ class ChatScreenState extends State<ChatScreen> {
     doctorName = "Dr."+concat;
     receiverId = widget.doctors?.id;
     userToken = getStringAsync(USER_TOKEN);
+    init ();
     getTimes();
      time = Timer.periodic(Duration(seconds: 1), (Timer t) =>   setState(() {
 
     }));
+  }
+  void init() async{
+    await  profileListCreate(currentUserId!,receiverId);
   }
 
 
@@ -257,7 +261,7 @@ class ChatScreenState extends State<ChatScreen> {
                    if (!currentFocus.hasPrimaryFocus) {
                      currentFocus.unfocus();
                    }
-                   sendMessage(msgText.text ,userToken,receiverId,currentUserId);
+                   sendMessage(msgText.text ,receiverId,currentUserId);
                    _scrollController.animateTo(
                      _scrollController.position.maxScrollExtent,
                      curve: Curves.easeOut,
@@ -273,11 +277,11 @@ class ChatScreenState extends State<ChatScreen> {
 
   }
 
-  void sendMessage(String msg, String? userToken, String? receiverId,String? currentUserId) async{
+  void sendMessage(String msg,   String? receiverId,String? currentUserId) async{
     setState(() {
       msgText.clear();
     });
-    var info = await sendMsg(msg, userToken!,currentUserId!,receiverId!);
+    var info = await sendMsg(msg, currentUserId!,receiverId!);
      if(info?.msg == "000"){
         successToast("send");
      }else{

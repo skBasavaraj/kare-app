@@ -37,7 +37,7 @@ Future<List<getPatientCounts>>? getDoctorRequested(  ) async {
 Future<List<doctorGetAppointments>>? todayAppointment() async{
   var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/dtodayAppointment.php'));
   request.fields.addAll({
-    'doctorID': getStringAsync(USER_ID)
+    'doctorID':  getStringAsync(USER_ID)
   });
 
 
@@ -140,6 +140,51 @@ Future<List<doctorGetAppointments>>? typesAppointment(String type) async{
   return countList;
 
 }
+Future<List<getProfileList>>? getPatientProfileList( ) async{
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/getProfileList.php'));
+  request.fields.addAll({
+    'doctorID': getStringAsync(USER_ID)
+  });
+
+
+
+  http.StreamedResponse response = await request.send();
+
+  var response1 = await http.Response.fromStream(response);
+  List<getProfileList> countList = [];
+  var appList = jsonDecode( response1.body);
+   for(var item in appList){
+    getProfileList profileList = getProfileList(
+      id: item['id'],
+      type: item['type'],
+      file:item['file'],
+      name:item['name'],
+      username: item['username'],
+      email: item['email'],
+      mobile: item['mobile'],
+      location: item['location'],
+      password: item['password'],
+      token: item['token'],
+      dob: item['dob'],
+      bloodGroup: item['bloodGroup'],
+      gender: item['gender'],
+      joining: item['joining'],
+      profile: item['profile'],
+      status: item['status'],
+      updated: item['updated']
+
+    );
+    print("printID"+getStringAsync(USER_ID));
+    countList.add(profileList);
+
+
+  }
+
+
+  return countList;
+
+}
+
 Future<EditAppointment?> editAppointment(String? endPoint,String? id,String? date,String? time) async{
   var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/${endPoint}'));
   request.fields.addAll({
@@ -182,7 +227,86 @@ Future<EditAppointment?> doctorApprove(String? status,String? id,String? doctorI
     return null;
   }
 }
+class getProfileList {
+  String? id;
+  String? type;
+  String? file;
+  String? name;
+  String? username;
+  String? email;
+  String? mobile;
+  String? location;
+  String? password;
+  String? token;
+  String? dob;
+  String? bloodGroup;
+  String? gender;
+  String? joining;
+  String? profile;
+  String? status;
+  String? updated;
 
+  getProfileList(
+      {this.id,
+        this.type,
+        this.file,
+        this.name,
+        this.username,
+        this.email,
+        this.mobile,
+        this.location,
+        this.password,
+        this.token,
+        this.dob,
+        this.bloodGroup,
+        this.gender,
+        this.joining,
+        this.profile,
+        this.status,
+        this.updated});
+
+  getProfileList.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    type = json['type'];
+    file = json['file'];
+    name = json['name'];
+    username = json['username'];
+    email = json['email'];
+    mobile = json['mobile'];
+    location = json['location'];
+    password = json['password'];
+    token = json['token'];
+    dob = json['dob'];
+    bloodGroup = json['bloodGroup'];
+    gender = json['gender'];
+    joining = json['joining'];
+    profile = json['profile'];
+    status = json['status'];
+    updated = json['updated'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['type'] = this.type;
+    data['file'] = this.file;
+    data['name'] = this.name;
+    data['username'] = this.username;
+    data['email'] = this.email;
+    data['mobile'] = this.mobile;
+    data['location'] = this.location;
+    data['password'] = this.password;
+    data['token'] = this.token;
+    data['dob'] = this.dob;
+    data['bloodGroup'] = this.bloodGroup;
+    data['gender'] = this.gender;
+    data['joining'] = this.joining;
+    data['profile'] = this.profile;
+    data['status'] = this.status;
+    data['updated'] = this.updated;
+    return data;
+  }
+}
 class EditAppointment {
   String? error;
   String? message;

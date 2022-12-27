@@ -294,6 +294,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
     if (info!.error == "000") {
      await setValue(USER_ID,  info.id);
+     await setValue(USER_TOKEN, info.token);
      await setValue(USER_CITY,info.city);
      await  setValue(USER_EMAIL,  info.email);
      await  setValue(USER_NAME, info.name);
