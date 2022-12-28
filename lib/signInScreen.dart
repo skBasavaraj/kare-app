@@ -86,28 +86,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     32.height,
                     Image.asset('images/appIcon.png', height: 200, width: 150)
                         .center(),
-                   /* 16.height,
-                    RichTextWidget(
-                      list: [
-                        TextSpan(
-                          text: appFirstName,
-                          style: boldTextStyle(
-                            size: 32,
-                            letterSpacing: 1,
-                            color:Colors.blue
-                          ),
-                        ),
-                        TextSpan(
-                          text: appSecondName,
-                          style: primaryTextStyle(
-                            size: 32,
-                            letterSpacing: 1,
-                            color:Colors.blue
-                            ,
-                          ),
-                        ),
-                      ],
-                    ).center(),*/
+
                     16.height,
 
                     Text(
@@ -182,10 +161,12 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            showDialog(context: context, builder:    (context) =>
-                                forgotAlertDialog(context)
-                              ,  );
-                       //    return forgotPasswordDialog();
+                            showDialog(context: context, builder:  (context) {
+                              return AlertDialog(content: StatefulBuilder(builder:
+                                  (BuildContext context, void Function(void Function()) setState)
+                              { return const forgotDialog(); },),);
+                            },);
+                        //    return forgotPasswordDialog();
 
                            // ChangePasswordScreen().launch(context,pageRouteAnimation: PageRouteAnimation.Scale);
                           },
@@ -218,15 +199,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: Text( 'Sign In',
                           style: TextStyle(color: Colors.white,)),
                     ),
-                    60.height,
-                    loginRegisterWidget(
-                      context,
-                      title:  'Dont have account?',
-                      subTitle: 'SignUp',
-                      onTap: () {
-                         SignUpScreen().launch(context);
-                      },
-                    ),
+                    40.height,
+                    hideSignUp(),
                     20.height,
                     HorizontalList(
                       itemCount: demoLoginData.length,
@@ -322,6 +296,20 @@ class _SignInScreenState extends State<SignInScreen> {
       print(info.message);
     }
   }
+
+Widget  hideSignUp() {
+     if(Type=="user") {
+       return loginRegisterWidget(
+         context,
+         title: 'Dont have account?',
+         subTitle: 'SignUp',
+         onTap: () {
+           SignUpScreen().launch(context);
+         },
+       );
+     }
+     return 5.width;
+}
 }
 
 class DemoLoginModel {

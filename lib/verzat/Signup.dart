@@ -351,7 +351,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         decoration:  BoxDecoration(color: Color(0xFFEDF4FF) ,borderRadius:  BorderRadius.circular(10),border:Border.all(color: Colors.blue,width: 1)),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10,right: 10),
-                          child: DropdownButton(
+                          child:
+                          DropdownButton(
                             hint:Text("Select City",style:GoogleFonts.jost(color: Colors.grey) ,),
                              iconSize: 30,
                             onTap: () {

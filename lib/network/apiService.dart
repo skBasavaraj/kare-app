@@ -233,10 +233,11 @@ Future<loginInfo?> uploadPaymentInfo(
   }
 
 }
-Future<loginInfo?> forgotPasswrd(String email, String password) async {
+Future<loginInfo?> forgotPasswrd(String email, String type) async {
   var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/forgotPassword.php'));
   request.fields.addAll({
-    'email': email
+    'email': email,
+    'type':type
     // 'password': password,
   });
 

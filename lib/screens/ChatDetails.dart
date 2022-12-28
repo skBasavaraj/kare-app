@@ -189,34 +189,40 @@ class ChatScreenState extends State<ChatScreen> {
           ),
         ],
       );
-    } else { 
+    } else {
       return Column(
         children: <Widget>[
           Container(
+
             alignment: Alignment.topLeft,
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.80,
-              ),
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.symmetric(vertical: 10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 1,
-                    blurRadius: 2,
+            child: Column(
+              children: [
+                Container(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 0.80,
                   ),
-                ],
-              ),
-              child: Text(
-                message.message!,
-                style: TextStyle(
-                  color: Colors.black54,
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.symmetric(vertical: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:   BorderRadius.only(topRight: Radius.elliptical(0, 100), bottomRight: Radius.circular(5),
+                      bottomLeft:
+                      Radius.circular(5),
+                      topLeft: Radius.circular(5),),
+
+                  ),
+                  child:Text(
+                    message.message!,
+                    style: GoogleFonts.jost(
+                      color: Colors.black54,
+
+
+                    ),
+                  ),
+
                 ),
-              ),
+
+              ],
             ),
           ),
           Container(
