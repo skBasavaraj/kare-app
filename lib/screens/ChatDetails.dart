@@ -370,12 +370,11 @@ class ChatScreenState extends State<ChatScreen> {
     var minutes1 =   formattedMinutesLeft.toString();
     var  secnd = formattedSecondsLeft.toString();
     final fastestMarathon = Duration(minutes:   minutes1.toInt(), seconds: secnd.toInt());
-    print(';;${fastestMarathon.inSeconds}${"%%"}${minutes1}');
-      updateTime(currentUserId!, receiverId!, fastestMarathon.inSeconds.toString()   );
-     print(';;${total.toString()}');
+       updateTime(currentUserId!, receiverId!, fastestMarathon.inSeconds.toString()   );
+  //   print(';;${total.toString()}');
      if(minutes1=="00"){
        timer?.cancel();
-       print("decline");
+     //  print("decline");
         updateTime(currentUserId!, receiverId!,  "done"   );
      }
      timer!.cancel();
@@ -401,7 +400,7 @@ class ChatScreenState extends State<ChatScreen> {
         ) async {
       // Simple check to see if we have Internet
       // ignore: avoid_print
-      print('''The statement 'this machine is connected to the Internet' is: ''');
+     // print('''The statement 'this machine is connected to the Internet' is: ''');
       final bool isConnected = await InternetConnectionChecker().hasConnection;
       // ignore: avoid_print
       print(
@@ -411,9 +410,9 @@ class ChatScreenState extends State<ChatScreen> {
 
       // We can also get an enum instead of a bool
       // ignore: avoid_print
-      print(
-        'Current status: ${await InternetConnectionChecker().connectionStatus}',
-      );
+      // print(
+      //   'Current status: ${await InternetConnectionChecker().connectionStatus}',
+      // );
       // Prints either InternetConnectionStatus.connected
       // or InternetConnectionStatus.disconnected
 
@@ -424,11 +423,11 @@ class ChatScreenState extends State<ChatScreen> {
           switch (status) {
             case InternetConnectionStatus.connected:
             // ignore: avoid_print
-              print('Data connection is available.');
+          //    print('Data connection is available.');
               break;
             case InternetConnectionStatus.disconnected:
             // ignore: avoid_print
-              print('You are disconnected from the internet.');
+             // print('You are disconnected from the internet.');
               break;
           }
         },

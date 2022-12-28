@@ -153,7 +153,7 @@ class ApiService {
 
 Future<Timers?> updateTime(String senderId, String receiverId,String time) async {
   var request = http.MultipartRequest(
-      'POST', Uri.parse(ApiService.url+'/UserApi/updateTime.php'));
+      'POST', Uri.parse('https://admin.verzat.com/user-api/updateTIme.php'));
   request.fields.addAll({
     'senderId': senderId,
     'receiverId':receiverId,
@@ -364,7 +364,7 @@ class CatList {
 }
 Future<Timers?> getTime(String senderId, String receiverId) async {
   var request = http.MultipartRequest(
-      'POST', Uri.parse(ApiService.url+'/UserApi/getTime.php'));
+      'POST', Uri.parse('https://admin.verzat.com/user-api/getTime.php'));
   request.fields.addAll({
     'senderId': senderId,
     'receiverId':receiverId
@@ -383,7 +383,7 @@ Future<Timers?> getTime(String senderId, String receiverId) async {
 }
 Future<Timers?> setTime(String senderId, String receiverId,String time) async {
   var request = http.MultipartRequest(
-      'POST', Uri.parse(ApiService.url+'/UserApi/setTime.php'));
+      'POST', Uri.parse('https://admin.verzat.com/user-api/setTime.php'));
   request.fields.addAll({
     'senderId': senderId,
     'receiverId':receiverId,

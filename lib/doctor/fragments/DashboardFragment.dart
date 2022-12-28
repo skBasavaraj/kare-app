@@ -40,7 +40,11 @@ class _DashboardFragmentState extends State<DashboardFragment> {
     super.didUpdateWidget(oldWidget);
     setState(() {});
   }
-
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+    print("refresh");
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

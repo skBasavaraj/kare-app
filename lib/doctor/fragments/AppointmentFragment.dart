@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:zatcare/appConstants.dart';
+import 'package:zatcare/network/apiService.dart';
+import 'package:zatcare/utils/color_use.dart';
 
 import '../../network/doctorApiService.dart';
 import '../../screens/ChatDetails.dart';
@@ -17,6 +20,14 @@ class AppointmentFragment extends StatefulWidget {
 
 class _AppointmentFragmentState extends State<AppointmentFragment> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -27,6 +38,7 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<getProfileList> list = snapshot!.data!;
+
                 return ListView.builder(
                   itemBuilder: (context, index) {
                     return profiles(list[index]);
@@ -45,41 +57,64 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
     );
   }
 
-  Widget profiles(getProfileList list) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+  Widget profiles(getProfileList list)   {
+     return Padding(
+      padding: EdgeInsets.symmetric(  ),
       child: Material(
+        color: Colors.white,
+
         shadowColor: Colors.grey,
-        elevation: 1,
-        borderRadius: BorderRadius.circular(10),
+
         child: InkWell(
-          borderRadius: BorderRadius.circular(10),
-          onTap: () {
+
+           onTap: () {
             DoctorChatScreen(list).launch(context,pageRouteAnimation: PageRouteAnimation.Scale);
           },
           splashColor: Colors.blue.shade100,
-          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child:
+          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             5.width,
-            CircleAvatar(
-              minRadius: 25,
-              backgroundImage: NetworkImage(
-             //     'https://admin.verzat.com/assets/images/uploads/users/${list.file}'),
-                  'https://admin.verzat.com/assets/images/user.png'),
-            ).paddingAll(2),
+            Expanded(
+              flex: 1,
+              child: CircleAvatar(
+                minRadius: 25,
+                backgroundColor: Colors.white,
+                backgroundImage: NetworkImage(
+
+               //     'https://admin.verzat.com/assets/images/uploads/users/${list.file}'),
+                    'https://admin.verzat.com/assets/images/user.png'),
+              ).paddingAll(2),
+            ),
             10.width,
-            MarqueeWidget(
-              child: Text(
-                list.name!,
-                style: GoogleFonts.roboto(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400),
-                softWrap: false,
-              ),
-            ).paddingTop(10)
-          ]),
+            Expanded(
+              flex: 4,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MarqueeWidget(
+                        child: Text(
+                          list.name!,
+                          style: GoogleFonts.roboto(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400),
+                          softWrap: false,
+                        ),
+                      ).paddingTop(5),
+
+                    ],
+               ),
+            )
+            ,/*Expanded(
+              flex: 1,
+                child:
+                Text( LastMessage.msg!,style: GoogleFonts.roboto(fontSize: 14,color: Colors.black54),).paddingTop(5)
+
+            )*/
+          ]).paddingOnly(left: 20,top: 5,bottom: 5),
         ),
       ),
     );
   }
+
 }

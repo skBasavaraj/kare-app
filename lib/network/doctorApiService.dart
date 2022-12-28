@@ -5,8 +5,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
  import 'dart:developer' as logDev;
  import 'package:nb_utils/nb_utils.dart';
+import 'package:zatcare/network/apiService.dart';
 
 import '../appConstants.dart';
+
+
+
+class LastMessage{
+  static  String? msg;
+  static   lastMsg(String userID,String patientID) async {
+     String? lastMessage;
+      await getMessages(userID, patientID).then((value) {
+        msg =   value.last.message!;
+       // msg = lastMessage.toString();
+            print("7000"+msg!);
+      });
+
+     return lastMessage;
+  }
+  static Future<String> lastMsgTime(String userID,String patientID) async {
+    var getmsg = await getMessages(userID, patientID);
+    var msg= getmsg.last;
+    return msg.messageTime!;
+  }
+}
 
 Future<List<getPatientCounts>>? getDoctorRequested(  ) async {
   var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/doctorGetAppointments.php'));
@@ -174,8 +196,7 @@ Future<List<getProfileList>>? getPatientProfileList( ) async{
       updated: item['updated']
 
     );
-    print("printID"+getStringAsync(USER_ID));
-    countList.add(profileList);
+     countList.add(profileList);
 
 
   }
