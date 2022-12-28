@@ -34,7 +34,7 @@ import 'color_use.dart';
 
  class _forgotDialogState extends State<forgotDialog> {
    Type _types = Type.user;
-  String? LoginType;
+  String? LoginType="user";
    @override
    Widget build(BuildContext context) {
      Size size = MediaQuery.of(context).size;
@@ -119,7 +119,3 @@ import 'color_use.dart';
      errorToast(info!.message!);
    }
  }
- /*
-
-
-*/

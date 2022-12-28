@@ -181,8 +181,7 @@ Future<loginInfo?> editRegister( String id,String name,
     String number,
     String city,
     String password,
-
-    ) async {
+     ) async {
   var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/editProfile.php'));
   request.fields.addAll({
     'id': id,
@@ -190,7 +189,8 @@ Future<loginInfo?> editRegister( String id,String name,
     'email': email,
     'mobile': number,
     'location': city,
-    'password': password
+    'password': password,
+    'type':getStringAsync(USER_TYPE)
   });
 
   // request.files.add(await http.MultipartFile.fromPath('photo',  file));

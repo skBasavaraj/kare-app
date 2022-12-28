@@ -27,7 +27,26 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   FilePickerResult? result;
+  String? dropdownvalue ;
+  String? cityName;
+  var items = [
+    'Ahmedabad',
+    'Agra',
+    'Bengaluru',
+    'Bhopal',
+    'Chennai',
+    'Delhi',
+    'Ernakulam',
+    'Hyderabad',
+    'Indore',
+    'Jaipur',
+    'Kochi',
+    'Kolkata',
+    'Lucknow',
+    'Mumbai',
+    'Pune',
 
+  ];
 
    List<GenderModel> genderList = [];
   TextEditingController fileCont = TextEditingController();
@@ -251,7 +270,7 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
                         textInputAction: TextInputAction.newline,
                       ),
                       16.height,*/
-                      AppTextField(
+                     /* AppTextField(
                         controller: cityCont,
                         focus: cityFocus,
                         nextFocus: stateFocus,
@@ -261,6 +280,48 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
                         decoration: textInputStyle(context: context,
                             label: 'City'
                             ,text: 'City'
+                        ),
+                      ),*/
+                      Container(
+                        decoration:  BoxDecoration(color: Color(0xFFEDF4FF) ,borderRadius:  BorderRadius.circular(10),border:Border.all(color: Colors.blue,width: 1)),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10,right: 10),
+                          child:
+                          DropdownButton(
+                            hint:Text("Select City",style:GoogleFonts.jost(color: Colors.grey) ,),
+                            iconSize: 30,
+                            onTap: () {
+
+                            },
+                            dropdownColor: Colors.white,
+
+                            borderRadius: BorderRadius.circular(10),
+                            isExpanded: true,
+                            // Initial Value
+                            value: dropdownvalue ,
+
+                            // Down Arrow Icon
+                            icon: const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+
+                            // Array list of items
+                            items: items.map((String items) {
+
+                              return DropdownMenuItem(
+
+                                value: items,
+                                child: Text(items),
+
+                              );
+                            }).toList(),
+                            // After selecting the desired option,it will
+                            // change button value to selected value
+                            onChanged: (String? newValue) {
+                              cityName =newValue;
+                              setState(() {
+                                dropdownvalue = newValue!;
+                              });
+                            },
+                          ),
                         ),
                       ),
                       16.height,
@@ -397,7 +458,7 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
                         onTap: () async {
                           // signUp();
                           var info = await editRegister(getStringAsync(USER_ID) ,firstNameCont.text.validate(), emailCont.text.validate(),
-                              contactNumberCont.text.toString(), cityCont.text,passwordCont.text.validate()
+                              contactNumberCont.text.toString(),cityName.toString(),passwordCont.text.validate()
 
                           ) ;
                           if(info!.error =="000"){
