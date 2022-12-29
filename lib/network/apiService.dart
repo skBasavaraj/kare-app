@@ -1027,10 +1027,11 @@ Future<bool> connectivityChecker()   async {
   }
   return connected;
 }
-Future<List<Appointments>> getNotificaton( ) async {
-  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/appStatus.php'));
+Future<List<Notifications>> getNotificaton( ) async {
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/fetchNotification.php'));
   request.fields.addAll({
-    'userID': getStringAsync(USER_ID),
+    'receiver_id': getStringAsync(USER_ID),
+    'receiver_type': getStringAsync(USER_TYPE)
 
   });
 
@@ -1038,37 +1039,25 @@ Future<List<Appointments>> getNotificaton( ) async {
   http.StreamedResponse response = await request.send();
 
   var response1 = await http.Response.fromStream(response);
-  List<Appointments> apptmntList = [];
+  List<Notifications> apptmntList = [];
   var appList = jsonDecode( response1.body);
  // print("hiii${ appList }");
   for(var item in appList){
-    Appointments appointments = Appointments(
-        id: item['id'],
-        userID: item['userID'],
-        role: item['role'],
-        doctorID: item['doctorID'],
-        patientName: item['patientName'],
-        patientAge: item['patientAge'],
-        patientNumber: item['patientNumber'],
-        patientEmail: item['patientEmail'],
-        patientGender: item['patientGender'],
-        apptDate: item['apptDate'],
-        apptTime: item['apptTime'],
-        bookDate: item['bookDate'],
-        bookTime: item['bookTime'],
-        bloodGroup: item['bloodGroup'],
-        subject: item['subject'],
-        description: item['description'],
-        appointmentId: item['appointmentId'],
-        status: item['status']
-        ,mobile: item['mobile'],
-        location: item['location'],
-        name:item['name'],
-        hospital: item['hospital'],
-        fees: item['fees'],
-        count:item['count'].toString()
+    Notifications appointments = Notifications(
+      id: item['id'],
+      activityA: item['activityA'],
+      activityB: item['activityB'],
+      userIDA: item['userIDA'],
+      typeA: item['typeA'],
+      userIDB: item['userIDB'],
+      typeB: item['typeB'],
+      dateN: item['dateN'],
+      timeN: item['timeN'],
+      name: item['name'],
+      status: item['status'],
+      file: item['file']
 
-    );
+     );
 
     apptmntList.add(appointments);
   //  ApiService.notiCount = apptmntList.length.toString();
@@ -1077,6 +1066,66 @@ Future<List<Appointments>> getNotificaton( ) async {
 
 
   return apptmntList;
+}
+class Notifications {
+  String? id;
+  String? activityA;
+  String? activityB;
+  String? userIDA;
+  String? typeA;
+  String? userIDB;
+  String? typeB;
+  String? dateN;
+  String? timeN;
+  String? name;
+  String? status;
+  String? file;
+
+  Notifications(
+      {this.id,
+        this.activityA,
+        this.activityB,
+        this.userIDA,
+        this.typeA,
+        this.userIDB,
+        this.typeB,
+        this.dateN,
+        this.timeN,
+        this.name,
+        this.status,
+        this.file});
+
+  Notifications.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    activityA = json['activityA'];
+    activityB = json['activityB'];
+    userIDA = json['userIDA'];
+    typeA = json['typeA'];
+    userIDB = json['userIDB'];
+    typeB = json['typeB'];
+    dateN = json['dateN'];
+    timeN = json['timeN'];
+    name = json['name'];
+    status = json['status'];
+    file = json['file'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['activityA'] = this.activityA;
+    data['activityB'] = this.activityB;
+    data['userIDA'] = this.userIDA;
+    data['typeA'] = this.typeA;
+    data['userIDB'] = this.userIDB;
+    data['typeB'] = this.typeB;
+    data['dateN'] = this.dateN;
+    data['timeN'] = this.timeN;
+    data['name'] = this.name;
+    data['status'] = this.status;
+    data['file'] = this.file;
+    return data;
+  }
 }
 /*
 

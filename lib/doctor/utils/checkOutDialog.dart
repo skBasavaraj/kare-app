@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:zatcare/network/doctorApiService.dart';
 
+import '../../appConstants.dart';
 import '../../utils/appCommon.dart';
 import '../../utils/color_use.dart';
 
@@ -126,9 +127,13 @@ AlertDialog CheckOutDialog(BuildContext context, doctorGetAppointments list) {
 
 Future<void> submit(doctorGetAppointments list) async {
   var info = await  doctorApprove("closed",list.id!,list.doctorID,list.apptDate, list.apptTime);
-  if(info!.error=="000"){
-    successToast("Your successfully updated details");
-    
+ if(info!.error=="000"){
+    var notification = await setNotification("You have approved appointment",  "Your Appointment approved in ${list!.hospital!}",   list.doctorID!, getStringAsync(USER_TYPE),  list!.userID!,  "user", list!.patientName!, "dateN", "timeN",  "not seen");
+    if(notification!.error=="000"){
+      successToast("Your successfully  done appointment");
+     }else{
+      errorToast(notification!.error!);
+    }
   }else{
     errorToast(info.message!);
   }

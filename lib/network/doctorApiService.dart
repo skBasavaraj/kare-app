@@ -30,6 +30,49 @@ class LastMessage{
   }
 }
 
+
+
+Future<loginInfo?>? updateNotification( ) async {
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/updateNotification.php'));
+  request.fields.addAll({
+  'userIDB': getStringAsync(USER_ID),
+  'typeB': getStringAsync(USER_TYPE),
+  'status': 'seen'
+   });
+  var Stremresponse = await request.send();
+
+  if (Stremresponse.statusCode == 200) {
+    var response = await http.Response.fromStream(Stremresponse);
+    final result = jsonDecode(response.body);
+    return loginInfo.fromJson(result);
+  } else {
+    return null;
+  }
+}
+
+Future<loginInfo?>? setNotification(String activityA,String activityB,String userIDA,String typeA,String userIDB,
+   String  typeB,String name,String dateN,String timeN,String status) async {
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/setNotification.php'));
+  request.fields.addAll({
+    'activityA':  activityA,
+    'activityB': activityB,
+    'userIDA': userIDA,
+    'typeA': typeA,
+    'userIDB':userIDB,
+    'typeB': typeB,
+    'name': name,
+    'status': 'not seen'
+  });
+   var Stremresponse = await request.send();
+
+  if (Stremresponse.statusCode == 200) {
+    var response = await http.Response.fromStream(Stremresponse);
+    final result = jsonDecode(response.body);
+    return loginInfo.fromJson(result);
+   } else {
+    return null;
+   }
+}
 Future<List<getPatientCounts>>? getDoctorRequested(  ) async {
   var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/doctorGetAppointments.php'));
   request.fields.addAll({

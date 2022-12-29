@@ -78,8 +78,8 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
                 backgroundImage: NetworkImage(
 
                     //     'https://admin.verzat.com/assets/images/uploads/users/${list.file}'),
-                    'https://admin.verzat.com/assets/images/user.png'),
-              ).paddingAll(2),
+                    'https://admin.verzat.com/assets/images/uploads/users/IMG_smt.jpg'),
+              ).paddingOnly(top:10),
             ),
             10.width,
             Expanded(
@@ -94,10 +94,10 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
                       style: GoogleFonts.roboto(
                           color: Colors.black,
                           fontSize: 18,
-                          fontWeight: FontWeight.w400),
+                          fontWeight: FontWeight.w600),
                       softWrap: false,
                     ),
-                  ).paddingTop(5),
+                  ).paddingTop(10),
                   5.height,
                   FutureBuilder<List<Msg>>(
                     future: getMessages(getStringAsync(USER_ID), list.id),
@@ -136,7 +136,7 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
                   ).paddingBottom(0);
                 }
               },
-            ).paddingOnly(top:5,right: 10)
+            ).paddingOnly(top:10,right: 10)
 
           ]).paddingOnly(left: 20, top: 5, bottom: 5),
         ),
