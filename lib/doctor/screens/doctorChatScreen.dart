@@ -263,7 +263,8 @@ class DoctorChatScreenState extends State<DoctorChatScreen> {
         children: <Widget>[
           Expanded(
 
-            child:FutureBuilder<List<Msg>> (
+            child:
+            FutureBuilder<List<Msg>> (
               future:  getMessages(currentUserId,receiverId),
 
               builder: (context, snapshot) {
