@@ -130,7 +130,7 @@ Future<void> submit(doctorGetAppointments list) async {
  if(info!.error=="000"){
     var notification = await setNotification("You have completed appointment",  "Your Appointment completed by  Dr.${getStringAsync(USER_NAME)}",   list.doctorID!, getStringAsync(USER_TYPE),  list!.userID!,  "user", list!.patientName!, "dateN", "timeN",  "not seen");
     if(notification!.error=="000"){
-      successToast("Your successfully  done appointment");
+       successToast("Your successfully  done appointment");
      }else{
       errorToast(notification!.error!);
     }

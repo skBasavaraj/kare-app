@@ -186,8 +186,7 @@ class _DashboardFragmentState extends State<DashboardFragment> {
         FutureBuilder<List<doctorGetAppointments>>(
       future:  todayAppointment(),
       builder: (_, snap) {
-        print(";;"+snap!.toString());
-        if (snap.hasData) {
+         if (snap.hasData) {
           List<doctorGetAppointments> list = snap!.data!;
           return ListView.builder(
             scrollDirection: Axis.horizontal,
