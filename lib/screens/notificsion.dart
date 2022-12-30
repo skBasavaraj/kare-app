@@ -27,18 +27,21 @@ class _UserNotificationState extends State<UserNotification> {
     return Scaffold(
       backgroundColor: scaffoldBgColor,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 0,
+              child:
               Padding(
                 padding: EdgeInsets.only(
-                  left: 20,
-                  top: 20,
+                   top: 0,
                 ),
-                child: Container(
-                  height: 30,
-                  child: Row(
+                child: Material(
+                  elevation: 2,
+                   color: Colors.blue,
+                  child:
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
@@ -47,15 +50,15 @@ class _UserNotificationState extends State<UserNotification> {
 
                               child: Icon(
                             Icons.arrow_back,
-                            color: Colors.black,
+                            color: Colors.white,
                             size: 30,
                           )
                           ,onTap: () {
                             pop(context);
-                          },),
+                          },).paddingOnly(top: 8,bottom:8,left: 10),
                           5.width,
                           Text("Notifications",
-                              style: GoogleFonts.jost(fontSize: 20)),
+                              style: GoogleFonts.jost(fontSize: 20,color: Colors.white)),
                         ],
                       ),
                       Container(
@@ -78,39 +81,45 @@ class _UserNotificationState extends State<UserNotification> {
                   ),
                 ),
               ),
-              FutureBuilder<List<Notifications>>(
-                future: getNotificaton(),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.data == null) {
-                    // logDev.log(snapshot.data,PatientName:"123");
-                    print(snapshot.data);
-                    return Lottie.network(
-                      "https://assets2.lottiefiles.com/packages/lf20_eMqO0m.json",
-                      height: 400,
-                      width: 200,
-                    );
-                  } else {
-                    _app = [];
-                    _app = snapshot.data;
+            ),
+            Expanded(
+              flex: 10,
+              child: SingleChildScrollView(
+                child: FutureBuilder<List<Notifications>>(
+                  future: getNotificaton(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null) {
+                      // logDev.log(snapshot.data,PatientName:"123");
+                      print(snapshot.data);
+                      return Lottie.network(
+                        "https://assets2.lottiefiles.com/packages/lf20_eMqO0m.json",
+                        height: 400,
+                        width: 200,
+                      );
+                    } else {
+                      _app = [];
+                      _app = snapshot.data;
 
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      // new
-                      scrollDirection: Axis.vertical,
-                      controller: _controller,
-                      padding: EdgeInsets.all(10),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        // print("kkl"+_app![index].patientName! );
-                        return appointments(_app![index]);
-                      },
-                    );
-                  }
-                },
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        reverse: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        // new
+                        scrollDirection: Axis.vertical,
+                        controller: _controller,
+                        padding: EdgeInsets.all(10),
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          // print("kkl"+_app![index].patientName! );
+                          return appointments(_app![index]);
+                        },
+                      );
+                    }
+                  },
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -209,14 +218,14 @@ class _UserNotificationState extends State<UserNotification> {
   Widget markButton(List<Notifications>? app) {
     if (app?.last!.status == "not seen") {
       return Material(
-          color: scaffoldBgColor,
+          color: Colors.blue,
           child: InkWell(
             onTap: ()   {
               updateSeen();
             },
             child: Center(
                 child: Text(
-              "mark as read ",
+              "mark as read ",style: GoogleFonts.jost(color:Colors.white),
             )),
           ));
     } else {

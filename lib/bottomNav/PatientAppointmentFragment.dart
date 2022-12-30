@@ -34,7 +34,7 @@ class _PatientAppointmentFragmentState
   List<String> pStatus = [];
   ScrollController _controller = new ScrollController();
   String? currentUserId;
-  String? statusType="pending";
+  String? statusType="approved";
 
   int selectIndex = -1;
   List<Appointments>? _app;
@@ -60,8 +60,8 @@ class _PatientAppointmentFragmentState
     pStatus.add("Pending");
     pStatus.add("Booked");
     pStatus.add('Completed');
-    pStatus.add('Cancelled');
-    pStatus.add('Past');
+    pStatus.add('rejected');
+   // pStatus.add('Past');
     selectIndex = 0;
 
     // await getConfiguration().catchError(log);
@@ -131,15 +131,11 @@ class _PatientAppointmentFragmentState
 
                     statusType = "approved";
 
-                    url = urlLink! + '/UserApi/getAppointments.php';
-                    successToast("Approved");
+                         successToast("Approved");
 
                     // appStore.setStatus('all');
                   } else if (index == 1) {
                     statusType = "pending";
-
-                    url = urlLink! + '/UserApi/getAppointments.php';
-                    successToast("pending");
 
 
                     // appStore.setStatus('-1');
@@ -147,29 +143,26 @@ class _PatientAppointmentFragmentState
                     successToast("booked");
                     statusType = "booked";
 
-                    url = urlLink! + 'appointmentDone.php';
 
 
                     //appStore.setStatus('3');
                   } else if (index == 3) {
                     successToast("Completed");
-                    statusType = "Completed";
-                    url = urlLink! + 'appointmentDone.php';
+                    statusType = "closed";
 
                   } else if (index == 4) {
-                    successToast("Cancel");
-                    statusType = "Cancel";
-                    url = urlLink! + 'appointmentDone.php';
-                    //appStore.setStatus('0');
+                    successToast("rejected");
+                    statusType = "rejected";
+                     //appStore.setStatus('0');
 
 
 
                     //appStore.setStatus('past');
-                  } else if(index == 5){
+                  } /*else if(index == 5){
                     successToast("closed");
                     statusType = "closed";
                     url = urlLink! + 'appointmentDone.php';
-                  } //
+                  } *///
                   setState(() {});
                 },
               );
@@ -407,7 +400,8 @@ class _PatientAppointmentFragmentState
         ),
       );
     } else if (appointments.status == "booked") {
-      return Container(
+      return
+        Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: Colors.white),
         margin: EdgeInsets.all(10),
@@ -587,7 +581,272 @@ class _PatientAppointmentFragmentState
           ),
         ),
       );
-    } else {
+    } else if (appointments.status == "closed") {
+      return
+        Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15), color: Colors.white),
+        margin: EdgeInsets.all(10),
+        height: 200,
+        child: Expanded(
+          child: Wrap(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15, top: 10),
+                      child: Text(
+                        "Dr.${appointments.name}",
+                        style:   GoogleFonts.jost(
+                            fontSize: 30,
+                            color: Colors.black,
+                            decoration: TextDecoration.none),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15,top: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.calendar_month,
+                      color: Colors.blue,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5),
+                      child: Text(
+                        "${appointments.apptDate}",
+                        style: GoogleFonts.jost(
+                            fontSize: 16,
+                            color: Colors.black,
+                            decoration: TextDecoration.none),
+                        maxLines: 2,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.watch_later_outlined,
+                          color: Colors.blue,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 5),
+                          child: Text(
+                            "${appointments.apptTime}",
+                            style: GoogleFonts.jost(
+                                fontSize: 16,
+                                color: Colors.black,
+                                decoration: TextDecoration.none),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding:   EdgeInsets.only(left: 15, top: 0),
+                child: Expanded(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.location_city_rounded,
+                          size: 24,
+                          color: Colors.green,
+                        ),
+                        Padding(
+                          padding:   EdgeInsets.only(left: 10),
+                          child:  SizedBox(
+
+                            width: 260,
+                            height: 30,
+                            child: Text(
+                              "Hospital: ${appointments.hospital} " ,
+                              style: GoogleFonts.jost(
+                                color: Colors.black,
+                                fontSize: 20,
+
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(
+                          width: 10,
+                        )
+                      ]),
+                ),
+              ),
+              Padding(
+                padding:   EdgeInsets.only(left: 15, top: 0),
+                child: Expanded(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.location_on_sharp,
+                          size: 24,
+                          color: Colors.red,
+                        ),
+                        Padding(
+                          padding:   EdgeInsets.only(left: 4),
+                          child:  SizedBox(
+
+                            width: 260,
+                            height: 30,
+                            child: Text(
+                              " ${appointments.location} " ,
+                              style: GoogleFonts.jost(
+                                color: Colors.black,
+                                fontSize: 20,
+
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(
+                          width: 10,
+                        )
+                      ]),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 15,top:5),
+                child: Container(
+                  width: 200,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.green),
+                  child: Center(
+                      child: Text(
+                        "Completed appointment",
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      )),
+                ),
+              ),
+              /* Padding(
+                padding: const EdgeInsets.all(10),
+                child: ElevatedButton(
+                    onPressed: () async {
+                      //  var info =    await get();
+
+                      _pay(appointments.doctorUpiAddress!,appointments.doctorName!);
+                    },
+                    child: Center(child: const Text("Payment pending"))),
+              )*/
+            ],
+          ),
+        ),
+      );
+    }  else if (appointments.status == "rejected") {
+      return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15), color: Colors.white),
+        margin: EdgeInsets.all(10),
+        height: 160,
+        child: Wrap(
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15,top: 15,bottom: 5),
+                    child: Text(
+                      "Dr.${appointments.name!}",
+                      style: GoogleFonts.jost(
+                          fontSize: 30,
+                          color: Colors.black,
+                          decoration: TextDecoration.none),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.calendar_month,
+                          color: Colors.blue,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Text(
+                            "${appointments.apptDate}",
+                            style: GoogleFonts.jost(
+                                fontSize: 16,
+                                color: Colors.black,
+                                decoration: TextDecoration.none),
+                            maxLines: 2,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.watch_later_outlined,
+                              color: Colors.blue,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 5),
+                              child: Text(
+                                "${appointments.apptTime}",
+                                style: GoogleFonts.jost(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.none),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: ElevatedButton(
+                        onPressed: buttonenabled ? () {} : null,
+                        child:
+                        Center(child: Text("your appointment has been canceled "))),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    else {
       NoDataFoundWidget();
     }
   }
