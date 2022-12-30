@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 
 import 'package:nb_utils/nb_utils.dart';
@@ -19,6 +20,7 @@ class DoctorDashboardScreen extends StatefulWidget {
 class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
   int currentIndex = 0;
   double iconSize = 24;
+  final cron = Cron();
 
   Color disabledIconColor =   secondaryTxtColor;
 
@@ -29,6 +31,12 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
   }
 
   init() async {
+       setStatusBarColor(  scaffoldBgColor);
+      cron.schedule(Schedule.parse('*/1 * * * * *'), () async {
+        setState(() { });
+
+        print('Runs every Five seconds');
+      });
     /*window.onPlatformBrightnessChanged = () {
       if (getIntAsync(THEME_MODE_INDEX) == ThemeModeSystem) {
         appStore.setDarkMode(MediaQuery.of(context).platformBrightness == Brightness.light);
@@ -99,5 +107,15 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    cancel();
+  }
+  cancel() async {
+    await cron.close();
+
   }
 }

@@ -111,8 +111,7 @@ Future<List<doctorGetAppointments>>? todayAppointment() async{
  var response1 = await http.Response.fromStream(response);
  List<doctorGetAppointments> countList = [];
  var appList = jsonDecode( response1.body);
- // print("hiii${ appList }");
- for(var item in appList){
+  for(var item in appList){
   doctorGetAppointments appointments = doctorGetAppointments(
       id: item['id'],
       userID: item['userID'],

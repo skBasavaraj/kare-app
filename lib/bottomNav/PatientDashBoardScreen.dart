@@ -1,6 +1,7 @@
 import 'dart:ui';
 
- import 'package:flutter/material.dart';
+ import 'package:cron/cron.dart';
+import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'package:nb_utils/nb_utils.dart';
@@ -26,6 +27,8 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen>with Wid
   int currentIndex = 0;
 
   double iconSize = 24;
+  final cron = Cron();
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
@@ -59,12 +62,17 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen>with Wid
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    cronCancell();
     super.dispose();
   }
   init() async {
     setStatusBarColor(  scaffoldBgColor);
     //await getNotificaton();
+    cron.schedule(Schedule.parse('*/1 * * * * *'), () async {
+      setState(() { });
 
+      print('Runs every Five seconds');
+    });
 
 
     window.onPlatformBrightnessChanged = () {
@@ -175,5 +183,8 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen>with Wid
         ),
       ),
     );
+  }
+ cronCancell() async {
+    await cron.close();
   }
 }

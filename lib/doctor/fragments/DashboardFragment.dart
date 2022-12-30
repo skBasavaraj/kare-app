@@ -1,4 +1,5 @@
 
+import 'package:cron/cron.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -33,6 +34,12 @@ class _DashboardFragmentState extends State<DashboardFragment> {
 
   init() async {
     setStatusBarColor(  scaffoldBgColor);
+    // final cron = Cron();
+    // cron.schedule(Schedule.parse('*/1 * * * * *'), () async {
+    //   setState(() { });
+    //
+    //   print('Runs every Five seconds');
+    // });
   }
 
   @override
