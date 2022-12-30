@@ -133,20 +133,39 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
       child: Scaffold(
 
         backgroundColor:  scaffoldBgColor,
-        body: Form(
+         body: Form(
+
           key: formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: Stack(
+          child: Column(
             children: [
+             Material(
+               elevation: 3,
+               child:  Row(
+                 children: [
+                   IconButton(
+                     icon: Icon(Icons.arrow_back, size: 30,color:Colors.white),
+                     onPressed: () {
+                       finish(context);
+                     },
+                   ).paddingLeft(10),
+                   Text("Edit your profile",style: GoogleFonts.jost(fontSize: 25,color: Colors.white),)
+                 ],
+               ),
+               color:Colors.blue
+
+
+
+             ),
               SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image.asset('images/appIcon.png', height: 150, width: 200),
+                      /*Image.asset('images/appIcon.png', height: 150, width: 200),
                          Text("Edit your Details",style:GoogleFonts.jost(color:Colors.blue, fontSize: 30,fontWeight: FontWeight.w500),
-                        ),
+                        ),*/
                       16.height,
                       AppTextField(
                         textStyle:  GoogleFonts.jost(color: textPrimaryBlackColor),
@@ -457,18 +476,29 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
                         shapeBorder: RoundedRectangleBorder(borderRadius: radius()),
                         onTap: () async {
                           // signUp();
-                          var info = await editRegister(getStringAsync(USER_ID) ,firstNameCont.text.validate(), emailCont.text.validate(),
-                              contactNumberCont.text.toString(),cityName.toString(),passwordCont.text.validate()
+                          if(firstNameCont.text.isNotEmpty&&emailCont.text.isNotEmpty&&passwordCont.text.isNotEmpty&&contactNumberCont.text.isNotEmpty) {
+                            var info = await editRegister(
+                                getStringAsync(USER_ID),
+                                firstNameCont.text.validate(),
+                                emailCont.text.validate(),
+                                contactNumberCont.text.toString(),
+                                cityName.toString(),
+                                passwordCont.text.validate()
 
-                          ) ;
-                          if(info!.error =="000"){
-                            successToast(info.message);
-                            Navigator.pop(context);
+                            );
+                            if (info!.error == "000") {
+                              successToast(info.message);
+                              snackBar(context,title: info.message!,backgroundColor: Colors.green.shade200);
+
+                              Navigator.pop(context);
+                            }
+                          }else {
+                            snackBar(context,title: "Please enter all the information",backgroundColor: Colors.red.shade200);
                           }
                         },
                         color: primaryColor,
-                        padding: EdgeInsets.all(16),
-                        child: Text( 'Submit', style: GoogleFonts.jost(color:  Colors.white)),
+                        padding: EdgeInsets.all(10),
+                        child: Text( 'Submit', style: GoogleFonts.jost(color:  Colors.white,fontSize:20)),
                       ),
                       /*24.height,
                       loginRegisterWidget(context, title: languageTranslate('AlreadyAMember'), subTitle: languageTranslate('Login'), onTap: () {
@@ -482,18 +512,7 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
               // Observer(
               //   builder: (context) => setLoader().withSize(width: 40, height: 40).visible(appStore.isLoading).center(),
               // ),
-              Positioned(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_back, size: 30),
-                    onPressed: () {
-                      finish(context);
-                    },
-                  ),
-                ),
-              )
-            ],
+             ],
           ),
         ),
       ),
@@ -596,7 +615,7 @@ class _EditPatientProfileScreenState extends State<EditPatientProfileScreen> {
                 ],
               ),
               16.height,
-              (getStringAsync(USER_EMAIL) == receptionistEmail || getStringAsync(USER_EMAIL) == doctorEmail || getStringAsync(USER_EMAIL) == patientEmail)
+              (getStringAsync(USER_EMAIL) == receptionistEmail && getStringAsync(USER_EMAIL) == doctorEmail && getStringAsync(USER_EMAIL) == patientEmail)
                   ? AppTextField(
                       controller: emailCont,
                       focus: emailFocus,

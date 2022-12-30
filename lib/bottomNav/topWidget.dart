@@ -9,7 +9,8 @@ import 'package:nb_utils/nb_utils.dart';
 import '../appConstants.dart';
 import '../network/apiService.dart';
 import '../screens/notificsion.dart';
- import '../utils/color_use.dart';
+import '../utils/appwigets.dart';
+import '../utils/color_use.dart';
 
 class TopNameWidget extends StatefulWidget {
   const TopNameWidget({Key? key}) : super(key: key);
@@ -18,21 +19,22 @@ class TopNameWidget extends StatefulWidget {
   State<TopNameWidget> createState() => _TopNameWidgetState();
 }
 
-class _TopNameWidgetState extends State<TopNameWidget> {
+class _TopNameWidgetState extends State<TopNameWidget>with WidgetsBindingObserver  {
   // var countShow =   _SplashScreenState();
-  Color textColor =Colors.blue;
+  Color textColor = Colors.blue;
+  List<Notifications>? last;
 
   var num;
+
   @override
   void initState() {
-   //init();
+    //init();
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       decoration: boxDecorationWithShadow(
         borderRadius: radius(0),
         backgroundColor: scaffoldBgColor,
@@ -56,7 +58,7 @@ class _TopNameWidgetState extends State<TopNameWidget> {
                       children: [
                         // Image.asset("images/icons/hi.png", width: 22, height: 22, fit: BoxFit.cover),
                         Text(
-                           greeting(),
+                          greeting(),
                           style: GoogleFonts.jost(
                               color: textColor,
                               fontSize: 24,
@@ -75,7 +77,20 @@ class _TopNameWidgetState extends State<TopNameWidget> {
                                 pageRouteAnimation: PageRouteAnimation.Scale);
                           },
                         ),
-                        notifyText()
+                        FutureBuilder<List<Notifications>>(
+                          future:  getNotificaton(),
+                          builder: (context, snapshot) {
+                            if (snapshot.data == null) {
+                              return snapWidgetHelper(snapshot,
+                                  errorWidget: noAppointmentDataWidget(
+                                      text: "No Data Found", isInternet: true));
+                            } else {
+                              last = snapshot.data;
+                              return notifyText(last,last!.length!.toInt());
+
+                            }
+                          },
+                        )
 
                       ],
                     ).paddingOnly(right: 5)
@@ -87,7 +102,7 @@ class _TopNameWidgetState extends State<TopNameWidget> {
         ).paddingSymmetric(horizontal: 12, vertical: 5),
       ),
     );
-     /* Observer(
+    /* Observer(
       builder: (_) =>
           Container(
         decoration: boxDecorationWithShadow(
@@ -158,30 +173,55 @@ class _TopNameWidgetState extends State<TopNameWidget> {
       ),
     );*/
   }
-   notifyText(){
+    void refresh(){
+     setState(() {
 
-    if(ApiService.notiCount.isNotEmpty){
+     });
+  }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+      // --
 
-    return  Positioned(
-          right: 3,
-          child: Container(
-              height: 15,
-              width: 12,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.red),
-              child:
-
-              Center(
-                  child: Text(ApiService.notiCount,
-                    style: GoogleFonts.jost(
-                        color: Colors.white, fontSize: 10),
-                  ))));
+        print('Resumed'+"topwidget");
+        break;
+      case AppLifecycleState.inactive:
+      // --
+        print('Inactive');
+        break;
+      case AppLifecycleState.paused:
+      // --
+        print('Paused'+"topwidget");
+        break;
+      case AppLifecycleState.detached:
+      // --
+        print('Detached');
+        break;
     }
-    return Text( "");
   }
 
- /* Future<void> init() async {
+  notifyText(List<Notifications>? lastItem, int count  ) {
+
+    if (lastItem!.last.status=="not seen") {
+      return Positioned(
+          right: 9,
+          top:3,
+          child: Container(
+              height: 6,
+              width: 5,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20), color: Colors.red),
+              child: Center(
+                  child: Text(
+                  "",
+                style: GoogleFonts.jost(color: Colors.white, fontSize: 10),
+              ))));
+    }
+    return Text("");
+  }
+
+  /* Future<void> init() async {
       num =await count().toString();
 
   }*/
@@ -195,12 +235,10 @@ class _TopNameWidgetState extends State<TopNameWidget> {
       textColor = Colors.deepOrangeAccent;
 
       return 'Good Afternoon';
-
     }
     textColor = Colors.blue;
 
     return 'Good Evening';
-
   }
 }
 

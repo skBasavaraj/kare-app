@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../bottomNav/PatientAppointmentFragment.dart';
+import '../bottomNav/topWidget.dart';
 import '../network/apiService.dart';
 import '../network/doctorApiService.dart';
 import '../utils/color_use.dart';
@@ -48,7 +49,10 @@ class _UserNotificationState extends State<UserNotification> {
                             Icons.arrow_back,
                             color: Colors.black,
                             size: 30,
-                          )),
+                          )
+                          ,onTap: () {
+                            pop(context);
+                          },),
                           5.width,
                           Text("Notifications",
                               style: GoogleFonts.jost(fontSize: 20)),
@@ -120,12 +124,7 @@ class _UserNotificationState extends State<UserNotification> {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-/*
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) =>  PatientAppointmentFragment()),
-            );
-*/
+
         },
         child: Row(
           children: [
@@ -152,48 +151,48 @@ class _UserNotificationState extends State<UserNotification> {
                   notifications.name!,
                   style: GoogleFonts.jost(
                       fontSize: 20,
-                      color: Colors.black54,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold),
-                ),
+                ).paddingOnly(top: 5, right: 0, bottom: 5),
                 Container(
                     width: 270,
                     child: Text(
                       notifications.activityB!,
                       style: GoogleFonts.jost(
                           fontSize: 16,
-                          color: Colors.black54,
+                          color: Colors.black.withOpacity(0.8),
                           letterSpacing: 0.2,
                           wordSpacing: 0.4,
                           height: 1),
                       maxLines: 3,
-                    )),
+                    )).paddingBottom(5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsets.only(right: 10, top: 4, bottom: 4),
+                          const EdgeInsets.only(right: 15, top: 4, bottom: 5),
                       child: Text(notifications.dateN!,
                           style: GoogleFonts.jost(
-                              fontSize: 14,
+                              fontSize: 12,
                               color: Colors.black54,
                               fontWeight: FontWeight.normal)),
                     ),
                     Padding(
                       padding:
-                          const EdgeInsets.only(right: 10, top: 4, bottom: 4),
+                          const EdgeInsets.only(right: 15, top: 4, bottom: 5),
                       child: Text(notifications.timeN!,
                           style: GoogleFonts.jost(
-                              fontSize: 14,
+                              fontSize: 12,
                               color: Colors.black54,
                               fontWeight: FontWeight.normal)),
                     ),
                     Padding(
                       padding:
-                          const EdgeInsets.only(right: 10, top: 4, bottom: 4),
+                          const EdgeInsets.only(right: 15, top: 4, bottom: 4),
                       child: Text(notifications.status!,
                           style: GoogleFonts.jost(
-                              fontSize: 14,
+                              fontSize: 12,
                               color: Colors.black54,
                               fontWeight: FontWeight.normal)),
                     )
@@ -234,7 +233,8 @@ class _UserNotificationState extends State<UserNotification> {
  void updateSeen() async {
     await updateNotification();
       setState(() {
-
+    
       });
+
   }
 }

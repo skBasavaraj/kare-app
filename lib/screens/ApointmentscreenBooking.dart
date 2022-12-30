@@ -13,6 +13,7 @@ import 'dart:developer' as logDev;
 
 import '../appConstants.dart';
 import '../network/apiService.dart';
+import '../network/doctorApiService.dart';
 import '../utils/appCommon.dart';
 import '../utils/appwigets.dart';
 import '../utils/color_use.dart';
@@ -362,6 +363,7 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
                           label: 'Patient Name',
                           text: 'Patient Name',
                           isMandatory: true,
+
                           suffixIcon: commonImage(
                             imageUrl: "images/icons/user.png",
                             size: 10,
@@ -837,29 +839,39 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
           onPressed: () async {
             // saveData();
             logDev.log("1", name: "upload");
-            info = await ApiService.bookAppointments(
-              getStringAsync(USER_ID),
-              doctors!.id!,
-              firstNameCont.text.validate(),
-               dOBCont.text,
-              contactNumberCont.text.toString(),
-              userEmail,
-              genderValue.validate(),
-              appointmentDateCont.text,
-              appointmentSlotsCont.text,
-              bloodGroup.validate(),
-              lastNameCont.text,
-              descriptionCont.text,
-            );
-            if (info?.status == "002") {
-              successToast(info?.message);
-            } else if (info?.status == "000") {
-              successToast(" Book slot successful");
-              Navigator.pop(context);
-            } else {
-              errorToast(info?.message);
-              print(";;" + info.message);
-              logDev.log(info?.status, name: "upload");
+            if(firstNameCont.text.isNotEmpty&&lastNameCont.text.isNotEmpty&&appointmentDateCont.text.isNotEmpty&& appointmentSlotsCont.text.isNotEmpty&&contactNumberCont.text.isNotEmpty) {
+              info = await ApiService.bookAppointments(
+                getStringAsync(USER_ID),
+                doctors!.id!,
+                firstNameCont.text.validate(),
+                dOBCont.text.validate(),
+                contactNumberCont.text.toString(),
+                userEmail ,
+                genderValue.validate(),
+                appointmentDateCont.text,
+                appointmentSlotsCont.text,
+                bloodGroup.validate(),
+                lastNameCont.text,
+                descriptionCont.text,
+              );
+              if (info?.status == "001") {
+                 snackBar(context,title:info?.message,backgroundColor: Colors.red.shade200,elevation: 5);
+
+              } else if (info?.status == "000") {
+            //    successToast(" Book slot successful");
+                await setNotification("You have send request ${doctors!.name!} for appointment",  "${getStringAsync(USER_NAME)}  send request for appointment",   getStringAsync(USER_ID), getStringAsync(USER_TYPE),  doctors!.id! ,  "doctor",  doctors!.name!, "dateN", "timeN",  "not seen");
+
+                snackBar(context,title:"Book slot successful",backgroundColor: Colors.green.shade200,elevation: 5);
+
+                Navigator.pop(context);
+              } else {
+                errorToast(info?.message);
+
+                logDev.log(info?.status, name: "upload");
+              }
+            }else {
+              snackBar(context,title:"Please fill all the fields",backgroundColor: Colors.blue.shade200,elevation: 5);
+
             }
           },
         ),
