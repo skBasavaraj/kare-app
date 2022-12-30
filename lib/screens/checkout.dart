@@ -71,14 +71,16 @@ class _CheckOutState extends State<CheckOut> {
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
     print("paymentId"+response.paymentId!);
     print( response.paymentId);
-    print('');
-   await uploadPaymentInfo(widget.appointments!.doctorID!,widget.appointments!.userID!,
+   await uploadPaymentInfo( widget.appointments!.appointmentId!,widget.appointments!.doctorID!,widget.appointments!.userID!,
        widget.appointments!.fees!,
        'success',response.paymentId!,widget.appointments!.appointmentId!,widget.appointments!.role!);
 
     await setBook(widget.appointments!.id!);
       statusPay = "done";
-      Navigator.pop(context);
+
+    Navigator.pop(context);
+    print('widget.appointments!.appointmentId!${widget.appointments!.appointmentId!}');
+
   }
   _handlePaymentError(PaymentFailureResponse response)    {
     statusPay = "000";

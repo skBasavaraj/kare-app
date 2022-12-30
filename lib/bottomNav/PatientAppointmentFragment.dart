@@ -629,7 +629,7 @@ Future<List<Appointments>> get(String userId ,String statusType) async {
         bloodGroup: item['bloodGroup'],
         subject: item['subject'],
         description: item['description'],
-        appointmentId: item['appointmentId'],
+        appointmentId: item['apptID'],
         status: item['status']
         ,mobile: item['mobile'],
         location: item['location'],
@@ -714,7 +714,7 @@ class Appointments {
     bloodGroup = json['bloodGroup'];
     subject = json['subject'];
     description = json['description'];
-    appointmentId = json['appointmentId'];
+    appointmentId = json['apptID'];
     status = json['status'];
     mobile = json['mobile'];
     location = json['location'];
@@ -742,7 +742,7 @@ class Appointments {
     data['bloodGroup'] = this.bloodGroup;
     data['subject'] = this.subject;
     data['description'] = this.description;
-    data['appointmentId'] = this.appointmentId;
+    data['apptID'] = this.appointmentId;
     data['status'] = this.status;
     data['mobile'] = this.mobile;
     data['location'] = this.location;

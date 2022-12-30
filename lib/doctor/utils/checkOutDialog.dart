@@ -128,7 +128,7 @@ AlertDialog CheckOutDialog(BuildContext context, doctorGetAppointments list) {
 Future<void> submit(doctorGetAppointments list) async {
   var info = await  doctorApprove("closed",list.id!,list.doctorID,list.apptDate, list.apptTime);
  if(info!.error=="000"){
-    var notification = await setNotification("You have approved appointment",  "Your Appointment approved in ${list!.hospital!}",   list.doctorID!, getStringAsync(USER_TYPE),  list!.userID!,  "user", list!.patientName!, "dateN", "timeN",  "not seen");
+    var notification = await setNotification("You have completed appointment",  "Your Appointment completed by  Dr.${getStringAsync(USER_NAME)}",   list.doctorID!, getStringAsync(USER_TYPE),  list!.userID!,  "user", list!.patientName!, "dateN", "timeN",  "not seen");
     if(notification!.error=="000"){
       successToast("Your successfully  done appointment");
      }else{

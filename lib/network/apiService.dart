@@ -206,11 +206,12 @@ Future<loginInfo?> editRegister( String id,String name,
     print(Stremresponse.reasonPhrase);
   }
 }
-Future<loginInfo?> uploadPaymentInfo(
-    String doctorID,String userID,String amount, String statusType,String? paymentID,String? orderId,String role
+Future<loginInfo?> uploadPaymentInfo(String apptID,
+    String doctorID,String userID,String amount, String statusType,String? paymentID,String orderId,String role
     )async{
   var request = http.MultipartRequest('POST',  Uri.parse('https://admin.verzat.com/user-api/paymentInfo.php'));
   request.fields.addAll({
+    'apptID':apptID,
     'doctorID': doctorID,
     'userID': userID,
     'role': role,
