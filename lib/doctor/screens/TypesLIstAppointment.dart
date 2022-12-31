@@ -51,23 +51,26 @@ class _TypesAppointmentListState extends State<TypesAppointmentList> {
       body: Column(
         children: [
           Expanded(
-            flex: 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                    onTap: () {
-                      pop(context);
-                    },
+            flex: 0,
+            child: Container(
+              color: Colors.blue,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                      onTap: () {
+                        pop(context);
+                      },
 
-                    child: Icon(Icons.arrow_back, size: 30,).paddingSymmetric(
-                        vertical: 10, horizontal: 10))
-                ,
-                Text(widget.type!, style: GoogleFonts.poppins(
-                    fontSize: 25, fontWeight: FontWeight.w400),)
+                      child: Icon(Icons.arrow_back, size: 25,color: Colors.white,).paddingSymmetric(
+                          vertical: 10, horizontal: 10))
+                  ,
+                  Text(widget.type!.capitalizeFirstLetter(), style: GoogleFonts.poppins(
+                      fontSize: 25, fontWeight: FontWeight.w400,color: Colors.white),)
 
-              ],
+                ],
+              ),
             ),
           ),
           Expanded(

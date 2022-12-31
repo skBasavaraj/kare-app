@@ -30,26 +30,30 @@ class _PatientDetailsState extends State<PatientDetails> {
     return SafeArea(
       child: Scaffold(
 
-        floatingActionButton:
-        floatingButton(),
+       /* floatingActionButton:
+        floatingButton(),*/
         backgroundColor: scaffoldBgColor,
         body: Column(
         children: [
           Expanded(
-            flex: 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                    onTap: () {
-                      pop(context);
-                    },
+            flex: 0,
+            child: Container(
+              color: Colors.lightBlue,
+              child:
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                      onTap: () {
+                        pop(context);
+                      },
 
-                    child: Icon(Icons.arrow_back,size: 25,).paddingSymmetric(vertical: 10,horizontal: 20))
-                ,Text("Edit Date And Time",style: GoogleFonts.poppins(fontSize: 20,fontWeight: FontWeight.w500),)
+                      child: Icon(Icons.arrow_back,size: 25,color: Colors.white,).paddingSymmetric(vertical: 10,horizontal: 10))
+                  ,Text("Edit Date And Time",style: GoogleFonts.poppins(fontSize: 20,fontWeight: FontWeight.w400,color: Colors.white),)
 
-              ],
+                ],
+              ).paddingSymmetric(vertical: 2),
             ),
           ),
           Expanded(
@@ -195,7 +199,9 @@ class _PatientDetailsState extends State<PatientDetails> {
                       ),
 
                   ).paddingSymmetric(vertical: 10,horizontal: 20),
-                    70.height
+                    20.height,
+                  floatingButton()
+                  ,20.height,
 
                 ],
               ),
@@ -211,8 +217,9 @@ class _PatientDetailsState extends State<PatientDetails> {
 
  Widget floatingButton() {
    if(widget.patientDetail!.status=="pending"  ){
-   return Row(
-     mainAxisAlignment: MainAxisAlignment.spaceAround,
+   return
+     Row(
+     mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
         height: 50,
@@ -260,7 +267,7 @@ class _PatientDetailsState extends State<PatientDetails> {
           ),
         ),
       ],
-   );
+   ).paddingSymmetric(horizontal: 20);
    }
 
    return FloatingActionButton(onPressed: () async {
