@@ -317,9 +317,12 @@ Future<List<Doctors>> getSearchDoctors(String text) async {
         ratings: item['ratings'],
         fees: item['fees'],
         availFrom: item['availFrom'],
-        availTo: item['availTo']
+        availTo: item['availTo'],
+      notAvailReason: item['notAvailReason'],
+      notAvailFrom: item['notAvailFrom'],
+        notAvailTo: item['notAvailTo']);
 
-  );
+
 
   docList.add(doctors);
   }
@@ -671,6 +674,9 @@ class Doctors {
   String? fees;
   String? availFrom;
   String? availTo;
+  String? notAvailReason;
+  String? notAvailFrom;
+  String? notAvailTo;
 
 
   Doctors({
@@ -688,7 +694,10 @@ class Doctors {
     this.email,
     this.fees,
     this.availFrom,
-    this.availTo});
+    this.availTo,
+  this.notAvailReason,
+  this.notAvailFrom
+  ,this.notAvailTo});
 
   Doctors.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -706,6 +715,9 @@ class Doctors {
     fees = json['fees'];
     availFrom = json['availFrom'];
     availTo = json['availTo'];
+    notAvailReason = json['notAvailReason'];
+    notAvailFrom = json['notAvailFrom'];
+    notAvailTo = json['notAvailTo'];
   }
 
   Map<String, dynamic> toJson() {
@@ -725,6 +737,9 @@ class Doctors {
     data['fees'] = this.fees;
     data['availFrom'] = this.availFrom;
     data['availTo'] = this.availTo;
+    data['notAvailReason'] = this.notAvailReason;
+    data['notAvailFrom'] = this.notAvailFrom;
+    data['notAvailTo'] = this.notAvailTo;
     return data;
   }
 }

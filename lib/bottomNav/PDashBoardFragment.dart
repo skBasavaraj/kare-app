@@ -766,73 +766,8 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment>
                           ).paddingBottom(14),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                shape: BoxShape.rectangle,
-                                border:
-                                    Border.all(color: Colors.blue, width: 1)),
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  AutoSizeText(
-                                    "Available",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                  AutoSizeText(
-                                    "${doctor.availFrom} AM - ${doctor.availTo} PM",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      color: Colors.blue,
-                                    ),
-                                  )
-                                ],
-                              ).paddingAll(4),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(right: 10, bottom: 5),
-                            child: Material(
-                              elevation: 5,
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.blue.shade300,
-                              child: InkWell(
-                                splashFactory: InkRipple.splashFactory,
-                                splashColor: Colors.white,
-                                onTap: () {
-                                  DetailsDoctors(doctor).launch(context,
-                                      pageRouteAnimation:
-                                          PageRouteAnimation.Scale);
-                                },
-                                child: Container(
-                                    height: 30,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10))),
-                                    child: Center(
-                                        child: Text(
-                                      "Book",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ))),
-                              ),
-                            ),
-                          )
-                        ],
-                      ).paddingOnly(bottom: 5, left: 10)
+            timings(doctor)
+                .paddingOnly(bottom: 5, left: 10)
                     ],
                   ).paddingOnly(bottom: 3),
                 )
@@ -947,6 +882,109 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment>
     print("kkk"+getPatientCounts.name.toString());
     return Text(getPatientCounts.name.toString(),style: TextStyle(fontSize: 30,color: Colors.black),);
   }
+
+Widget  timings(Doctors doctor) {
+    if(doctor.notAvailReason=="urgent"){
+      return Container(
+        height: 50,
+        width: 200,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            shape: BoxShape.rectangle,
+            border:
+            Border.all(color: Colors.red.withOpacity(0.5), width: 1)),
+        child: Column(
+          mainAxisAlignment:
+          MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            AutoSizeText(
+              "No Available",
+              style: GoogleFonts.poppins(
+                fontSize: 12,
+                color: Colors.red.withOpacity(0.5),
+              ),
+            ),
+            Text(
+              "${doctor.notAvailFrom} AM - ${doctor.notAvailTo}",
+              style: GoogleFonts.poppins(
+                fontSize: 12,
+                color: Colors.blue,
+              ),
+            )
+          ],
+        ).paddingAll(4),
+      );
+
+    }
+ return Row(
+   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+   crossAxisAlignment: CrossAxisAlignment.center,
+   children: [
+     Container(
+       decoration: BoxDecoration(
+           borderRadius: BorderRadius.circular(10),
+           shape: BoxShape.rectangle,
+           border:
+           Border.all(color: Colors.blue, width: 1)),
+       child: Center(
+         child: Column(
+           mainAxisAlignment:
+           MainAxisAlignment.spaceEvenly,
+           crossAxisAlignment: CrossAxisAlignment.center,
+           children: [
+             AutoSizeText(
+               "Available",
+               style: GoogleFonts.poppins(
+                 fontSize: 12,
+                 color: Colors.blue,
+               ),
+             ),
+             AutoSizeText(
+               "${doctor.availFrom} AM - ${doctor.availTo}",
+               style: GoogleFonts.poppins(
+                 fontSize: 12,
+                 color: Colors.blue,
+               ),
+             )
+           ],
+         ).paddingAll(4),
+       ),
+     ),
+     Padding(
+       padding: EdgeInsets.only(right: 10, bottom: 5),
+       child: Material(
+         elevation: 5,
+         borderRadius: BorderRadius.circular(10),
+         color: Colors.blue.shade300,
+         child: InkWell(
+           splashFactory: InkRipple.splashFactory,
+           splashColor: Colors.white,
+           onTap: () {
+             DetailsDoctors(doctor).launch(context,
+                 pageRouteAnimation:
+                 PageRouteAnimation.Scale);
+           },
+           child: Container(
+               height: 30,
+               width: 100,
+               decoration: BoxDecoration(
+                   borderRadius: BorderRadius.all(
+                       Radius.circular(10))),
+               child: Center(
+                   child: Text(
+                     "Book",
+                     style: GoogleFonts.poppins(
+                         fontSize: 12,
+                         fontWeight: FontWeight.bold,
+                         color: Colors.white),
+                   ))),
+         ),
+       ),
+     )
+   ],
+ );
+}
 
 }
 
