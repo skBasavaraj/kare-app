@@ -1,3 +1,4 @@
+import 'package:cron/cron.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,50 +21,77 @@ class TypesAppointmentList extends StatefulWidget {
 }
 
 class _TypesAppointmentListState extends State<TypesAppointmentList> {
+  final cron = Cron();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    init();
+    super.initState();
+  }
+
+  init() async {
+    setStatusBarColor(scaffoldBgColor);
+    cron.schedule(Schedule.parse('*/1 * * * * *'), () async {
+      setState(() {});
+
+      print('Runs every Five seconds');
+    });
+    /*window.onPlatformBrightnessChanged = () {
+      if (getIntAsync(THEME_MODE_INDEX) == ThemeModeSystem) {
+        appStore.setDarkMode(MediaQuery.of(context).platformBrightness == Brightness.light);
+      }
+    };*/
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(child: Scaffold(
+    return SafeArea(child: Scaffold(
       backgroundColor: scaffoldBgColor,
       body: Column(
-       children: [
-         Expanded(
-           flex: 1,
-           child: Row(
-             mainAxisAlignment: MainAxisAlignment.start,
-             crossAxisAlignment: CrossAxisAlignment.center,
-             children: [
-               InkWell(
-                  onTap: () {
-                    pop(context);
-                  },
+        children: [
+          Expanded(
+            flex: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkWell(
+                    onTap: () {
+                      pop(context);
+                    },
 
-                   child: Icon(Icons.arrow_back,size: 30,).paddingSymmetric(vertical: 10,horizontal: 10))
-               ,Text(widget.type!,style: GoogleFonts.poppins(fontSize: 25,fontWeight: FontWeight.w400),)
+                    child: Icon(Icons.arrow_back, size: 30,).paddingSymmetric(
+                        vertical: 10, horizontal: 10))
+                ,
+                Text(widget.type!, style: GoogleFonts.poppins(
+                    fontSize: 25, fontWeight: FontWeight.w400),)
 
-             ],
-           ),
-         ),
-         Expanded(
-           flex: 10,
-           child: FutureBuilder<List<doctorGetAppointments>>(builder: (context, snapshot) {
-             if (snapshot.hasData) {
-               List<doctorGetAppointments> list = snapshot!.data!;
-               return ListView.builder(
-                 itemBuilder:(context, index) {
-                   return   todayCard(list[index]);
-                 },itemCount: snapshot.data!.length,);
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 10,
+            child: FutureBuilder<List<doctorGetAppointments>>(
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<doctorGetAppointments> list = snapshot!.data!;
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      return todayCard(list[index]);
+                    }, itemCount: snapshot.data!.length,);
+                }
+                return snapWidgetHelper(snapshot,
+                    errorWidget: noAppointmentDataWidget(
+                        text: "No Data Found", isInternet: true));
+              }, future: typesAppointment(widget.type!),),
+          )
 
-             }
-             return snapWidgetHelper(snapshot, errorWidget:  noAppointmentDataWidget(text: "No Data Found", isInternet: true));
-
-           },future: typesAppointment(widget.type!),),
-         )
-
-       ],
-       ),
+        ],
+      ),
     ));
-
   }
+
   Widget todayCard(doctorGetAppointments list) {
     if (widget.type == "booked" || widget.type == "pending" ||
         widget.type == "approved") {
@@ -188,7 +216,7 @@ class _TypesAppointmentListState extends State<TypesAppointmentList> {
               ]),
         ).paddingSymmetric(vertical: 10, horizontal: 20),
       );
-    }else{
+    } else {
       return GestureDetector(
         onTap: () {
           // PatientDetails(list).launch(
@@ -311,5 +339,16 @@ class _TypesAppointmentListState extends State<TypesAppointmentList> {
         ).paddingSymmetric(vertical: 10, horizontal: 20),
       );
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    removeCron();
+    super.dispose();
+  }
+
+  removeCron() async {
+await cron.close();
   }
 }
