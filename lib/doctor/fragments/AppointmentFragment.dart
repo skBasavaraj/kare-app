@@ -58,8 +58,9 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
 
   Widget profiles(getProfileList list) {
     return Padding(
-      padding: EdgeInsets.symmetric(),
+      padding: EdgeInsets.only(bottom: 0.5),
       child: Material(
+        elevation: 0.5,
         color: Colors.white,
         shadowColor: Colors.grey,
         child: InkWell(
@@ -79,7 +80,7 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
 
                     //     'https://admin.verzat.com/assets/images/uploads/users/${list.file}'),
                     'https://admin.verzat.com/assets/images/uploads/users/IMG_smt.jpg'),
-              ).paddingOnly(top:10),
+              ).paddingOnly(top: 10),
             ),
             10.width,
             Expanded(
@@ -103,9 +104,11 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
                     future: getMessages(getStringAsync(USER_ID), list.id),
                     builder: (context, snapshot) {
                       if (snapshot.data == null) {
-                        return snapWidgetHelper(snapshot,
+                        return Text("");
+                          /* snapWidgetHelper(snapshot,
                             errorWidget: noAppointmentDataWidget(
                                 text: "No Data Found", isInternet: true));
+                     */
                       } else {
                         messages = snapshot.data;
                         return Text(
@@ -116,7 +119,6 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
                       }
                     },
                   )
-
                 ],
               ),
             ),
@@ -124,20 +126,21 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
               future: getMessages(getStringAsync(USER_ID), list.id),
               builder: (context, snapshot) {
                 if (snapshot.data == null) {
-                  return snapWidgetHelper(snapshot,
+                  return Text("");
+                  /* snapWidgetHelper(snapshot,
                       errorWidget: noAppointmentDataWidget(
-                          text: "No Data Found", isInternet: true));
+                          text: "No Data Found", isInternet: true))*/
+                  ;
                 } else {
                   messages = snapshot.data;
                   return Text(
                     messages!.last.messageTime!,
-                    style: GoogleFonts.jost(
-                        fontSize: 12, color: Colors.black54),
+                    style:
+                        GoogleFonts.jost(fontSize: 12, color: Colors.black54),
                   ).paddingBottom(0);
                 }
               },
-            ).paddingOnly(top:10,right: 10)
-
+            ).paddingOnly(top: 10, right: 10)
           ]).paddingOnly(left: 20, top: 5, bottom: 5),
         ),
       ),

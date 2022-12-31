@@ -343,12 +343,11 @@ class _TypesAppointmentListState extends State<TypesAppointmentList> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    removeCron();
+     removeCron();
     super.dispose();
   }
 
   removeCron() async {
-await cron.close();
+  await cron.close();
   }
 }

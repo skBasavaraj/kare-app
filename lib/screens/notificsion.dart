@@ -107,7 +107,7 @@ class _UserNotificationState extends State<UserNotification> {
                         // new
                         scrollDirection: Axis.vertical,
                         controller: _controller,
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(0),
                         itemCount: snapshot.data!.length,
                         itemBuilder: (BuildContext context, int index) {
                           // print("kkl"+_app![index].patientName! );
@@ -126,12 +126,13 @@ class _UserNotificationState extends State<UserNotification> {
   }
 
   appointments(Notifications notifications) {
-    return Material(
+    return
+      Material(
       elevation: 1,
       color: Colors.white,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(0),
       child: InkWell(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(0),
         onTap: () {
 
         },
@@ -164,7 +165,7 @@ class _UserNotificationState extends State<UserNotification> {
                       fontWeight: FontWeight.bold),
                 ).paddingOnly(top: 5, right: 0, bottom: 5),
                 Container(
-                    width: 270,
+                    width: 260,
                     child: Text(
                       notifications.activityB!,
                       style: GoogleFonts.jost(
@@ -212,7 +213,7 @@ class _UserNotificationState extends State<UserNotification> {
           ],
         ),
       ),
-    ).paddingOnly(top: 5, left: 10, bottom: 0);
+    ).paddingOnly(top: 0, left: 0, bottom: 0);
   }
 
   Widget markButton(List<Notifications>? app) {
