@@ -879,8 +879,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment>
 
   Widget abc( Doctors getPatientCounts) {
 
-    print("kkk"+getPatientCounts.name.toString());
-    return Text(getPatientCounts.name.toString(),style: TextStyle(fontSize: 30,color: Colors.black),);
+     return Text(getPatientCounts.name.toString(),style: TextStyle(fontSize: 30,color: Colors.black),);
   }
 
 Widget  timings(Doctors doctor) {
