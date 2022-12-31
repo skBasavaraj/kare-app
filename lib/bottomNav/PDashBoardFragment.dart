@@ -317,8 +317,11 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment>
     return Padding(
       padding: const EdgeInsets.only(left: 5, right: 5),
       child: CupertinoButton(
+        borderRadius: BorderRadius.circular(10),
         onPressed: () {},
         child: InkWell(
+          borderRadius: BorderRadius.circular(10),
+          
           onTap: () async {
             SearchScreen(list.catName)
                 .launch(context, pageRouteAnimation: PageRouteAnimation.Scale);
@@ -685,9 +688,10 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment>
             ScrollDragController.momentumRetainStationaryDurationThreshold,
         borderRadius: BorderRadius.circular(10),
         child: Ink(
-          height: 130,
+           height: 130,
           width: double.infinity,
           child: InkWell(
+            borderRadius:BorderRadius.circular(10),
             splashColor: Colors.blue.shade100,
             onTap: () {},
             child: Row(

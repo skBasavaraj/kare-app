@@ -57,7 +57,8 @@ class _DoctorDetailsState extends State<DoctorDetails> {
     return
     Scaffold(
 
-      body: Container(
+      body:
+      Container(
         color: Colors.white,
 
         child: SingleChildScrollView(
@@ -79,7 +80,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                   children: [
                     SizedBox(width: 10,),
                     InkWell(
-                      onTap: () {
+                       onTap: () {
                         Navigator.pop(context);
                       },
                         child: Icon(Icons.arrow_back,color: Colors.blue,size: 30,))

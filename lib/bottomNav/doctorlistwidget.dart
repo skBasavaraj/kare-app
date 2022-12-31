@@ -159,6 +159,8 @@ class _DoctorListWidgetState extends State<DoctorListWidget> {
             height: 130,
             width: double.infinity,
             child: InkWell(
+              borderRadius: BorderRadius.circular(10),
+
               splashColor: Colors.blue.shade100,
               onTap: () {
 

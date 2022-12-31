@@ -237,6 +237,8 @@ class _DetailsDoctorsState extends State<DetailsDoctors> {
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                       child: Ink(
                         child: InkWell(
+                          borderRadius: BorderRadius.circular(10),
+
                           onTap: () {
                             makingPhoneCall( doctor!.number!);
                             print("tap tap");
@@ -278,6 +280,8 @@ class _DetailsDoctorsState extends State<DetailsDoctors> {
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                       child: Ink(
                         child: InkWell(
+                          borderRadius: BorderRadius.circular(10),
+
                           onTap: () {},
                           splashColor: Colors.blue,
                           child: Expanded(
@@ -315,6 +319,8 @@ class _DetailsDoctorsState extends State<DetailsDoctors> {
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                       child: Ink(
                         child: InkWell(
+                          borderRadius: BorderRadius.circular(10),
+
                           onTap: () {
                             ChatScreen(doctor).launch(context, pageRouteAnimation: PageRouteAnimation.Slide);
 
