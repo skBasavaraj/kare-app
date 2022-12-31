@@ -189,6 +189,7 @@ class _DashboardFragmentState extends State<DashboardFragment> {
         Container(
         //  width: context.width(),
           height:180,
+          width: context.width(),
           child:
         FutureBuilder<List<doctorGetAppointments>>(
       future:  todayAppointment(),
@@ -224,7 +225,7 @@ class _DashboardFragmentState extends State<DashboardFragment> {
       },
       child:
       Container(
-        width: 350,
+        width: context.width()/1-42,
         height: 150,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,7 +267,9 @@ class _DashboardFragmentState extends State<DashboardFragment> {
                         Text("Gender:",style: GoogleFonts.jost(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.white70),).paddingLeft(10),
                         Text(list.patientGender!,style: GoogleFonts.jost(fontSize: 14,fontWeight: FontWeight.w400,color: Colors.white70),).paddingLeft(5),
                         Text("Age:",style: GoogleFonts.jost(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.white70),).paddingLeft(10),
-                        Text("00",style: GoogleFonts.jost(fontSize: 14,fontWeight: FontWeight.w400,color: Colors.white70),).paddingLeft(5),
+                        Text(list.patientAge!,style: GoogleFonts.jost(fontSize: 14,fontWeight: FontWeight.w400,color: Colors.white70),).paddingLeft(5),
+                        Text("Blood:",style: GoogleFonts.jost(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.white70),).paddingLeft(10),
+                        Text(list.bloodGroup!,style: GoogleFonts.jost(fontSize: 14,fontWeight: FontWeight.w400,color: Colors.white70),).paddingLeft(5),
 
                       ],
                     )
@@ -314,7 +317,7 @@ class _DashboardFragmentState extends State<DashboardFragment> {
                   blurRadius: 6,
                   spreadRadius: 1)
             ]),
-      ).paddingOnly(left: 25,top: 10,bottom: 10),
+      ).paddingOnly(left: 20,top: 10,bottom: 10,right: 20),
     );
 
   }
