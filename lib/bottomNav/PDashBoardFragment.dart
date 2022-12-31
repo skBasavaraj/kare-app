@@ -790,7 +790,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment>
                                     ),
                                   ),
                                   AutoSizeText(
-                                    "7am - 10 am",
+                                    "${doctor.availFrom} AM - ${doctor.availTo} PM",
                                     style: GoogleFonts.poppins(
                                       fontSize: 12,
                                       color: Colors.blue,

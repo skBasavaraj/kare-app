@@ -15,12 +15,12 @@ import '../utils/appCommon.dart';
 
 class ApiService {
   //192.168.1.138
-  static String notiCount="";
-  static String url ="http://192.168.0.102";
- // static String url ="http://192.168.1.138";
+  static String notiCount = "";
+  static String url = "http://192.168.0.102";
+
+  // static String url ="http://192.168.1.138";
   static Future<loginInfo?> register
-      (
-      String file,
+      (String file,
       String name,
       String username,
       String email,
@@ -28,25 +28,23 @@ class ApiService {
       String location,
       String password,
       String dob,
-      String gender,
-
-      ) async {
+      String gender,) async {
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://admin.verzat.com/user-api/register.php'));
     request.fields.addAll({
 
-      'type':  'user',
+      'type': 'user',
       'name': name,
-      'username':  username,
+      'username': username,
       'email': email,
       'mobile': mobile,
-      'location':  location,
+      'location': location,
       'password': password,
-      'dob':  dob,
-      'gender':  gender,
+      'dob': dob,
+      'gender': gender,
       'status': 'online'
     });
-    request.files.add(await http.MultipartFile.fromPath('file',  file));
+    request.files.add(await http.MultipartFile.fromPath('file', file));
     var Stremresponse = await request.send();
 
     if (Stremresponse.statusCode == 200) {
@@ -61,15 +59,15 @@ class ApiService {
   }
 
 
-
-  static Future<loginInfo?> login(String email, String password,String type) async {
+  static Future<loginInfo?> login(String email, String password,
+      String type) async {
     var request = http.MultipartRequest(
       //  'POST', Uri.parse(url+'/UserApi/login.php'));
         'POST', Uri.parse("https://admin.verzat.com/user-api/login.php"));
     request.fields.addAll({
       'email': email,
       'password': password,
-      'type':type
+      'type': type
     });
 
     var Stremresponse = await request.send();
@@ -84,9 +82,11 @@ class ApiService {
   }
 
   static Future<BookSucessful?> bookAppointments
-      (String userId,String doctorId,String patientName,patientAge,patientNumber,patientEmail,patientGender,
-      apptDate,apptTime,bloodGroup,subject,description) async {
-    var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/bookAppointment.php'));
+      (String userId, String doctorId, String patientName, patientAge,
+      patientNumber, patientEmail, patientGender,
+      apptDate, apptTime, bloodGroup, subject, description) async {
+    var request = http.MultipartRequest('POST',
+        Uri.parse('https://admin.verzat.com/user-api/bookAppointment.php'));
     request.fields.addAll({
       'userId': userId,
       'role': getStringAsync(USER_TYPE),
@@ -96,7 +96,7 @@ class ApiService {
       'patientNumber': patientNumber,
       'patientEmail': patientEmail,
       'patientGender': patientGender,
-      'apptDate':  apptDate,
+      'apptDate': apptDate,
       'apptTime': apptTime,
       'bloodGroup': bloodGroup,
       'subject': subject,
@@ -116,7 +116,6 @@ class ApiService {
       return null;
     }
   }
-
 
 
 /*static Future<List<Msg>> getMsg() async {
@@ -151,12 +150,13 @@ class ApiService {
   }*/
 }
 
-Future<Timers?> updateTime(String senderId, String receiverId,String time) async {
+Future<Timers?> updateTime(String senderId, String receiverId,
+    String time) async {
   var request = http.MultipartRequest(
       'POST', Uri.parse('https://admin.verzat.com/user-api/updateTIme.php'));
   request.fields.addAll({
     'senderId': senderId,
-    'receiverId':receiverId,
+    'receiverId': receiverId,
     'doneTime': time
   });
 
@@ -172,17 +172,16 @@ Future<Timers?> updateTime(String senderId, String receiverId,String time) async
     print("updateee22");
 
     return null;
-
   }
 }
 
-Future<loginInfo?> editRegister( String id,String name,
-     String email,
+Future<loginInfo?> editRegister(String id, String name,
+    String email,
     String number,
     String city,
-    String password,
-     ) async {
-  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/editProfile.php'));
+    String password,) async {
+  var request = http.MultipartRequest(
+      'POST', Uri.parse('https://admin.verzat.com/user-api/editProfile.php'));
   request.fields.addAll({
     'id': id,
     'name': name,
@@ -190,7 +189,7 @@ Future<loginInfo?> editRegister( String id,String name,
     'mobile': number,
     'location': city,
     'password': password,
-    'type':getStringAsync(USER_TYPE)
+    'type': getStringAsync(USER_TYPE)
   });
 
   // request.files.add(await http.MultipartFile.fromPath('photo',  file));
@@ -206,19 +205,21 @@ Future<loginInfo?> editRegister( String id,String name,
     print(Stremresponse.reasonPhrase);
   }
 }
+
 Future<loginInfo?> uploadPaymentInfo(String apptID,
-    String doctorID,String userID,String amount, String statusType,String? paymentID,String orderId,String role
-    )async{
-  var request = http.MultipartRequest('POST',  Uri.parse('https://admin.verzat.com/user-api/paymentInfo.php'));
+    String doctorID, String userID, String amount, String statusType,
+    String? paymentID, String orderId, String role) async {
+  var request = http.MultipartRequest(
+      'POST', Uri.parse('https://admin.verzat.com/user-api/paymentInfo.php'));
   request.fields.addAll({
-    'apptID':apptID,
+    'apptID': apptID,
     'doctorID': doctorID,
     'userID': userID,
     'role': role,
-    'amount':  amount,
+    'amount': amount,
     'status': statusType,
     'paymentID': paymentID!,
-    'orderID':  orderId!
+    'orderID': orderId!
   });
 
   var Stremresponse = await request.send();
@@ -226,19 +227,19 @@ Future<loginInfo?> uploadPaymentInfo(String apptID,
   if (Stremresponse.statusCode == 200) {
     var response = await http.Response.fromStream(Stremresponse);
     final result = jsonDecode(response.body);
-     return loginInfo.fromJson(result);
-
+    return loginInfo.fromJson(result);
   } else {
     return null;
     print(Stremresponse.reasonPhrase);
   }
-
 }
+
 Future<loginInfo?> forgotPasswrd(String email, String type) async {
-  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/forgotPassword.php'));
+  var request = http.MultipartRequest('POST',
+      Uri.parse('https://admin.verzat.com/user-api/forgotPassword.php'));
   request.fields.addAll({
     'email': email,
-    'type':type
+    'type': type
     // 'password': password,
   });
 
@@ -256,7 +257,8 @@ Future<loginInfo?> forgotPasswrd(String email, String type) async {
 
 Future<List<Doctors>> getDoctors() async {
   var response =
-  await http.get(Uri.parse("https://admin.verzat.com/user-api/doctorsList.php"));
+  await http.get(
+      Uri.parse("https://admin.verzat.com/user-api/doctorsList.php"));
 
   var jsonData = json.decode(response.body);
   var jsonArray = jsonData['doctors'];
@@ -286,9 +288,10 @@ Future<List<Doctors>> getDoctors() async {
 Future<List<Doctors>> getSearchDoctors(String text) async {
   // var response =
   // await http.get(Uri.parse(ApiService.url+'/UserApi/doctorsList.php'));
-  var request = http.MultipartRequest('POST', Uri.parse("https://admin.verzat.com/user-api/searchList.php"));
+  var request = http.MultipartRequest(
+      'POST', Uri.parse("https://admin.verzat.com/user-api/searchList.php"));
   request.fields.addAll({
-    'text':  text
+    'text': text
   });
   var Stremresponse = await request.send();
   var response = await http.Response.fromStream(Stremresponse);
@@ -311,13 +314,21 @@ Future<List<Doctors>> getSearchDoctors(String text) async {
         hospital: item['hospital'],
         location: item['location'],
         number: item['mobile'],
-        ratings: item['ratings']);
+        ratings: item['ratings'],
+        fees: item['fees'],
+        availFrom: item['availFrom'],
+        availTo: item['availTo']
 
-    docList.add(doctors);
+  );
+
+  docList.add(doctors);
   }
-  print('hey${docList.toString()}');
-  return docList;
+  print('hey${docList.toString()}'
+  );
+  return
+  docList;
 }
+
 Future<List<CatList>> getCatList() async {
   // var response =
   // await http.get(Uri.parse(ApiService.url+'/UserApi/category.php'));
@@ -326,18 +337,40 @@ Future<List<CatList>> getCatList() async {
   // var jsonArray = jsonData['catList'];
 
   List<CatList> catList = [];
-   catList.add(CatList(categoryUrl:   "https://static.thenounproject.com/png/2683238-200.png", catName:  "Anxiety"));
-   catList.add(CatList(categoryUrl:   "https://cdn-icons-png.flaticon.com/512/7145/7145185.png", catName:  "Depression"));
-   catList.add(CatList(categoryUrl:   "https://cdn-icons-png.flaticon.com/512/4939/4939498.png", catName:  "Activity & Nutrition"));
-   catList.add(CatList(categoryUrl:   "https://cdn.iconscout.com/icon/premium/png-256-thumb/obesity-1573349-1332894.png", catName:  "Over weight "));
-   catList.add(CatList(categoryUrl:   "https://static.thenounproject.com/png/3199163-200.png", catName:  "Eye care"));
-    catList.add(CatList(categoryUrl:   "https://cdn-icons-png.flaticon.com/512/7075/7075766.png", catName:  "Skin care"));
-  catList.add(CatList(categoryUrl:   "https://cdn.iconscout.com/icon/premium/png-256-thumb/cardiology-2383070-2014925.png", catName:  "CardioLogy"));
-  catList.add(CatList(categoryUrl:  "https://static.thenounproject.com/png/3627839-200.png", catName:  " Neurology"));
-  catList.add(CatList(categoryUrl:  "https://cdn.iconscout.com/icon/free/png-256/dental-1537082-1302669.png", catName:  "Dental"));
-  catList.add(CatList(categoryUrl:  "https://cdn.iconscout.com/icon/premium/png-256-thumb/ear-nose-throat-3281171-2750704.png", catName:  "ENT"));
-  catList.add(CatList(categoryUrl:  "https://static.thenounproject.com/png/3429664-200.png", catName:  "Orthopaedic"));
-   /*for (var item in jsonArray) {
+  catList.add(CatList(
+      categoryUrl: "https://static.thenounproject.com/png/2683238-200.png",
+      catName: "Anxiety"));
+  catList.add(CatList(
+      categoryUrl: "https://cdn-icons-png.flaticon.com/512/7145/7145185.png",
+      catName: "Depression"));
+  catList.add(CatList(
+      categoryUrl: "https://cdn-icons-png.flaticon.com/512/4939/4939498.png",
+      catName: "Activity & Nutrition"));
+  catList.add(CatList(
+      categoryUrl: "https://cdn.iconscout.com/icon/premium/png-256-thumb/obesity-1573349-1332894.png",
+      catName: "Over weight "));
+  catList.add(CatList(
+      categoryUrl: "https://static.thenounproject.com/png/3199163-200.png",
+      catName: "Eye care"));
+  catList.add(CatList(
+      categoryUrl: "https://cdn-icons-png.flaticon.com/512/7075/7075766.png",
+      catName: "Skin care"));
+  catList.add(CatList(
+      categoryUrl: "https://cdn.iconscout.com/icon/premium/png-256-thumb/cardiology-2383070-2014925.png",
+      catName: "CardioLogy"));
+  catList.add(CatList(
+      categoryUrl: "https://static.thenounproject.com/png/3627839-200.png",
+      catName: " Neurology"));
+  catList.add(CatList(
+      categoryUrl: "https://cdn.iconscout.com/icon/free/png-256/dental-1537082-1302669.png",
+      catName: "Dental"));
+  catList.add(CatList(
+      categoryUrl: "https://cdn.iconscout.com/icon/premium/png-256-thumb/ear-nose-throat-3281171-2750704.png",
+      catName: "ENT"));
+  catList.add(CatList(
+      categoryUrl: "https://static.thenounproject.com/png/3429664-200.png",
+      catName: "Orthopaedic"));
+  /*for (var item in jsonArray) {
        CatList list = CatList(categoryUrl: item['categoryUrl'],
        catName: item['catName']);
 
@@ -345,6 +378,7 @@ Future<List<CatList>> getCatList() async {
   }*/
   return catList;
 }
+
 class CatList {
   String? categoryUrl;
   String? catName;
@@ -363,12 +397,13 @@ class CatList {
     return data;
   }
 }
+
 Future<Timers?> getTime(String senderId, String receiverId) async {
   var request = http.MultipartRequest(
       'POST', Uri.parse('https://admin.verzat.com/user-api/getTime.php'));
   request.fields.addAll({
     'senderId': senderId,
-    'receiverId':receiverId
+    'receiverId': receiverId
   });
 
 
@@ -382,12 +417,13 @@ Future<Timers?> getTime(String senderId, String receiverId) async {
     return null;
   }
 }
-Future<Timers?> setTime(String senderId, String receiverId,String time) async {
+
+Future<Timers?> setTime(String senderId, String receiverId, String time) async {
   var request = http.MultipartRequest(
       'POST', Uri.parse('https://admin.verzat.com/user-api/setTime.php'));
   request.fields.addAll({
     'senderId': senderId,
-    'receiverId':receiverId,
+    'receiverId': receiverId,
     'doneTime': time
   });
 
@@ -405,14 +441,14 @@ Future<Timers?> setTime(String senderId, String receiverId,String time) async {
 }
 
 Future<List<Msg>> getMessages(String? currentUserId, String? receiverId) async {
-   var type;
- if(getStringAsync(USER_TYPE)=="user"){
-   type="doctor";
-
- }else{
-   type="user";
- }
-  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/messages.php'));
+  var type;
+  if (getStringAsync(USER_TYPE) == "user") {
+    type = "doctor";
+  } else {
+    type = "user";
+  }
+  var request = http.MultipartRequest(
+      'POST', Uri.parse('https://admin.verzat.com/user-api/messages.php'));
   request.fields.addAll({
     'receiver_type': type,
     'sender_type': getStringAsync(USER_TYPE),
@@ -420,17 +456,17 @@ Future<List<Msg>> getMessages(String? currentUserId, String? receiverId) async {
     'receiver_id': receiverId!
   });
 
-  logDev.log('1',name:"12");
+  logDev.log('1', name: "12");
 
   http.StreamedResponse response = await request.send();
   var response1 = await http.Response.fromStream(response);
-  logDev.log('2',name:"12");
+  logDev.log('2', name: "12");
 
   var jsonData = json.decode(response1.body);
   var jsonArray = jsonData['msg'];
   List<Msg> msgList = [];
   print(jsonArray);
-  logDev.log('3',name:"27-12");
+  logDev.log('3', name: "27-12");
 
   for (var item in jsonArray) {
     Msg msg = Msg(
@@ -439,24 +475,23 @@ Future<List<Msg>> getMessages(String? currentUserId, String? receiverId) async {
         senderId: item['sender_id'],
         message: item['message'],
         messageDate: item['messageDate'],
-         messageTime: item['messageTime']);
+        messageTime: item['messageTime']);
 
     msgList.add(msg);
-    logDev.log('4',name:"27-12");
-
+    logDev.log('4', name: "27-12");
   }
-  logDev.log('5',name:"27-12");
+  logDev.log('5', name: "27-12");
   return msgList;
-
 }
 
-Future<MsgSend?> sendMsg(String msg , String senderId,String receiverId) async{
-  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/send_messages.php'));
+Future<MsgSend?> sendMsg(String msg, String senderId, String receiverId) async {
+  var request = http.MultipartRequest(
+      'POST', Uri.parse('https://admin.verzat.com/user-api/send_messages.php'));
   request.fields.addAll({
     'message': msg,
     'sender_id': senderId,
     'receiver_id': receiverId,
-    'type':getStringAsync(USER_TYPE)
+    'type': getStringAsync(USER_TYPE)
   });
 
 
@@ -465,14 +500,15 @@ Future<MsgSend?> sendMsg(String msg , String senderId,String receiverId) async{
   if (Stremresponse.statusCode == 200) {
     var response = await http.Response.fromStream(Stremresponse);
     final result = jsonDecode(response.body);
-    return  MsgSend.fromJson(result);
+    return MsgSend.fromJson(result);
   } else {
     return null;
   }
-
 }
-Future<void> profileListCreate(String? senderID,String? receiverID )async {
-  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/profileList.php'));
+
+Future<void> profileListCreate(String? senderID, String? receiverID) async {
+  var request = http.MultipartRequest(
+      'POST', Uri.parse('https://admin.verzat.com/user-api/profileList.php'));
   request.fields.addAll({
     'sender_id': senderID!,
     'receiver_id': receiverID!
@@ -488,10 +524,11 @@ Future<void> profileListCreate(String? senderID,String? receiverID )async {
   else {
     print(response.reasonPhrase);
   }
-
 }
-Future<void> setBook(String id ) async{
-  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/setBook.php'));
+
+Future<void> setBook(String id) async {
+  var request = http.MultipartRequest(
+      'POST', Uri.parse('https://admin.verzat.com/user-api/setBook.php'));
   request.fields.addAll({
     'id': id
   });
@@ -545,6 +582,7 @@ class MsgSend {
     return data;
   }
 }
+
 class loginInfo {
   String? token;
   String? error;
@@ -562,9 +600,10 @@ class loginInfo {
   String? file;
 
 
-
-  loginInfo(this.token, this.error, this.id,this.type, this.message, this.email,this.name,
-      this.address, this.city, this.state, this.lastName, this.photo,this.mobile);
+  loginInfo(this.token, this.error, this.id, this.type, this.message,
+      this.email, this.name,
+      this.address, this.city, this.state, this.lastName, this.photo,
+      this.mobile);
 
   loginInfo.fromJson(Map<String, dynamic> json) {
     token = json['token'];
@@ -592,6 +631,7 @@ class loginInfo {
     return data;
   }
 }
+
 class GetAllDoctorsList {
   List<Doctors>? doctors;
 
@@ -628,22 +668,27 @@ class Doctors {
   String? number;
   String? description;
   String? email;
+  String? fees;
+  String? availFrom;
+  String? availTo;
 
 
-  Doctors(
-      {
-        this.id,
-        this.name,
-        this.lastName,
-        this.gender,
-        this.exp,
-        this.expertise,
-        this.hospital,
-        this.location,
-        this.ratings,
-        this.number,
-        this.description,
-        this.email});
+  Doctors({
+    this.id,
+    this.name,
+    this.lastName,
+    this.gender,
+    this.exp,
+    this.expertise,
+    this.hospital,
+    this.location,
+    this.ratings,
+    this.number,
+    this.description,
+    this.email,
+    this.fees,
+    this.availFrom,
+    this.availTo});
 
   Doctors.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -658,6 +703,9 @@ class Doctors {
     number = json['mobile'];
     description = json['description'];
     email = json['email'];
+    fees = json['fees'];
+    availFrom = json['availFrom'];
+    availTo = json['availTo'];
   }
 
   Map<String, dynamic> toJson() {
@@ -674,9 +722,13 @@ class Doctors {
     data['number'] = this.number;
     data['description'] = this.description;
     data['email'] = this.email;
+    data['fees'] = this.fees;
+    data['availFrom'] = this.availFrom;
+    data['availTo'] = this.availTo;
     return data;
   }
 }
+
 class Msg {
   String? id;
   String? receiverId;
@@ -685,13 +737,12 @@ class Msg {
   String? messageDate;
   String? messageTime;
 
-  Msg(
-      {this.id,
-        this.receiverId,
-        this.senderId,
-        this.message,
-        this.messageDate,
-        this.messageTime});
+  Msg({this.id,
+    this.receiverId,
+    this.senderId,
+    this.message,
+    this.messageDate,
+    this.messageTime});
 
   Msg.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -713,6 +764,7 @@ class Msg {
     return data;
   }
 }
+
 class AppointmentSlotModel {
   String? time;
   bool? available;
@@ -732,6 +784,7 @@ class AppointmentSlotModel {
     return data;
   }
 }
+
 class ServiceData {
   String? charges;
   String? doctor_id;
@@ -743,7 +796,8 @@ class ServiceData {
   String? mapping_table_id;
   bool isCheck;
 
-  ServiceData({this.charges, this.doctor_id, this.id, this.name, this.service_id, this.status, this.type, this.mapping_table_id, this.isCheck = false});
+  ServiceData(
+      {this.charges, this.doctor_id, this.id, this.name, this.service_id, this.status, this.type, this.mapping_table_id, this.isCheck = false});
 
   factory ServiceData.fromJson(Map<String, dynamic> json) {
     return ServiceData(
@@ -779,6 +833,7 @@ class GenderModel {
 
   GenderModel({this.name, this.icon, this.value});
 }
+
 class UpcomingAppointment {
   String? appointment_end_date;
   String? appointment_end_time;
@@ -796,36 +851,37 @@ class UpcomingAppointment {
   String? patient_name;
   String? status;
   String? visit_label;
- // List<VisitType>? visit_type;
- // ZoomData? zoomData;
+
+  // List<VisitType>? visit_type;
+  // ZoomData? zoomData;
   int? all_service_charges;
- // List<AppointmentReport>? appointment_report;
+
+  // List<AppointmentReport>? appointment_report;
   String? discount_code;
   bool? video_consultation;
 
-  UpcomingAppointment(
-      {this.appointment_end_date,
-        this.appointment_end_time,
-        this.appointment_start_date,
-        this.appointment_start_time,
-        this.clinic_id,
-        this.clinic_name,
-        this.created_at,
-        this.description,
-        this.doctor_id,
-        this.doctor_name,
-        this.encounter_id,
-        this.id,
-        this.patient_id,
-        this.patient_name,
-        this.status,
-        this.visit_label,
-        // this.visit_type,
-        // this.zoomData,
-        this.all_service_charges,
-      //  this.appointment_report,
-        this.discount_code,
-        this.video_consultation});
+  UpcomingAppointment({this.appointment_end_date,
+    this.appointment_end_time,
+    this.appointment_start_date,
+    this.appointment_start_time,
+    this.clinic_id,
+    this.clinic_name,
+    this.created_at,
+    this.description,
+    this.doctor_id,
+    this.doctor_name,
+    this.encounter_id,
+    this.id,
+    this.patient_id,
+    this.patient_name,
+    this.status,
+    this.visit_label,
+    // this.visit_type,
+    // this.zoomData,
+    this.all_service_charges,
+    //  this.appointment_report,
+    this.discount_code,
+    this.video_consultation});
 
   factory UpcomingAppointment.fromJson(Map<String, dynamic> json) {
     return UpcomingAppointment(
@@ -837,7 +893,7 @@ class UpcomingAppointment {
       clinic_name: json['clinic_name'],
       created_at: json['created_at'],
       description: json['description'],
-   //   appointment_report: json['appointment_report'] != null ? (json['appointment_report'] as List).map((i) => AppointmentReport.fromJson(i)).toList() : [],
+      //   appointment_report: json['appointment_report'] != null ? (json['appointment_report'] as List).map((i) => AppointmentReport.fromJson(i)).toList() : [],
       doctor_id: json['doctor_id'],
       discount_code: json['discount_code'],
       doctor_name: json['doctor_name'],
@@ -882,9 +938,6 @@ class UpcomingAppointment {
 }
 
 
-
-
-
 class News {
   String? image;
   String? postDate;
@@ -909,9 +962,10 @@ class News {
     return data;
   }
 }
-Future<List<News>> getNews() async{
+
+Future<List<News>> getNews() async {
   var response =
-  await http.get(Uri.parse(ApiService.url+'/UserApi/news.php'));
+  await http.get(Uri.parse(ApiService.url + '/UserApi/news.php'));
 
   var jsonData = json.decode(response.body);
   var jsonArray = jsonData['news'];
@@ -921,9 +975,9 @@ Future<List<News>> getNews() async{
   for (var item in jsonArray) {
     News news = News(
         image: item['image']
-    ,postDate: item['postDate']
-    ,postTitle: item['postTitle']
-    ,postContent: item['postContent']);
+        , postDate: item['postDate']
+        , postTitle: item['postTitle']
+        , postContent: item['postContent']);
 
     newsList.add(news);
   }
@@ -948,6 +1002,7 @@ class Timers {
     return data;
   }
 }
+
 Future<Position> determinePosition() async {
   bool serviceEnabled;
   LocationPermission permission;
@@ -1004,9 +1059,11 @@ Future<void> logout(BuildContext context) async {
   await removeKey(IS_LOGGED_IN);
 
   //appStore.setLoggedIn(false);
-  push(SignInScreen(), isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+  push(SignInScreen(), isNewTask: true,
+      pageRouteAnimation: PageRouteAnimation.Fade);
 }
-Future<bool> connectivityChecker()   async {
+
+Future<bool> connectivityChecker() async {
   var connected = false;
   print("Checking internet...");
   try {
@@ -1016,24 +1073,25 @@ Future<bool> connectivityChecker()   async {
     if ((result.isNotEmpty && result[0].rawAddress.isNotEmpty) ||
         (result2.isNotEmpty && result2[0].rawAddress.isNotEmpty) ||
         (result3.isNotEmpty && result3[0].rawAddress.isNotEmpty)) {
-    //  print('connected..');
+      //  print('connected..');
       connected = true;
     } else {
-    //  print("not connected from else..");
+      //  print("not connected from else..");
       connected = false;
     }
   } on SocketException catch (_) {
-  //  print('not connected...');
+    //  print('not connected...');
     connected = false;
   }
   return connected;
 }
-Future<List<Notifications>> getNotificaton( ) async {
-  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/fetchNotification.php'));
+
+Future<List<Notifications>> getNotificaton() async {
+  var request = http.MultipartRequest('POST',
+      Uri.parse('https://admin.verzat.com/user-api/fetchNotification.php'));
   request.fields.addAll({
     'receiver_id': getStringAsync(USER_ID),
     'receiver_type': getStringAsync(USER_TYPE)
-
   });
 
 
@@ -1041,33 +1099,34 @@ Future<List<Notifications>> getNotificaton( ) async {
 
   var response1 = await http.Response.fromStream(response);
   List<Notifications> apptmntList = [];
-  var appList = jsonDecode( response1.body);
- // print("hiii${ appList }");
-  for(var item in appList){
+  var appList = jsonDecode(response1.body);
+  // print("hiii${ appList }");
+  for (var item in appList) {
     Notifications appointments = Notifications(
-      id: item['id'],
-      activityA: item['activityA'],
-      activityB: item['activityB'],
-      userIDA: item['userIDA'],
-      typeA: item['typeA'],
-      userIDB: item['userIDB'],
-      typeB: item['typeB'],
-      dateN: item['dateN'],
-      timeN: item['timeN'],
-      name: item['name'],
-      status: item['status'],
-      file: item['file']
+        id: item['id'],
+        activityA: item['activityA'],
+        activityB: item['activityB'],
+        userIDA: item['userIDA'],
+        typeA: item['typeA'],
+        userIDB: item['userIDB'],
+        typeB: item['typeB'],
+        dateN: item['dateN'],
+        timeN: item['timeN'],
+        name: item['name'],
+        status: item['status'],
+        file: item['file']
 
-     );
+    );
 
     apptmntList.add(appointments);
-  //  ApiService.notiCount = apptmntList.length.toString();
+    //  ApiService.notiCount = apptmntList.length.toString();
 
   }
 
 
   return apptmntList;
 }
+
 class Notifications {
   String? id;
   String? activityA;
@@ -1082,19 +1141,18 @@ class Notifications {
   String? status;
   String? file;
 
-  Notifications(
-      {this.id,
-        this.activityA,
-        this.activityB,
-        this.userIDA,
-        this.typeA,
-        this.userIDB,
-        this.typeB,
-        this.dateN,
-        this.timeN,
-        this.name,
-        this.status,
-        this.file});
+  Notifications({this.id,
+    this.activityA,
+    this.activityB,
+    this.userIDA,
+    this.typeA,
+    this.userIDB,
+    this.typeB,
+    this.dateN,
+    this.timeN,
+    this.name,
+    this.status,
+    this.file});
 
   Notifications.fromJson(Map<String, dynamic> json) {
     id = json['id'];
