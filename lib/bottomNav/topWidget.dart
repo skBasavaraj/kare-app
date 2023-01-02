@@ -39,68 +39,66 @@ class _TopNameWidgetState extends State<TopNameWidget>with WidgetsBindingObserve
         borderRadius: radius(0),
         backgroundColor: scaffoldBgColor,
       ),
-      child: Expanded(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                2.height,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Wrap(
-                      direction: Axis.vertical,
-                      children: [
-                        // Image.asset("images/icons/hi.png", width: 22, height: 22, fit: BoxFit.cover),
-                        Text(
-                          greeting(),
-                          style: GoogleFonts.jost(
-                              color: textColor,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(' ${getStringAsync(USER_NAME)}  ',
-                            style: GoogleFonts.jost(fontSize: 16)),
-                      ],
-                    ).paddingOnly(left: 10),
-                    Stack(
-                      children: [
-                        InkWell(
-                          child: Image.asset('images/notify.png', height: 30),
-                          onTap: () {
-                            UserNotification().launch(context,
-                                pageRouteAnimation: PageRouteAnimation.Scale);
-                          },
-                        ),
-                        FutureBuilder<List<Notifications>>(
-                          future:  getNotificaton(),
-                          builder: (context, snapshot) {
-                            if (snapshot.data == null) {
-                              return snapWidgetHelper(snapshot,
-                                  errorWidget: noAppointmentDataWidget(
-                                      text: "No Data Found", isInternet: true));
-                            } else {
-                              last = snapshot.data;
-                              return notifyText(last,last!.length!.toInt());
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              2.height,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Wrap(
+                    direction: Axis.vertical,
+                    children: [
+                      // Image.asset("images/icons/hi.png", width: 22, height: 22, fit: BoxFit.cover),
+                      Text(
+                        greeting(),
+                        style: GoogleFonts.jost(
+                            color: textColor,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(' ${getStringAsync(USER_NAME)}  ',
+                          style: GoogleFonts.jost(fontSize: 16)),
+                    ],
+                  ).paddingOnly(left: 10),
+                  Stack(
+                    children: [
+                      InkWell(
+                        child: Image.asset('images/notify.png', height: 30),
+                        onTap: () {
+                          UserNotification().launch(context,
+                              pageRouteAnimation: PageRouteAnimation.Scale);
+                        },
+                      ),
+                      FutureBuilder<List<Notifications>>(
+                        future:  getNotificaton(),
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null) {
+                            return snapWidgetHelper(snapshot,
+                                errorWidget: noAppointmentDataWidget(
+                                    text: "No Data Found", isInternet: true));
+                          } else {
+                            last = snapshot.data;
+                            return notifyText(last,last!.length!.toInt());
 
-                            }
-                          },
-                        )
+                          }
+                        },
+                      )
 
-                      ],
-                    ).paddingOnly(right: 5)
-                  ],
-                ),
-              ],
-            ).expand(),
-          ],
-        ).paddingSymmetric(horizontal: 12, vertical: 5),
-      ),
+                    ],
+                  ).paddingOnly(right: 5)
+                ],
+              ),
+            ],
+          ).expand(),
+        ],
+      ).paddingSymmetric(horizontal: 12, vertical: 5),
     );
     /* Observer(
       builder: (_) =>

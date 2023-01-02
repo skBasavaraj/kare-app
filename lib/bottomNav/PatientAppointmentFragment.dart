@@ -201,7 +201,7 @@ class _PatientAppointmentFragmentState
           )
           // PatientAppointment().paddingAll(16),
         ],
-      ).expand(),
+      ) ,
     );
   }
 
@@ -234,76 +234,74 @@ class _PatientAppointmentFragmentState
         height: 160,
         child: Wrap(
           children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15,top: 15,bottom: 5),
-                    child: Text(
-                      "Dr.${appointments.name!}",
-                      style: GoogleFonts.jost(
-                          fontSize: 30,
-                          color: Colors.black,
-                          decoration: TextDecoration.none),
-                      overflow: TextOverflow.ellipsis,
-                    ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15,top: 15,bottom: 5),
+                  child: Text(
+                    "Dr.${appointments.name!}",
+                    style: GoogleFonts.jost(
+                        fontSize: 30,
+                        color: Colors.black,
+                        decoration: TextDecoration.none),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15, ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.calendar_month,
-                          color: Colors.blue,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.calendar_month,
+                        color: Colors.blue,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: Text(
+                          "${appointments.apptDate}",
+                          style: GoogleFonts.jost(
+                              fontSize: 16,
+                              color: Colors.black,
+                              decoration: TextDecoration.none),
+                          maxLines: 2,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: Text(
-                            "${appointments.apptDate}",
-                            style: GoogleFonts.jost(
-                                fontSize: 16,
-                                color: Colors.black,
-                                decoration: TextDecoration.none),
-                            maxLines: 2,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.watch_later_outlined,
+                            color: Colors.blue,
                           ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.watch_later_outlined,
-                              color: Colors.blue,
+                          Padding(
+                            padding: EdgeInsets.only(left: 5),
+                            child: Text(
+                              "${appointments.apptTime}",
+                              style: GoogleFonts.jost(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none),
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 5),
-                              child: Text(
-                                "${appointments.apptTime}",
-                                style: GoogleFonts.jost(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.none),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: ElevatedButton(
-                        onPressed: buttonenabled ? () {} : null,
-                        child:
-                            Center(child: Text("appointment not approved "))),
-                  )
-                ],
-              ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: ElevatedButton(
+                      onPressed: buttonenabled ? () {} : null,
+                      child:
+                          Center(child: Text("appointment not approved "))),
+                )
+              ],
             ),
           ],
         ),
@@ -316,85 +314,81 @@ class _PatientAppointmentFragmentState
 
         child: Wrap(
           children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15, top: 10),
+                      child: Text(
+                        "Dr.${appointments.name}",
+                        style:   GoogleFonts.jost(
+                            fontSize: 30,
+                            color: Colors.black,
+                             decoration: TextDecoration.none),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, top: 5),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15, top: 10),
-                          child: Text(
-                            "Dr.${appointments.name}",
-                            style:   GoogleFonts.jost(
-                                fontSize: 30,
-                                color: Colors.black,
-                                 decoration: TextDecoration.none),
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                      const Icon(
+                        Icons.calendar_month,
+                        color: Colors.blue,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: Text(
+                          "${appointments.apptDate}",
+                          style: GoogleFonts.jost(
+                              fontSize: 16,
+                              color: Colors.black,
+                              decoration: TextDecoration.none),
+                          maxLines: 2,
                         ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.watch_later_outlined,
+                            color: Colors.blue,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 5),
+                            child: Text(
+                              "${appointments.apptTime}",
+                              style: GoogleFonts.jost(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15, top: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.calendar_month,
-                          color: Colors.blue,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: Text(
-                            "${appointments.apptDate}",
-                            style: GoogleFonts.jost(
-                                fontSize: 16,
-                                color: Colors.black,
-                                decoration: TextDecoration.none),
-                            maxLines: 2,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.watch_later_outlined,
-                              color: Colors.blue,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 5),
-                              child: Text(
-                                "${appointments.apptTime}",
-                                style: GoogleFonts.jost(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.none),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: ElevatedButton(
-                        onPressed: () async {
-                          //  var info =    await get();
-                          CheckOut(appointments).launch(context);
-                          //_pay(appointments.doctorName!,appointments.id!,appointments.dEmail!,appointments.patientName!);
-                        },
-                        child: Center(child: const Text("Payment pending"))),
-                  )
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: ElevatedButton(
+                      onPressed: () async {
+                        //  var info =    await get();
+                        CheckOut(appointments).launch(context);
+                        //_pay(appointments.doctorName!,appointments.id!,appointments.dEmail!,appointments.patientName!);
+                      },
+                      child: Center(child: const Text("Payment pending"))),
+                )
+              ],
             ),
           ],
         ),
@@ -406,179 +400,170 @@ class _PatientAppointmentFragmentState
             borderRadius: BorderRadius.circular(15), color: Colors.white),
         margin: EdgeInsets.all(10),
         height: 200,
-        child: Expanded(
-          child: Wrap(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+        child: Wrap(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, top: 10),
+                  child: Text(
+                    "Dr.${appointments.name}",
+                    style:   GoogleFonts.jost(
+                        fontSize: 30,
+                        color: Colors.black,
+                        decoration: TextDecoration.none),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15,top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Expanded(
-                    flex: 3,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15, top: 10),
-                      child: Text(
-                        "Dr.${appointments.name}",
-                        style:   GoogleFonts.jost(
-                            fontSize: 30,
-                            color: Colors.black,
-                            decoration: TextDecoration.none),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                  const Icon(
+                    Icons.calendar_month,
+                    color: Colors.blue,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: Text(
+                      "${appointments.apptDate}",
+                      style: GoogleFonts.jost(
+                          fontSize: 16,
+                          color: Colors.black,
+                          decoration: TextDecoration.none),
+                      maxLines: 2,
                     ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.watch_later_outlined,
+                        color: Colors.blue,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 5),
+                        child: Text(
+                          "${appointments.apptTime}",
+                          style: GoogleFonts.jost(
+                              fontSize: 16,
+                              color: Colors.black,
+                              decoration: TextDecoration.none),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15,top: 5),
-                child: Row(
+            ),
+            Padding(
+              padding:   EdgeInsets.only(left: 15, top: 0),
+              child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(
-                      Icons.calendar_month,
-                      color: Colors.blue,
+                    Icon(
+                      Icons.location_city_rounded,
+                      size: 24,
+                      color: Colors.green,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 5),
-                      child: Text(
-                        "${appointments.apptDate}",
-                        style: GoogleFonts.jost(
-                            fontSize: 16,
+                      padding:   EdgeInsets.only(left: 10),
+                      child:  SizedBox(
+
+                        width: 260,
+                        height: 30,
+                        child: Text(
+                        "Hospital: ${appointments.hospital} " ,
+                              style: GoogleFonts.jost(
                             color: Colors.black,
-                            decoration: TextDecoration.none),
-                        maxLines: 2,
+                            fontSize: 20,
+
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+
+                        ),
                       ),
                     ),
+
                     SizedBox(
                       width: 10,
+                    )
+                  ]),
+            ),
+            Padding(
+              padding:   EdgeInsets.only(left: 15, top: 0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.location_on_sharp,
+                      size: 24,
+                      color: Colors.red,
                     ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.watch_later_outlined,
-                          color: Colors.blue,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 5),
-                          child: Text(
-                            "${appointments.apptTime}",
-                            style: GoogleFonts.jost(
-                                fontSize: 16,
-                                color: Colors.black,
-                                decoration: TextDecoration.none),
-                            overflow: TextOverflow.ellipsis,
+                    Padding(
+                      padding:   EdgeInsets.only(left: 4),
+                      child:  SizedBox(
+
+                        width: 260,
+                        height: 30,
+                        child: Text(
+                          " ${appointments.location} " ,
+                          style: GoogleFonts.jost(
+                            color: Colors.black,
+                            fontSize: 20,
+
                           ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+
                         ),
-                      ],
+                      ),
                     ),
-                  ],
-                ),
+
+                    SizedBox(
+                      width: 10,
+                    )
+                  ]),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(left: 15,top:5),
+              child: Container(
+                width: 200,
+                height: 40,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.green),
+                child: Center(
+                    child: Text(
+                  "Booked",
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                )),
               ),
-              Padding(
-                padding:   EdgeInsets.only(left: 15, top: 0),
-                child: Expanded(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.location_city_rounded,
-                          size: 24,
-                          color: Colors.green,
-                        ),
-                        Padding(
-                          padding:   EdgeInsets.only(left: 10),
-                          child:  SizedBox(
+            ),
+            /* Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton(
+                  onPressed: () async {
+                    //  var info =    await get();
 
-                            width: 260,
-                            height: 30,
-                            child: Text(
-                            "Hospital: ${appointments.hospital} " ,
-                                  style: GoogleFonts.jost(
-                                color: Colors.black,
-                                fontSize: 20,
-
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-
-                            ),
-                          ),
-                        ),
-
-                        SizedBox(
-                          width: 10,
-                        )
-                      ]),
-                ),
-              ),
-              Padding(
-                padding:   EdgeInsets.only(left: 15, top: 0),
-                child: Expanded(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.location_on_sharp,
-                          size: 24,
-                          color: Colors.red,
-                        ),
-                        Padding(
-                          padding:   EdgeInsets.only(left: 4),
-                          child:  SizedBox(
-
-                            width: 260,
-                            height: 30,
-                            child: Text(
-                              " ${appointments.location} " ,
-                              style: GoogleFonts.jost(
-                                color: Colors.black,
-                                fontSize: 20,
-
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-
-                            ),
-                          ),
-                        ),
-
-                        SizedBox(
-                          width: 10,
-                        )
-                      ]),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(left: 15,top:5),
-                child: Container(
-                  width: 200,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.green),
-                  child: Center(
-                      child: Text(
-                    "Booked",
-                    style: TextStyle(color: Colors.white, fontSize: 15),
-                  )),
-                ),
-              ),
-              /* Padding(
-                padding: const EdgeInsets.all(10),
-                child: ElevatedButton(
-                    onPressed: () async {
-                      //  var info =    await get();
-
-                      _pay(appointments.doctorUpiAddress!,appointments.doctorName!);
-                    },
-                    child: Center(child: const Text("Payment pending"))),
-              )*/
-            ],
-          ),
+                    _pay(appointments.doctorUpiAddress!,appointments.doctorName!);
+                  },
+                  child: Center(child: const Text("Payment pending"))),
+            )*/
+          ],
         ),
       );
     } else if (appointments.status == "closed") {
@@ -588,179 +573,170 @@ class _PatientAppointmentFragmentState
             borderRadius: BorderRadius.circular(15), color: Colors.white),
         margin: EdgeInsets.all(10),
         height: 200,
-        child: Expanded(
-          child: Wrap(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+        child: Wrap(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, top: 10),
+                  child: Text(
+                    "Dr.${appointments.name}",
+                    style:   GoogleFonts.jost(
+                        fontSize: 30,
+                        color: Colors.black,
+                        decoration: TextDecoration.none),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15,top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Expanded(
-                    flex: 3,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15, top: 10),
-                      child: Text(
-                        "Dr.${appointments.name}",
-                        style:   GoogleFonts.jost(
-                            fontSize: 30,
-                            color: Colors.black,
-                            decoration: TextDecoration.none),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                  const Icon(
+                    Icons.calendar_month,
+                    color: Colors.blue,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: Text(
+                      "${appointments.apptDate}",
+                      style: GoogleFonts.jost(
+                          fontSize: 16,
+                          color: Colors.black,
+                          decoration: TextDecoration.none),
+                      maxLines: 2,
                     ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.watch_later_outlined,
+                        color: Colors.blue,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 5),
+                        child: Text(
+                          "${appointments.apptTime}",
+                          style: GoogleFonts.jost(
+                              fontSize: 16,
+                              color: Colors.black,
+                              decoration: TextDecoration.none),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15,top: 5),
-                child: Row(
+            ),
+            Padding(
+              padding:   EdgeInsets.only(left: 15, top: 0),
+              child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(
-                      Icons.calendar_month,
-                      color: Colors.blue,
+                    Icon(
+                      Icons.location_city_rounded,
+                      size: 24,
+                      color: Colors.green,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 5),
-                      child: Text(
-                        "${appointments.apptDate}",
-                        style: GoogleFonts.jost(
-                            fontSize: 16,
+                      padding:   EdgeInsets.only(left: 10),
+                      child:  SizedBox(
+
+                        width: 260,
+                        height: 30,
+                        child: Text(
+                          "Hospital: ${appointments.hospital} " ,
+                          style: GoogleFonts.jost(
                             color: Colors.black,
-                            decoration: TextDecoration.none),
-                        maxLines: 2,
+                            fontSize: 20,
+
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+
+                        ),
                       ),
                     ),
+
                     SizedBox(
                       width: 10,
+                    )
+                  ]),
+            ),
+            Padding(
+              padding:   EdgeInsets.only(left: 15, top: 0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.location_on_sharp,
+                      size: 24,
+                      color: Colors.red,
                     ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.watch_later_outlined,
-                          color: Colors.blue,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 5),
-                          child: Text(
-                            "${appointments.apptTime}",
-                            style: GoogleFonts.jost(
-                                fontSize: 16,
-                                color: Colors.black,
-                                decoration: TextDecoration.none),
-                            overflow: TextOverflow.ellipsis,
+                    Padding(
+                      padding:   EdgeInsets.only(left: 4),
+                      child:  SizedBox(
+
+                        width: 260,
+                        height: 30,
+                        child: Text(
+                          " ${appointments.location} " ,
+                          style: GoogleFonts.jost(
+                            color: Colors.black,
+                            fontSize: 20,
+
                           ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+
                         ),
-                      ],
+                      ),
                     ),
-                  ],
-                ),
+
+                    SizedBox(
+                      width: 10,
+                    )
+                  ]),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(left: 15,top:5),
+              child: Container(
+                width: 200,
+                height: 40,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.green),
+                child: Center(
+                    child: Text(
+                      "Completed appointment",
+                      style: TextStyle(color: Colors.white, fontSize: 15),
+                    )),
               ),
-              Padding(
-                padding:   EdgeInsets.only(left: 15, top: 0),
-                child: Expanded(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.location_city_rounded,
-                          size: 24,
-                          color: Colors.green,
-                        ),
-                        Padding(
-                          padding:   EdgeInsets.only(left: 10),
-                          child:  SizedBox(
+            ),
+            /* Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton(
+                  onPressed: () async {
+                    //  var info =    await get();
 
-                            width: 260,
-                            height: 30,
-                            child: Text(
-                              "Hospital: ${appointments.hospital} " ,
-                              style: GoogleFonts.jost(
-                                color: Colors.black,
-                                fontSize: 20,
-
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-
-                            ),
-                          ),
-                        ),
-
-                        SizedBox(
-                          width: 10,
-                        )
-                      ]),
-                ),
-              ),
-              Padding(
-                padding:   EdgeInsets.only(left: 15, top: 0),
-                child: Expanded(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.location_on_sharp,
-                          size: 24,
-                          color: Colors.red,
-                        ),
-                        Padding(
-                          padding:   EdgeInsets.only(left: 4),
-                          child:  SizedBox(
-
-                            width: 260,
-                            height: 30,
-                            child: Text(
-                              " ${appointments.location} " ,
-                              style: GoogleFonts.jost(
-                                color: Colors.black,
-                                fontSize: 20,
-
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-
-                            ),
-                          ),
-                        ),
-
-                        SizedBox(
-                          width: 10,
-                        )
-                      ]),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(left: 15,top:5),
-                child: Container(
-                  width: 200,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.green),
-                  child: Center(
-                      child: Text(
-                        "Completed appointment",
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      )),
-                ),
-              ),
-              /* Padding(
-                padding: const EdgeInsets.all(10),
-                child: ElevatedButton(
-                    onPressed: () async {
-                      //  var info =    await get();
-
-                      _pay(appointments.doctorUpiAddress!,appointments.doctorName!);
-                    },
-                    child: Center(child: const Text("Payment pending"))),
-              )*/
-            ],
-          ),
+                    _pay(appointments.doctorUpiAddress!,appointments.doctorName!);
+                  },
+                  child: Center(child: const Text("Payment pending"))),
+            )*/
+          ],
         ),
       );
     }  else if (appointments.status == "rejected") {
@@ -771,76 +747,80 @@ class _PatientAppointmentFragmentState
         height: 160,
         child: Wrap(
           children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15,top: 15,bottom: 5),
-                    child: Text(
-                      "Dr.${appointments.name!}",
-                      style: GoogleFonts.jost(
-                          fontSize: 30,
-                          color: Colors.black,
-                          decoration: TextDecoration.none),
-                      overflow: TextOverflow.ellipsis,
-                    ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15,top: 15,bottom: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Dr.${appointments.name!}",
+                        style: GoogleFonts.jost(
+
+                            fontSize: 30,
+                            color: Colors.black,
+                            decoration: TextDecoration.none),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15, ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.calendar_month,
-                          color: Colors.blue,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.calendar_month,
+                        color: Colors.blue,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: Text(
+                          "${appointments.apptDate}",
+                          style: GoogleFonts.jost(
+                              fontSize: 16,
+                              color: Colors.black,
+                              decoration: TextDecoration.none),
+                          maxLines: 2,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: Text(
-                            "${appointments.apptDate}",
-                            style: GoogleFonts.jost(
-                                fontSize: 16,
-                                color: Colors.black,
-                                decoration: TextDecoration.none),
-                            maxLines: 2,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.watch_later_outlined,
+                            color: Colors.blue,
                           ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.watch_later_outlined,
-                              color: Colors.blue,
+                          Padding(
+                            padding: EdgeInsets.only(left: 5),
+                            child: Text(
+                              "${appointments.apptTime}",
+                              style: GoogleFonts.jost(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none),
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 5),
-                              child: Text(
-                                "${appointments.apptTime}",
-                                style: GoogleFonts.jost(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.none),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: ElevatedButton(
-                        onPressed: buttonenabled ? () {} : null,
-                        child:
-                        Center(child: Text("your appointment has been canceled "))),
-                  )
-                ],
-              ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: ElevatedButton(
+                      onPressed: buttonenabled ? () {} : null,
+                      child:
+                      Center(child: Text("your appointment has been canceled "))),
+                )
+              ],
             ),
           ],
         ),
