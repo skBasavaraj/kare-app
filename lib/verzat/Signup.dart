@@ -95,8 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   signUp() async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-    //  appStore.setLoading(true);
-      setState(() {});
+       setState(() {});
 
 
     }
