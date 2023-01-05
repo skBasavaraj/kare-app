@@ -62,23 +62,7 @@ class _SettingFragmentState extends State<SettingFragment> with SingleTickerProv
                               clipBehavior: Clip.none,
                               alignment: Alignment.bottomRight,
                               children: [
-                             /*    cachedImage(
-                                   'images/patientAvatars/patient3.png',
-                                  height: 90,
-                                  width: 90,
-                                  fit: BoxFit.cover,
-                                  alignment: Alignment.center,
-                                ).cornerRadiusWithClipRRect(180)
-                                    :*/ Container(
-                                  height: 90,
-                                  width: 90,
-                                  padding: EdgeInsets.all(16),
-                                  decoration: boxDecorationWithRoundedCorners(
-                                    backgroundColor:   profileBgColor,
-                                    boxShape: BoxShape.circle,
-                                  ),
-                                  child: Icon(Icons.person_outline_rounded),
-                                ),
+                                profileImage(),
                                 Positioned(
                                   bottom: -8,
                                   left: 0,
@@ -267,4 +251,26 @@ class _SettingFragmentState extends State<SettingFragment> with SingleTickerProv
       ),
     );
   }
+
+ Widget profileImage() {
+
+    return cachedImage(
+       "https://admin.verzat.com/assets/images/uploads/"+getStringAsync(USER_TYPE)+"s/"+getStringAsync(PROFILE_IMAGE),
+      height: 90,
+      width: 90,
+      fit: BoxFit.cover,
+      alignment: Alignment.center,
+    ).cornerRadiusWithClipRRect(180);
+
+  }
+  /* Container(
+    height: 90,
+    width: 90,
+    padding: EdgeInsets.all(16),
+    decoration: boxDecorationWithRoundedCorners(
+    backgroundColor:   profileBgColor,
+    boxShape: BoxShape.circle,
+    ),
+    child: Icon(Icons.person_outline_rounded),
+    )*/
 }

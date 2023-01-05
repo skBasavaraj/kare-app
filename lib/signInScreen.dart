@@ -274,8 +274,8 @@ class _SignInScreenState extends State<SignInScreen> {
      await  setValue(USER_NAME, info.name);
      await  setValue(USER_MOBILE, info.mobile);
      await  setValue(USER_TYPE, info.type);
-      var imagePath = USER_IMAGE_URL+info.file!;
-      setValue(PROFILE_IMAGE, imagePath);
+      //var imagePath = USER_IMAGE_URL++"s"+info.file!;
+      setValue(PROFILE_IMAGE, info.file);
       setValue(IS_LOGGED_IN,  true);
       successToast("login successful");
      if(info.type=="user") {

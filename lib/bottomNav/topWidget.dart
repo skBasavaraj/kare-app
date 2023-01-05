@@ -176,28 +176,6 @@ class _TopNameWidgetState extends State<TopNameWidget>with WidgetsBindingObserve
 
      });
   }
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    switch (state) {
-      case AppLifecycleState.resumed:
-      // --
-
-        print('Resumed'+"topwidget");
-        break;
-      case AppLifecycleState.inactive:
-      // --
-        print('Inactive');
-        break;
-      case AppLifecycleState.paused:
-      // --
-        print('Paused'+"topwidget");
-        break;
-      case AppLifecycleState.detached:
-      // --
-        print('Detached');
-        break;
-    }
-  }
 
   notifyText(List<Notifications>? lastItem, int count  ) {
 

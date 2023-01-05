@@ -62,13 +62,13 @@ class _AddAppointmentScreenStep1State extends State<AddAppointmentScreenStep1> {
                           style: primaryTextStyle(size: 14, color: patientTxtColor),
                         ),
                         8.height,
-                        Text( 'ChooseYourDoctor', style: boldTextStyle(size: titleTextSize)),
+                        Text( 'Choose Your Doctor', style: boldTextStyle(size: titleTextSize)),
                       ],
                     ),
                   ],
                 )
                     : Text(
-                  'Step1Of2',
+                  'Step 1 Of 2',
                   style: primaryTextStyle(size: 14, color: patientTxtColor),
                 ),
                 stepProgressIndicator(stepTxt: "1/2", percentage: 0.66),
@@ -90,7 +90,7 @@ class _AddAppointmentScreenStep1State extends State<AddAppointmentScreenStep1> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: scaffoldBgColor,
-          appBar: appAppBar(context, name:  'AddNewAppointment'),
+          appBar: appAppBar(context, name:  'Add New Appointment'),
           body: body()
           /*floatingActionButton:
           AddFloatingButton(
