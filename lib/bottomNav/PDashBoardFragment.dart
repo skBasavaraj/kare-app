@@ -69,7 +69,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment>
     //Start at the controller and set the time to switch pages
 
       _animationController =
-      new AnimationController(vsync: this, duration: Duration(seconds: 10));
+      new AnimationController(vsync: this, duration: Duration(seconds: 2));
       _nextPage = Tween(begin: 0.0, end: 1.0).animate(_animationController!);
 
       _animationController!.addListener(() {
@@ -131,6 +131,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment>
                     // color:Colors.purple,
                     ),
                 child: PageView.builder(
+
                   controller: _pageController,
                   onPageChanged: (value) {
                     _animationController!.forward();
@@ -492,6 +493,8 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment>
 
   @override
   Widget build(BuildContext context) {
+    _animationController!.forward();
+
     size = MediaQuery.of(context).size;
     height = size.height;
     width = size.width;
