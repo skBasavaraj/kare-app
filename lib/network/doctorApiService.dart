@@ -99,6 +99,59 @@ Future<List<getPatientCounts>>? getDoctorRequested(  ) async {
   return countList;
 
 }
+Future<List<doctorGetAppointments>>? dateAppointment(String date) async{
+  var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/dappointmentsByDate.php'));
+  request.fields.addAll({
+    'doctorID':  getStringAsync(USER_ID),
+    'apptDate':date
+  });
+
+
+  http.StreamedResponse response = await request.send();
+
+  var response1 = await http.Response.fromStream(response);
+  List<doctorGetAppointments> countList = [];
+  var appList = jsonDecode( response1.body);
+  for(var item in appList){
+    doctorGetAppointments appointments = doctorGetAppointments(
+      id: item['id'],
+      userID: item['userID'],
+      role: item['role'],
+      doctorID: item['doctorID'],
+      patientName: item['patientName'],
+      patientAge: item['patientAge'],
+      patientNumber: item['patientNumber'],
+      patientEmail: item['patientEmail'],
+      patientGender: item['patientGender'],
+      apptDate: item['apptDate'],
+      apptTime: item['apptTime'],
+      bookDate: item['bookDate'],
+      bookTime: item['bookTime'],
+      bloodGroup: item['bloodGroup'],
+      subject: item['subject'],
+      description: item['description'],
+      appointmentId: item['appointmentId'],
+      status: item['status']
+      ,mobile: item['mobile'],
+      location: item['location'],
+      name:item['name'],
+      hospital: item['hospital'],
+      fees: item['fees'],
+      //   count:item['count'].toString()
+
+    );
+    print("printIDs"+  item['hospital'].toString());
+    countList.add(appointments);
+
+    // ApiService.notiCount = countList.length.toString();
+
+  }
+
+
+  return countList;
+
+}
+
 Future<List<doctorGetAppointments>>? todayAppointment() async{
   var request = http.MultipartRequest('POST', Uri.parse('https://admin.verzat.com/user-api/dtodayAppointment.php'));
   request.fields.addAll({

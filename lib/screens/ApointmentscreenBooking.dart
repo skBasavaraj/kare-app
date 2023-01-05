@@ -279,7 +279,7 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: scaffoldBgColor,
-        appBar: appAppBar(context, name: 'ConfirmAppointment'),
+        appBar: appAppBar(context, name: 'Confirm Appointment'),
         body: SingleChildScrollView(
           child: Form(
             key: formKey,

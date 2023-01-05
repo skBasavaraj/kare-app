@@ -152,31 +152,24 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen>with Wid
             elevation: 12,
             items: [
               BottomNavigationBarItem(
-                icon:  new Icon( MdiIcons.homeOutline,size: iconSize,  color: disableIconColor),
-
-                activeIcon: new Icon( MdiIcons.home,size: 30,color: Colors.blue,),
-                label: 'lblPatientDashboard',
+                icon: Image.asset('images/icons/dashboard.png', height: iconSize, width: iconSize, color: disableIconColor),
+                activeIcon: Image.asset('images/icons/dashboardFill.png', height: iconSize, width: iconSize),
+                label:  "Dashboard",
               ),
               BottomNavigationBarItem(
-                icon:  new Icon(  MdiIcons.calendarOutline,size: iconSize,  color: disableIconColor),
-
-                activeIcon: new Icon(MdiIcons.calendarBadge,size: 30,color: Colors.blue,),
-                label:  'lblAppointments',
+                icon: Image.asset('images/icons/calendar.png', height: iconSize, width: iconSize, color: disableIconColor),
+                activeIcon: Image.asset('images/icons/calendarFill.png', height: iconSize, width: iconSize),
+                label:  "Appointments",
               ),
               BottomNavigationBarItem(
-                icon:  new Icon(Icons.search,size: iconSize,  color: disableIconColor),
-
-                activeIcon: new Icon(Icons.search,size: 30,color: Colors.blue,),
-                label:  'FeedsAndArticles',
+                icon: Image.asset('images/icons/patient.png', height: iconSize, width: iconSize, color: disableIconColor),
+                activeIcon: Image.asset('images/icons/patientFill.png', height: iconSize, width: iconSize),
+                label:  "Patients",
               ),
               BottomNavigationBarItem(
-                // icon: Image.asset('images/icons/user.png', height: iconSize, width: iconSize, color: disableIconColor),
-                // activeIcon: Image.asset('', height: iconSize, width: iconSize, color: primaryColor),
-                icon:  new Icon( Icons.person_outline_outlined,size: iconSize,  color: disableIconColor),
-
-                activeIcon: new Icon( Icons.person,size: 30,color: Colors.blue,),
-
-                label:  'lblSettings',
+                icon: Image.asset('images/icons/user.png', height: iconSize, width: iconSize, color: disableIconColor),
+                activeIcon: Image.asset('images/icons/profile_fill.png', height: iconSize, width: iconSize),
+                label: "Settings",
               ),
             ],
           )

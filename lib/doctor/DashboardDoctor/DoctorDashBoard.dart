@@ -83,19 +83,20 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
             elevation: 12,
             items: [
               BottomNavigationBarItem(
-                icon: Image.asset('images/icons/dashboard.png', height: iconSize, width: iconSize, color: disabledIconColor),
-                activeIcon: Image.asset('images/icons/dashboardFill.png', height: iconSize, width: iconSize),
+          icon: Image.asset('images/icons/dashboard.png', height: iconSize, width: iconSize, color: disabledIconColor),
+          activeIcon: Image.asset('images/icons/dashboardFill.png', height: iconSize, width: iconSize),
                 label:  "Dashboard",
+              ),
+
+              BottomNavigationBarItem(
+                icon: Image.asset('images/icons/patient.png', height: iconSize, width: iconSize, color: disabledIconColor),
+                activeIcon: Image.asset('images/icons/patientFill.png', height: iconSize, width: iconSize),
+                label:  "Patients",
               ),
               BottomNavigationBarItem(
                 icon: Image.asset('images/icons/calendar.png', height: iconSize, width: iconSize, color: disabledIconColor),
                 activeIcon: Image.asset('images/icons/calendarFill.png', height: iconSize, width: iconSize),
                 label:  "Appointments",
-              ),
-              BottomNavigationBarItem(
-                icon: Image.asset('images/icons/patient.png', height: iconSize, width: iconSize, color: disabledIconColor),
-                activeIcon: Image.asset('images/icons/patientFill.png', height: iconSize, width: iconSize),
-                label:  "Patients",
               ),
               BottomNavigationBarItem(
                 icon: Image.asset('images/icons/user.png', height: iconSize, width: iconSize, color: disabledIconColor),
