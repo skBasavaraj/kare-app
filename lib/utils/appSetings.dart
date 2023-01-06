@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:nb_utils/nb_utils.dart';
 
@@ -52,7 +53,7 @@ class AppSettingItemWidget extends StatelessWidget {
                     defaultWidget: icon,
                   ),
                   16.height,
-                  Text( name!, style: boldTextStyle(size: 16)),
+                  Text( name!, style:GoogleFonts.jost(fontSize: 16)),
                   8.height,
                   Text(
                     isNotTranslate != false ? subTitle.validate() :  subTitle!,

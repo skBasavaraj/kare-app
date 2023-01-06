@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -308,9 +309,8 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
                                                 size: 14,
                                                 color: patientTxtColor))
                                         : Text(
-                                            'Step2Of2',
-                                            style: primaryTextStyle(
-                                                size: 14, color: primaryColor),
+                                            'Step 2 Of 2',
+                                            style:  GoogleFonts.jost(color: primaryColor,fontSize:14),
                                           ),
                                     8.height,
                                   ],
@@ -322,28 +322,8 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
                           ],
                         ).paddingAll(16),
                       ),
-                      /* RichTextWidget(
-                        list: [
-                          TextSpan(
-                            text: appFirstName,
-                            style: boldTextStyle(
-                              size: 32,
-                              letterSpacing: 1,
-                              color:  textPrimaryWhiteColor,
-                            ),
-                          ),
-                          TextSpan(
-                            text: appSecondName,
-                            style: primaryTextStyle(
-                              size: 32,
-                              letterSpacing: 1,
-                              color: textPrimaryWhiteColor,
-                            ),
-                          ),
-                        ],
-                      ).center(),
-                      24.height,*/
-                      Text('Patient Details',
+
+                     /* Text('Patient Details',
                           style: boldTextStyle(size: titleTextSize)),
                       8.height,
                       Text('Dr.' + Drname,
@@ -352,7 +332,7 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
                               fontFamily: fontFamilyPrimaryGlobal,
                               fontSize: 24,
                               fontWeight: FontWeight.w600)),
-                      8.height,
+                      8.height,*/
                       AppTextField(
                         textStyle:
                             primaryTextStyle(color: textPrimaryWhiteColor),
@@ -452,7 +432,7 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
                       Align(
                         alignment: Alignment.topLeft,
                         child:
-                            Text('Gender', style: primaryTextStyle(size: 12)),
+                            Text('Gender',  style: GoogleFonts.jost(fontSize: 16,fontWeight: FontWeight.w400,color:Colors.grey)),
                       ),
                       8.height,
                       Row(
@@ -466,6 +446,7 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
                               decoration: boxDecorationWithRoundedCorners(
                                 borderRadius: radius(defaultRadius),
                                 backgroundColor: context.cardColor,
+                                boxShadow: [BoxShadow(blurRadius: 0.6,color: Colors.black.withOpacity(0.1),spreadRadius: 1)]
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -515,7 +496,7 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
                           },
                         ),
                       ),
-                      60.height,
+                      30.height,
                       Row(
                         children: [
                           AppTextField(
@@ -609,8 +590,8 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
                                             ? Color(0xFFFF6433)
                                             : null),
                                     5.width,
-                                    Text('Session ' + '  ${index + 1}',
-                                        style: boldTextStyle(size: 16)),
+                                    Text('Session ' + ' 1',
+                                        style: GoogleFonts.jost(fontSize: 18,fontWeight: FontWeight.w500)),
                                   ],
                                 ),
                                 16.height,
@@ -638,7 +619,7 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
                                                   // ? cardDarkColor
                                                   : scaffoldBgColor,
                                           borderRadius: BorderRadius.circular(
-                                              defaultRadius),
+                                              defaultRadius,), boxShadow: [BoxShadow(color:Colors.black.withOpacity(0.1),spreadRadius: 0.5,blurRadius: 0.3)]
                                         ),
                                         child: FittedBox(
                                           child: Text(
@@ -682,12 +663,11 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
                                   children: [
                                     Image.asset('images/icons/morning.png',
                                         height: 20,
-                                        color: (index + 1) == 2
-                                            ? Colors.red
-                                            : null),
+                                        color:  Colors.red
+                                             ),
                                     5.width,
-                                    Text('Session' + ' 2',
-                                        style: boldTextStyle(size: 16)),
+                                    Text('Session' +  '  2',
+                                        style: GoogleFonts.jost(fontSize: 18,fontWeight: FontWeight.w500)),
                                   ],
                                 ),
                                 16.height,
@@ -716,7 +696,8 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
                                                   : scaffoldBgColor,
                                           borderRadius: BorderRadius.circular(
                                               defaultRadius),
-                                        ),
+                                                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1),spreadRadius: 0.5,blurRadius: 0.3)]
+                                            ),
                                         child: FittedBox(
                                           child: Text(
                                             '${sessionData.time}',

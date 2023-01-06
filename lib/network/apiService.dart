@@ -1062,6 +1062,7 @@ Future<void> logout(BuildContext context) async {
   await removeKey(USER_ID);
   await removeKey(USER_NAME);
   await removeKey(USER_EMAIL);
+  await removeKey(USER_DEVICE_TOKEN);
   await removeKey(USER_DISPLAY_NAME);
   await removeKey(PROFILE_IMAGE);
   await removeKey(USER_MOBILE);

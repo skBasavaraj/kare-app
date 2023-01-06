@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:nb_utils/nb_utils.dart';
 import 'package:share/share.dart';
@@ -120,9 +121,9 @@ class _SettingFragmentState extends State<SettingFragment> with SingleTickerProv
                               color: primaryColor,
                             ),
                             tabs: [
-                              Tab(icon: Text('General Setting', textAlign: TextAlign.center).paddingSymmetric(horizontal: 10)),
-                              Tab(icon: Text( 'App Settings', textAlign: TextAlign.center).paddingSymmetric(horizontal: 10)),
-                              Tab(icon: Text( 'Other', textAlign: TextAlign.center).paddingSymmetric(horizontal: 10)),
+                              Tab(icon: Text('General Setting', style:GoogleFonts.jost(),textAlign: TextAlign.center).paddingSymmetric(horizontal: 10)),
+                              Tab(icon: Text( 'App Settings',style:GoogleFonts.jost(), textAlign: TextAlign.center).paddingSymmetric(horizontal: 10)),
+                              Tab(icon: Text( 'Other', style:GoogleFonts.jost(),textAlign: TextAlign.center).paddingSymmetric(horizontal: 10)),
                             ],
                           ),
                           SingleChildScrollView(
@@ -139,7 +140,7 @@ class _SettingFragmentState extends State<SettingFragment> with SingleTickerProv
                                     runSpacing: 16,
                                     children: [
                                       AppSettingItemWidget(
-                                        name: 'Logout',
+                                        name: 'Log out',
                                         subTitle: 'Thanks For Visiting',
                                         image: "images/icons/logout.png",
                                         onTap: () async {

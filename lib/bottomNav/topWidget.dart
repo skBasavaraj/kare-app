@@ -80,9 +80,7 @@ class _TopNameWidgetState extends State<TopNameWidget>with WidgetsBindingObserve
                         future:  getNotificaton(),
                         builder: (context, snapshot) {
                           if (snapshot.data == null) {
-                            return snapWidgetHelper(snapshot,
-                                errorWidget: noAppointmentDataWidget(
-                                    text: "No Data Found", isInternet: true));
+                            return  Text("");
                           } else {
                             last = snapshot.data;
                             return notifyText(last,last!.length!.toInt());
