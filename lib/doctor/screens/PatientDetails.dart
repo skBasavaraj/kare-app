@@ -6,6 +6,8 @@ import 'package:zatcare/network/doctorApiService.dart';
 import 'package:zatcare/utils/appCommon.dart';
 import 'package:zatcare/utils/color_use.dart';
 
+import '../../notification/pushnotification.dart';
+
 class PatientDetails extends StatefulWidget {
   doctorGetAppointments? patientDetail;
 
@@ -232,6 +234,7 @@ class _PatientDetailsState extends State<PatientDetails> {
           var info = await  doctorApprove("approved",widget.patientDetail!.id!,widget.patientDetail?.doctorID!,DateCount.text.validate(),TimeCount.text.validate());
           if(info!.error=="000"){
             var notification = await setNotification("You have approved appointment",  "Your Appointment approved by Dr.${getStringAsync(USER_NAME)}",  widget.patientDetail!.doctorID!, getStringAsync(USER_TYPE),  widget.patientDetail!.userID!,  "user",  widget.patientDetail!.patientName!, "dateN", "timeN",  "not seen");
+            pushNotification.sendNotification(widget.patientDetail!.deviceToken!,"Approved","Your Appointment approved by Dr.${getStringAsync(USER_NAME)}");
             if(notification!.error=="000"){
               successToast("Your successfully updated details");
               pop(context);
@@ -254,6 +257,8 @@ class _PatientDetailsState extends State<PatientDetails> {
             var info = await  doctorApprove("rejected",widget.patientDetail!.id!,widget.patientDetail?.doctorID!,DateCount.text.validate(),TimeCount.text.validate());
             if(info!.error=="000"){
               var notification = await setNotification("You have rejected appointment",  "Your Appointment rejected by Dr.${getStringAsync(USER_NAME)} due to some issue",  widget.patientDetail!.doctorID!, getStringAsync(USER_TYPE),  widget.patientDetail!.userID!,  "user",  widget.patientDetail!.patientName!, "dateN", "timeN",  "not seen");
+              pushNotification.sendNotification(widget.patientDetail!.deviceToken!,"Rejected","Your Appointment Rejected by Dr.${getStringAsync(USER_NAME)} due to some issue");
+
               if(notification!.error=="000"){
                 successToast("Your successfully updated details");
                 pop(context);

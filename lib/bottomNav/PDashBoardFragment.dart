@@ -75,7 +75,7 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment>
       _animationController!.addListener(() {
         if (_animationController!.status == AnimationStatus.completed) {
           _animationController!.reset(); //Reset the controller
-          final int page = 4; //Number of pages in your PageView
+          final int page = 3; //Number of pages in your PageView
           if (_currentPage < page) {
             _currentPage++;
             _pageController.animateToPage(_currentPage,
@@ -662,7 +662,8 @@ class _PDashBoardFragmentState extends State<PDashBoardFragment>
               16.height,
 
             ],
-          ),*//*
+          ),*/
+  /*
         ],
       );
     }

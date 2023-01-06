@@ -131,6 +131,7 @@ Future<List<doctorGetAppointments>>? dateAppointment(String date) async{
       subject: item['subject'],
       description: item['description'],
       appointmentId: item['appointmentId'],
+      deviceToken: item['deviceToken'],
       status: item['status']
       ,mobile: item['mobile'],
       location: item['location'],
@@ -183,6 +184,7 @@ Future<List<doctorGetAppointments>>? todayAppointment() async{
       subject: item['subject'],
       description: item['description'],
       appointmentId: item['appointmentId'],
+      deviceToken: item['deviceToken'],
       status: item['status']
       ,mobile: item['mobile'],
       location: item['location'],
@@ -237,6 +239,7 @@ Future<List<doctorGetAppointments>>? typesAppointment(String type) async{
       subject: item['subject'],
       description: item['description'],
       appointmentId: item['appointmentId'],
+      deviceToken: item['deviceToken'],
       status: item['status']
       ,mobile: item['mobile'],
       location: item['location'],
@@ -459,6 +462,7 @@ class doctorGetAppointments {
  String? subject;
  String? description;
  String? appointmentId;
+ String? deviceToken;
  String? status;
  String? mobile;
  String? location;
@@ -484,6 +488,7 @@ class doctorGetAppointments {
       this.subject,
       this.description,
       this.appointmentId,
+       this.deviceToken,
       this.status,
       this.mobile,
       this.location,
@@ -509,6 +514,7 @@ class doctorGetAppointments {
   subject = json['subject'];
   description = json['description'];
   appointmentId = json['appointmentId'];
+  deviceToken = json['deviceToken'];
   status = json['status'];
   mobile = json['mobile'];
   location = json['location'];
@@ -536,6 +542,7 @@ class doctorGetAppointments {
   data['subject'] = this.subject;
   data['description'] = this.description;
   data['appointmentId'] = this.appointmentId;
+  data['deviceToken'] = this.deviceToken;
   data['status'] = this.status;
   data['mobile'] = this.mobile;
   data['location'] = this.location;

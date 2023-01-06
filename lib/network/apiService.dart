@@ -84,7 +84,7 @@ class ApiService {
   static Future<BookSucessful?> bookAppointments
       (String userId, String doctorId, String patientName, patientAge,
       patientNumber, patientEmail, patientGender,
-      apptDate, apptTime, bloodGroup, subject, description) async {
+      apptDate, apptTime, bloodGroup, subject, description, String  deviceToken) async {
     var request = http.MultipartRequest('POST',
         Uri.parse('https://admin.verzat.com/user-api/bookAppointment.php'));
     request.fields.addAll({
@@ -101,6 +101,7 @@ class ApiService {
       'bloodGroup': bloodGroup,
       'subject': subject,
       'description': description,
+      'deviceToken': deviceToken,
       'status': 'pending'
     });
     // request.files

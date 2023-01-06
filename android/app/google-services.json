@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "277066372203",
+    "project_id": "zatcare-dcea8",
+    "storage_bucket": "zatcare-dcea8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277066372203:android:d26a9002ad86226e1d0d2e",
+        "android_client_info": {
+          "package_name": "com.example.zatcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "277066372203-qu19ggrskeq58o9kie6opece5om2odaq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwURqNrAHU_fQ2prMr_TBcMrb1drRh0rs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "277066372203-qu19ggrskeq58o9kie6opece5om2odaq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "277066372203-tea70vfmntcctj8hih0vk01kermd39go.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.zatcare"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

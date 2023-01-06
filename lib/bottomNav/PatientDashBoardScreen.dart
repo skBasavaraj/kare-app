@@ -1,6 +1,7 @@
 import 'dart:ui';
 
  import 'package:cron/cron.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -11,6 +12,7 @@ import 'package:zatcare/bottomNav/topWidget.dart';
 import '../appConstants.dart';
 import '../network/apiService.dart';
 import '../network/doctorApiService.dart';
+import '../notification/localNotification.dart';
 import '../utils/color_use.dart';
 import 'PDashBoardFragment.dart';
 import 'PatientAppointmentFragment.dart';
@@ -56,6 +58,27 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen>with Wid
   void initState() {
     super.initState();
     init();
+    FirebaseMessaging.instance.getInitialMessage().then(
+          (value) => setState(
+            () {
+              print('A new onMessageOpenedApp event was 1!');
+
+              // _resolved = true;
+          // initialMessage = value?.data.toString();
+        },
+      ),
+    );
+
+    FirebaseMessaging.onMessage.listen((event) {
+      localNotification().showNotificationWithDefaultSound( event);
+      print('A new onMessageOpenedApp event was 2!');
+
+
+    },);
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was 3!');
+     });
     WidgetsBinding.instance.addObserver(this);
 
   }

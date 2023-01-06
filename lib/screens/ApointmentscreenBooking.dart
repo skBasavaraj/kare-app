@@ -853,6 +853,7 @@ class _ApointmentScreenState extends State<ApointmentScreen> {
                 bloodGroup.validate(),
                 lastNameCont.text,
                 descriptionCont.text,
+                getStringAsync(USER_DEVICE_TOKEN)
               );
               if (info?.status == "001") {
                  snackBar(context,title:info?.message,backgroundColor: Colors.red.shade200,elevation: 5);

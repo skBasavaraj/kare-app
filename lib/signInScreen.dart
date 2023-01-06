@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -27,6 +28,8 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final formKey = GlobalKey<FormState>();
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
   TextEditingController emailCont = TextEditingController();
   TextEditingController passwordCont = TextEditingController();
   bool isRemember = false;
@@ -41,6 +44,10 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     super.initState();
     init();
+    _firebaseMessaging.getToken().then((value) {
+      setValue(USER_DEVICE_TOKEN,  value);
+      print("Device Token"+value!);
+    },);
   }
 
   init() async {
@@ -310,6 +317,7 @@ Widget  hideSignUp() {
      }
      return 5.width;
 }
+
 }
 
 class DemoLoginModel {
